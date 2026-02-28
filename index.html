@@ -620,7 +620,7 @@ tr:hover td{background:var(--g50)}
   <div class="hdr-in">
     <div class="logo" onclick="go('dashboard')">
       <div class="logo-ic">🌿</div>
-      <div><div class="logo-nm">Equilibra</div><div class="logo-vr">v5.0</div></div>
+      <div><div class="logo-nm">Equilibra</div><div class="logo-vr">v5.8</div></div>
     </div>
     <!-- botões rápidos lado direito -->
     <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
@@ -771,6 +771,26 @@ tr:hover td{background:var(--g50)}
 
     <!-- Projeção quando tem meta -->
     <div id="progProj" style="display:none;font-size:12px;color:var(--g300);margin-bottom:10px;text-align:center"></div>
+
+    <!-- BARRAS ÁGUA E PROTEÍNA -->
+    <div id="narrBars" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:7px">
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">
+          <span>💧 Água hoje</span><span id="narrAguaPct">—</span>
+        </div>
+        <div style="height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
+          <div id="narrAguaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#0ea5e9);width:0%;transition:width .6s ease"></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">
+          <span>🥩 Proteína hoje</span><span id="narrProtPct">—</span>
+        </div>
+        <div style="height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
+          <div id="narrProtBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#4ade80,#22c55e);width:0%;transition:width .6s ease"></div>
+        </div>
+      </div>
+    </div>
 
     <!-- TENDÊNCIA SEMANAL -->
     <!-- PLACAR PROTEÍNA -->
@@ -1314,7 +1334,7 @@ tr:hover td{background:var(--g50)}
 <div class="sec" id="sec-faq">
   <div class="pg-title">❓ Dúvidas Frequentes</div>
   <div class="pg-sub">Respostas de especialista em GLP-1</div>
-  
+
   <!-- Campo de busca -->
   <div style="position:relative;margin-bottom:16px">
     <input id="faqBusca" type="text" placeholder="🔍 Digite sua dúvida..." oninput="filtrarFAQ(this.value)"
@@ -1420,10 +1440,10 @@ tr:hover td{background:var(--g50)}
         <text x="174" y="88" font-family="sans-serif" font-size="7" fill="#666">100</text>
         <!-- Tampinha laranja -->
         <rect x="144" y="2" width="14" height="14" rx="3" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
-        
+
         <!-- Seta indicando processo -->
         <text x="210" y="65" font-family="sans-serif" font-size="28" fill="#16a34a">→</text>
-        
+
         <!-- Região aplicação (silhueta do abdômen) -->
         <ellipse cx="295" cy="65" rx="30" ry="40" fill="rgba(255,220,180,0.4)" stroke="#d4a57a" stroke-width="1.5"/>
         <circle cx="295" cy="50" r="8" fill="rgba(255,100,80,0.2)" stroke="#f87171" stroke-width="1" stroke-dasharray="3,2"/>
@@ -1469,7 +1489,7 @@ tr:hover td{background:var(--g50)}
         <!-- Labels -->
         <text x="85" y="155" font-family="sans-serif" font-size="9" fill="#555" text-anchor="middle">Frente</text>
         <text x="255" y="155" font-family="sans-serif" font-size="9" fill="#555" text-anchor="middle">Costas/Braço</text>
-        
+
         <!-- Legenda -->
         <circle cx="10" cy="10" r="5" fill="rgba(34,197,94,0.3)" stroke="#16a34a" stroke-width="1.5"/>
         <text x="18" y="14" font-family="sans-serif" font-size="8" fill="#16a34a" font-weight="700">1° Abdômen</text>
@@ -1594,6 +1614,10 @@ var MS=[
 ];
 
 var SINT=[
+  {id:'fome_persistente',ttl:'😮‍💨 Ainda sinto fome',cls:'sint-warn',causa:'Pode indicar dose subterapêutica, problema de armazenamento ou necessidade de ajuste. Também pode ser desidratação — que imita fome.',quando:'Qualquer fase',
+   nv:[{c:'sl1',t:'Fome leve, controlável',tx:'Verifique: atingiu a meta de proteína? Proteína antes de carboidratos reduz fome. Bebeu água suficiente? Desidratação imita fome.'},
+       {c:'sl2',t:'Fome frequente, interfere no tratamento',tx:'Revise hidratação e proteína. Verifique armazenamento da caneta (2–8°C na geladeira). Converse com seu médico — pode indicar ajuste de dose.'},
+       {c:'sl3',t:'Sem saciedade alguma após 4+ semanas',tx:'🚨 Avise seu médico. Possível dose insuficiente, produto com problema ou necessidade de troca de fármaco.'}]},
   {id:'nausea',ttl:'🤢 Náusea',cls:'sint-ok',causa:'O GLP-1 retarda o esvaziamento gástrico — o estômago processa mais devagar. Intencional, mas causa náusea especialmente no início e após escalonamento.',quando:'Semanas 1–6',
    nv:[{c:'sl1',t:'Leve',tx:'Volumes menores. Proteína antes de carboidratos. Não deite por 1h após comer. Chá de gengibre pode ajudar.'},
        {c:'sl2',t:'Moderado (3+ dias)',tx:'Refeições menores e mais frequentes. Evite gordura e laticínios. Consulte médico — pode indicar ajuste.'},
@@ -1638,13 +1662,17 @@ var SINT=[
 var ANA={step:0,data:{},totalSteps:10};
 
 function anaInit(){
-  var h=new Date().getHours();
+  var h=agoraBR().getHours();
   var s=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
   anaProgresso(0);
   setTimeout(function(){
-    anaMsg('bot',s+'! Seja bem-vindo ao <strong>Equilibra</strong>. 🌿',null,function(){
-      anaMsg('bot','Sou o <strong>Equi</strong>, seu assistente de acompanhamento com GLP-1. Vou configurar tudo para você agora — leva cerca de 3 minutos e você não precisará preencher mais nada depois.',null,function(){
-        anaStep0();
+    anaMsg('bot',s+'! Bem-vindo ao <strong>Equilibra</strong>. 🌿',null,function(){
+      anaMsg('bot','O Equilibra é um <strong>app de acompanhamento clínico</strong> para quem usa GLP-1 — Tirzepatida, Semaglutida ou Liraglutida — no tratamento da obesidade.',null,function(){
+        anaMsg('bot','Ele monitora seu progresso, calcula suas metas de proteína e hidratação, explica os efeitos colaterais e te ajuda a manter o tratamento nos momentos difíceis.',null,function(){
+          anaMsg('bot','Sou o <strong>Equi</strong>. Vou configurar tudo para você agora — <strong>leva cerca de 3 minutos.</strong>',null,function(){
+            anaStep0();
+          });
+        });
       });
     });
   },500);
@@ -1806,12 +1834,23 @@ function anaStep8A(){
         setTimeout(function(){anaFinalA();},300);return;
       }
       anaMsg('usr','Sim, já sei');
-      anaMsg('bot','Qual será a data da <strong>primeira aplicação</strong>?');
+      anaMsg('bot','Qual será a data da <strong>primeira aplicação</strong>? <span style="opacity:.7;font-size:13px">Pode ser hoje ou uma data futura.</span>');
       anaDate(function(d){
-        ANA.data.inicio=d;ANA.data.ultima=d;
-        anaMsg('usr','Primeira dose: '+d);
-        setTimeout(function(){anaFinalA();},300);
-      });
+        ANA.data.inicio=d;
+        var ini=new Date(d+'T12:00:00-03:00');
+        var futura=ini>agoraBR();
+        if(futura){
+          var dias=Math.ceil((ini.getTime()-agoraBR().getTime())/(1000*60*60*24));
+          ANA.data.ultima=null;
+          anaMsg('usr','Primeira dose: '+dataBR(d));
+          anaMsg('bot','Ótimo — em <strong>'+dias+(dias===1?' dia':' dias')+'</strong> você começa! O app já estará pronto para acompanhar desde o primeiro dia.');
+        }else{
+          ANA.data.ultima=d;
+          anaMsg('usr','Primeira dose: '+dataBR(d));
+          anaMsg('bot','Registrado! Vamos acompanhar cada semana do seu tratamento.');
+        }
+        setTimeout(function(){anaFinalA();},500);
+      },true); // permite data futura
     });
   },400);
 }
@@ -1819,18 +1858,18 @@ function anaStep8A(){
 function anaFinalA(){
   anaProgresso(96);
   setTimeout(function(){
-    anaMsg('bot','Antes de entrar no app — as <strong>três regras de ouro</strong>:');
+    anaMsg('bot','Antes de entrar no app — as <strong>três regras de ouro</strong> que vão determinar seu resultado:');
     setTimeout(function(){
-      anaMsg('bot','<strong>1. Proteína primeiro.</strong> Em cada refeição, proteína antes de tudo. Com GLP-1 reduzindo o apetite, comer carboidrato primeiro vai saciar sem atingir a meta de proteína.','clinical');
+      anaMsg('bot','<strong>1. Proteína primeiro.</strong> Em cada refeição, proteína antes de tudo. Com GLP-1 reduzindo o apetite, comer carboidrato primeiro vai saciar sem atingir a meta de proteína. Você perde músculo, não gordura.','clinical');
       setTimeout(function(){
         var M=calcMetricsAna();
         var copos=M?Math.round(M.agua/250):8;
-        anaMsg('bot','<strong>2. Hidratação rigorosa.</strong> '+(M?'Meta: '+Math.round(M.agua)+' ml/dia — '+copos+' copos de 250ml. ':'Meta: 35ml × seu peso. ')+'Urina clara é o indicador. Desidratação imita fome e piora todos os efeitos colaterais.','clinical');
+        anaMsg('bot','<strong>2. Hidratação rigorosa.</strong> '+(M?'Meta: <strong>'+Math.round(M.agua)+' ml/dia</strong> — '+copos+' copos de 250ml. ':'Meta: 35ml × seu peso. ')+'Urina clara é o indicador. Desidratação imita fome e piora todos os efeitos colaterais.','clinical');
         setTimeout(function(){
-          anaMsg('bot','<strong>3. Consistência acima de perfeição.</strong> Você não precisa de uma semana perfeita. Precisa de semanas consistentes. O GLP-1 funciona com o tempo.','clinical');
-          setTimeout(function(){anaConfirm('Ver meu resumo →', function(){anaDone();});},400);
-        },700);
-      },700);
+          anaMsg('bot','<strong>3. Consistência acima de perfeição.</strong> Você não precisa de uma semana perfeita. Precisa de semanas consistentes. O GLP-1 funciona com o tempo — não abandone nas primeiras semanas difíceis.','clinical');
+          setTimeout(function(){anaConfirm('Ver meu resumo →', function(){anaDone();});},1200);
+        },1800);
+      },1800);
     },500);
   },400);
 }
@@ -2296,19 +2335,18 @@ function anaNum1(lbl,ph,cb){
   inp.appendChild(i);inp.appendChild(b);
 }
 
-function anaDate(cb){
+function anaDate(cb,permitirFutura){
   var inp=el('anaInput');inp.innerHTML='';
   var hint=document.createElement('div');
   hint.style.cssText='font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px;text-align:center';
-  hint.textContent='Selecione a data e toque em Confirmar';
-  var i=document.createElement('input');i.type='date';i.max=hoje();i.className='ana-num-inp';i.style.marginBottom='8px';
+  hint.textContent=permitirFutura?'Pode selecionar uma data futura':'Selecione a data e toque em Confirmar';
+  var i=document.createElement('input');i.type='date';if(!permitirFutura) i.max=hoje();i.className='ana-num-inp';i.style.marginBottom='8px';
   var b=document.createElement('button');b.className='ana-num-confirm';b.textContent='✓ Confirmar data';b.disabled=true;
   b.style.cssText='width:100%;padding:16px;border-radius:12px;background:var(--g600);border:none;color:#fff;font-family:var(--ss);font-size:16px;font-weight:700;cursor:pointer;margin-top:4px';
   i.oninput=function(){b.disabled=!i.value;};
   b.onclick=function(){inp.innerHTML='';cb(i.value);};
   inp.appendChild(hint);inp.appendChild(i);inp.appendChild(b);
-  // scroll msgs up to make room
-  setTimeout(function(){var last=el('anaMsgs').lastElementChild;if(last) last.scrollIntoView({behavior:'smooth',block:'end'});},150);
+  setTimeout(function(){var m=el('anaMsgs');m.scrollTop=m.scrollHeight;},150);
 }
 
 function mkNumInp(ph,ph2,mn,mx,stp){
@@ -2342,13 +2380,15 @@ function anaProgresso(p){el('anaFill').style.width=p+'%';}
 </script>
 <script>
 /* ══ UTILS ══ */
-function hoje(){var d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);}
+function agoraBR(){var d=new Date();return new Date(d.getTime()+(d.getTimezoneOffset()*60000)+(-3*3600000));}
+function hoje(){var d=agoraBR();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmtBR(iso){if(!iso||iso==='—') return iso||'—';var p=iso.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:iso;}
 function rd(x,n){return Math.round(x*Math.pow(10,n||0))/Math.pow(10,n||0);}
 function nv(v,fb){var x=parseFloat(v);return isNaN(x)?(fb!==undefined?fb:null):x;}
 function el(id){return document.getElementById(id);}
 function porData(a,b){return a.date<b.date?-1:a.date>b.date?1:0;}
 function getDH(){for(var i=0;i<S.daily.length;i++){if(S.daily[i].date===hoje()) return S.daily[i];}return null;}
-function calcSemanas(){if(!S.caneta.inicio) return null;return Math.floor((Date.now()-new Date(S.caneta.inicio+'T12:00:00').getTime())/(7*24*3600*1000));}
+function calcSemanas(){if(!S.caneta.inicio) return null;var ini=new Date(S.caneta.inicio+'T12:00:00-03:00');return Math.max(0,Math.floor((agoraBR().getTime()-ini.getTime())/(7*24*3600*1000)));}
 
 /* ══ PERSISTÊNCIA ══ */
 function salvar(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
@@ -2384,23 +2424,23 @@ function classificar(rl,est){
   if(rl>=-0.2)    return{lbl:'Sem perda ↔️',cls:'tw',bar:'sbar-warn',msg:'Oscilação normal. Avalie consistência.'};
   return{lbl:'Recuperando ⬆️',cls:'tr',bar:'sbar-red',msg:'Revise sal, álcool, sono e calorias.'};
 }
-function dataBR(iso){if(!iso) return '—';var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function dataBR(iso){if(!iso) return '—';var p=iso.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:iso;}
+function fmtBR(iso){return dataBR(iso);}
 function proxDose(){
   if(!S.caneta.farmaco||!S.caneta.ultima) return null;
-  var ul=new Date(S.caneta.ultima+'T12:00:00'),pr=new Date(ul);
+  var ul=new Date(S.caneta.ultima+'T12:00:00-03:00'),pr=new Date(ul);
   if(S.caneta.freq==='semanal') pr.setDate(pr.getDate()+7);else pr.setDate(pr.getDate()+1);
-  pr.setMinutes(pr.getMinutes()-pr.getTimezoneOffset());
-  var iso=pr.toISOString().slice(0,10),diff=Math.ceil((pr.getTime()-Date.now())/(1000*60*60*24));
+  var iso=pr.getFullYear()+'-'+String(pr.getMonth()+1).padStart(2,'0')+'-'+String(pr.getDate()).padStart(2,'0');
+  var diff=Math.ceil((pr.getTime()-agoraBR().getTime())/(1000*60*60*24));
   return{date:iso,diff:diff};
 }
 function calcStreak(){
   if(!S.daily.length) return 0;
   var dates=S.daily.map(function(d){return d.date;}).sort();
-  var streak=0,d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
-  var cur=d.toISOString().slice(0,10);
+  var streak=0,cur=hoje();
   for(var i=0;i<365;i++){
-    if(dates.indexOf(cur)>=0){streak++;var p=new Date(cur+'T12:00:00');p.setDate(p.getDate()-1);p.setMinutes(p.getMinutes()-p.getTimezoneOffset());cur=p.toISOString().slice(0,10);}
-    else if(i===0){var p2=new Date(cur+'T12:00:00');p2.setDate(p2.getDate()-1);p2.setMinutes(p2.getMinutes()-p2.getTimezoneOffset());cur=p2.toISOString().slice(0,10);if(dates.indexOf(cur)<0) break;}
+    if(dates.indexOf(cur)>=0){streak++;var p=new Date(cur+'T12:00:00-03:00');p.setDate(p.getDate()-1);cur=p.getFullYear()+'-'+String(p.getMonth()+1).padStart(2,'0')+'-'+String(p.getDate()).padStart(2,'0');}
+    else if(i===0){var p2=new Date(cur+'T12:00:00-03:00');p2.setDate(p2.getDate()-1);cur=p2.getFullYear()+'-'+String(p2.getMonth()+1).padStart(2,'0')+'-'+String(p2.getDate()).padStart(2,'0');if(dates.indexOf(cur)<0) break;}
     else break;
   }
   return streak;
@@ -2668,17 +2708,20 @@ function buildSint(){
 /* ══ ALIMENTOS — PROTEÍNA ══ */
 var PROT_ALIMENTOS=[
   {id:'frango',   nm:'🍗 Frango/Peito cozido',       fator:0.31},
-  {id:'carne',    nm:'🥩 Carne magra (patinho)',      fator:0.26},
+  {id:'carne',    nm:'🥩 Carne bovina magra',         fator:0.26},
+  {id:'porco',    nm:'🐷 Lombo suíno grelhado',       fator:0.27},
   {id:'peixe',    nm:'🐟 Peixe grelhado',             fator:0.25},
-  {id:'atum_lata',nm:'🥫 Atum em lata',               fator:0.26},
+  {id:'camarao',  nm:'🦐 Camarão cozido',             fator:0.24},
+  {id:'atum_lata',nm:'🥫 Atum em lata escorrido',     fator:0.28},
   {id:'ovo',      nm:'🥚 Ovo inteiro',                fator:0.125},
-  {id:'claras',   nm:'🥚 Só claras',                  fator:0.11},
-  {id:'whey',     nm:'🥛 Whey protein (pó)',          fator:0.80},
-  {id:'cottage',  nm:'🧀 Cottage',                    fator:0.12},
-  {id:'iogurte',  nm:'🥛 Iogurte grego',              fator:0.09},
-  {id:'queijo',   nm:'🧀 Queijo minas frescal',       fator:0.17},
-  {id:'camarao',  nm:'🍤 Camarão cozido',             fator:0.24},
-  {id:'porco',    nm:'🥓 Lombo de porco',             fator:0.27}
+  {id:'claras',   nm:'🥚 Só claras (unidade)',        fator:0.11},
+  {id:'whey',     nm:'💪 Whey protein (pó)',          fator:0.80},
+  {id:'cottage',  nm:'🧇 Cottage cheese',             fator:0.12},
+  {id:'iogurte',  nm:'🥛 Iogurte grego integral',     fator:0.09},
+  {id:'queijo_m', nm:'🧀 Queijo mussarela',           fator:0.20},
+  {id:'queijo_p', nm:'🧀 Queijo prato/coalho',        fator:0.23},
+  {id:'amendoim', nm:'🥜 Pasta de amendoim',          fator:0.27},
+  {id:'feijao',   nm:'🫘 Feijão/lentilha cozidos',    fator:0.09}
 ];
 
 /* Chips rápidos: porções do dia a dia já com peso pré-definido */
@@ -3128,6 +3171,17 @@ function render(){
   // PROGRESSO HERO
   renderProgresso(cw,sw,rl,dh,ma);
 
+  // BARRAS ÁGUA E PROTEÍNA
+  if(M&&dh){
+    var nb=el('narrBars');if(nb) nb.style.display='flex';
+    var aguaPctV=dh.waterMl?Math.min(100,Math.round((dh.waterMl/M.agua)*100)):0;
+    var protPctV=dh.proteinG?Math.min(100,Math.round((dh.proteinG/M.pm)*100)):0;
+    if(el('narrAguaBar')) el('narrAguaBar').style.width=aguaPctV+'%';
+    if(el('narrAguaPct')) el('narrAguaPct').textContent=aguaPctV+'% — '+(dh.waterMl||0)+'ml / '+Math.round(M.agua)+'ml';
+    if(el('narrProtBar')) el('narrProtBar').style.width=protPctV+'%';
+    if(el('narrProtPct')) el('narrProtPct').textContent=protPctV+'% — '+(dh.proteinG||0)+'g / '+Math.round(M.pm)+'g';
+  }else{var nb2=el('narrBars');if(nb2) nb2.style.display='none';}
+
   if(M){
     el('kTMB').textContent=Math.round(M.tmb);el('kGET').textContent=Math.round(M.tdee);el('kMeta').textContent=Math.round(M.meta);el('kDefH').textContent='déficit ~'+Math.round(M.def)+' kcal/dia';el('kPEst').textContent=rd(M.perda,2)+' kg';
     el('kPMin').textContent=Math.round(M.pm)+'g';el('kPIdeal').textContent=Math.round(M.pi1)+'–'+Math.round(M.pi2)+'g';el('kAgua').textContent=Math.round(M.agua);
@@ -3148,7 +3202,7 @@ function render(){
     if(pd){var pv=pd.diff<=0?'Hoje! 💉':pd.diff===1?'Amanhã':'Em '+pd.diff+' dia'+(pd.diff>1?'s':'')+' ('+dataBR(pd.date)+')';el('proxVal').textContent=pv;el('proxTag').className=pd.diff<=0?'tag tr':pd.diff<=2?'tag tw':'tag tg';el('proxTag').textContent=pd.diff<=0?'Hoje':pd.diff<=2?'Em breve':'Aguardando';}
     el('chDrug').textContent=S.caneta.farmaco;el('chDose').textContent=S.caneta.dose?'Dose atual: '+S.caneta.dose:'Dose não configurada';
     var crow=el('chRow');crow.innerHTML='';
-    [{l:'Frequência',v:S.caneta.freq==='semanal'?'Semanal':'Diária'},{l:'Última aplicação',v:S.caneta.ultima||'—'},{l:'Próxima',v:pd?pd.diff<=0?'Hoje':dataBR(pd.date):'—'}].forEach(function(k){var d=document.createElement('div');d.className='ch-kpi';d.innerHTML='<div class="ch-kl">'+k.l+'</div><div class="ch-kv">'+k.v+'</div>';crow.appendChild(d);});
+    [{l:'Frequência',v:S.caneta.freq==='semanal'?'Semanal':'Diária'},{l:'Última aplicação',v:S.caneta.ultima?dataBR(S.caneta.ultima):'—'},{l:'Próxima',v:pd?pd.diff<=0?'Hoje':dataBR(pd.date):'—'}].forEach(function(k){var d=document.createElement('div');d.className='ch-kpi';d.innerHTML='<div class="ch-kl">'+k.l+'</div><div class="ch-kv">'+k.v+'</div>';crow.appendChild(d);});
     var doses2=DOSES[S.caneta.farmaco];
     if(doses2){el('escCard').style.display='block';el('escSub').textContent='Protocolo para '+S.caneta.farmaco+'.';var tl=el('escTL');tl.innerHTML='';doses2.forEach(function(d){var act=S.caneta.dose&&d.dose===S.caneta.dose;var step=document.createElement('div');step.className='tl-step'+(act?' active':'');step.innerHTML='<div class="tl-dose">'+d.dose+' <span style="font-size:11px;color:var(--muted);font-weight:400">— '+d.sem+'</span>'+(act?' <span class="tag tg" style="font-size:10px;padding:2px 7px">Você está aqui</span>':'')+'</div><div class="tl-info">'+d.info+'</div>';tl.appendChild(step);});}else el('escCard').style.display='none';
     if(ESQ[S.caneta.farmaco]){el('esqCard').style.display='block';el('esqTxt').innerHTML=ESQ[S.caneta.farmaco];}else el('esqCard').style.display='none';
@@ -3156,8 +3210,8 @@ function render(){
   }else el('proxCard').style.display='none';
   var maMapR={};ma.forEach(function(x){maMapR[x.date]=x.avg;});
   renderChartSemanal();
-  var tp=el('tPesos');tp.innerHTML='';S.weights.slice().sort(porData).reverse().forEach(function(w){var tr=document.createElement('tr');tr.innerHTML='<td>'+w.date+'</td><td class="r">'+rd(w.weight,1)+'</td><td class="r">'+(maMapR[w.date]?rd(maMapR[w.date],1):'—')+'</td>';tp.appendChild(tr);});
-  var td=el('tDias');td.innerHTML='';S.daily.slice().sort(porData).reverse().forEach(function(d){var tr=document.createElement('tr');var sl=d.saciedade==='saciado'?'😌 Saciado':d.saciedade==='fome'?'😮‍💨 Fome':'—';tr.innerHTML='<td>'+d.date+'</td><td>'+sl+'</td><td class="r">'+(d.waterMl||'')+'</td><td>'+(d.urine||'')+'</td><td>'+(d.symptom||'')+'</td><td class="r">'+(d.proteinG||'')+'</td>';td.appendChild(tr);});
+  var tp=el('tPesos');tp.innerHTML='';S.weights.slice().sort(porData).reverse().forEach(function(w){var tr=document.createElement('tr');tr.innerHTML='<td>'+dataBR(w.date)+'</td><td class="r">'+rd(w.weight,1)+'</td><td class="r">'+(maMapR[w.date]?rd(maMapR[w.date],1):'—')+'</td>';tp.appendChild(tr);});
+  var td=el('tDias');td.innerHTML='';S.daily.slice().sort(porData).reverse().forEach(function(d){var tr=document.createElement('tr');var sl=d.saciedade==='saciado'?'😌 Saciado':d.saciedade==='fome'?'😮‍💨 Fome':'—';tr.innerHTML='<td>'+dataBR(d.date)+'</td><td>'+sl+'</td><td class="r">'+(d.waterMl||'')+'</td><td>'+(d.urine||'')+'</td><td>'+(d.symptom||'')+'</td><td class="r">'+(d.proteinG||'')+'</td>';td.appendChild(tr);});
   el('sexo').value=S.profile.sex||'M';el('idade').value=S.profile.age||'';el('altura').value=S.profile.heightCm||'';el('peso').value=S.profile.weightKg||'';el('pesoI').value=S.profile.weightStartKg||'';el('pesoMeta').value=S.profile.weightGoalKg||'';el('ativ').value=S.profile.activityLevel||'Moderada';el('dtIni').value=S.profile.startDate||hoje();
   if(S.caneta.farmaco){
     el('cFarm').value=S.caneta.farmaco;
