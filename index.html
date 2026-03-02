@@ -684,10 +684,18 @@ tr:hover td{background:var(--g50)}
   <div class="alert alert-g" id="alDose" style="display:none"></div>
 
   <!-- DISCLAIMER MISSÃO -->
-  <div style="background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:12px 16px;margin-bottom:14px;color:#fff">
-    <div style="font-size:12px;font-weight:700;color:var(--g300);letter-spacing:.5px;margin-bottom:4px">💧🥩 NOSSO OBJETIVO</div>
-    <div style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.9)">Foque em <strong>proteína e água</strong>. A balança vai cair — mas não às custas do seu músculo.</div>
+  <div style="background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
+    <div style="font-size:11px;font-weight:700;color:var(--g300);letter-spacing:.5px;margin-bottom:8px">💪 EMAGRECER COM SAÚDE</div>
+    <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.9)">
+      A medicação faz a balança cair. Mas quem decide o que você perde — gordura ou músculo — é o que você come.<br><br>
+      Sem proteína suficiente, o corpo "devora" o próprio músculo. Isso tem nome: <strong>sarcopenia</strong> — a perda progressiva de massa muscular que enfraquece o corpo, acelera o envelhecimento e abre porta para doenças.<br><br>
+      <strong>Bata sua meta de proteína. Beba sua água.</strong><br>
+      <span style="color:var(--g300)">Deixa a balança cair do jeito certo.</span>
+    </div>
   </div>
+
+  <!-- AVISO META ONTEM -->
+  <div id="avisoMetaOntem" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink)"></div>
 
   <!-- 1º — O QUE FAZER HOJE (PRIORIDADE MÁXIMA) -->
   <div id="guiaRapidoWrap" style="display:none;margin-bottom:14px">
@@ -931,6 +939,14 @@ tr:hover td{background:var(--g50)}
     </div>
   </div>
 
+  <!-- CARD EXERCÍCIO RESISTIDO -->
+  <div class="card" id="exercicioCard">
+    <div class="ct">💪 Estímulo muscular</div>
+    <div class="cs">Músculo se preserva com estímulo. O que você fez hoje?</div>
+    <div id="exercOpcoes" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
+    <div id="exercFeedback" style="margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:none"></div>
+  </div>
+
   <div class="card">
     <div class="ct" style="display:flex;align-items:center;gap:6px">⚡ Metabolismo &amp; Metas <span class="tip" onclick="mostrarDica('metabolismo')">ⓘ</span></div>
     <div class="cs">Toque em <strong>O que é?</strong> para entender cada número.</div>
@@ -1048,12 +1064,13 @@ tr:hover td{background:var(--g50)}
       <div class="alert alert-r" id="alChips" style="display:none;margin-top:10px">🚨 Múltiplos sintomas. Avalie consultar seu médico.</div>
     </div>
   </div>
+  <!-- CARD ÁGUA — independente -->
   <div class="card">
-    <div class="ct">💧 Água e proteína</div>
-    <div class="cs">Registre rapidamente.</div>
+    <div class="ct">💧 Água</div>
+    <div class="cs">Registre sua hidratação de hoje.</div>
     <div class="fg">
       <div class="fi">
-        <label>💧 Água — quantos copos bebeu? <span style="font-size:10px;color:var(--muted);font-weight:400">(1 copo = 250ml)</span></label>
+        <label>💧 Total bebido hoje <span style="font-size:10px;color:var(--muted);font-weight:400">(1 copo = 250ml)</span></label>
         <input id="ciAgua" type="number" step="250" placeholder="ex: 2000 ml"/>
         <div class="wbs" style="flex-wrap:wrap">
           <button class="wb" onclick="addAgua(250)">+1 copo</button>
@@ -1073,38 +1090,39 @@ tr:hover td{background:var(--g50)}
         </select>
       </div>
     </div>
-
-    <!-- PROTEÍNA — chips rápidos + entrada por peso real -->
-    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--cream3)">
-      <div style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">🥩 Proteína — o que você comeu hoje?</div>
-
-      <!-- MODO 1: Chips rápidos de porções prontas -->
-      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Toque para adicionar porções rápidas:</div>
-      <div id="protChipsWrap" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px"></div>
-
-      <!-- Separador -->
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <div style="flex:1;height:1px;background:var(--cream3)"></div>
-        <span style="font-size:11px;color:var(--muted);white-space:nowrap">ou informe o peso real</span>
-        <div style="flex:1;height:1px;background:var(--cream3)"></div>
-      </div>
-
-      <!-- MODO 2: Dropdown + campo de gramas -->
-      <div id="protFoodList" style="display:flex;flex-direction:column;gap:8px"></div>
-      <button onclick="addProtFood()" style="margin-top:8px;width:100%;padding:9px;border-radius:9px;border:1.5px dashed var(--cream3);background:transparent;color:var(--muted);font-family:var(--ss);font-size:13px;cursor:pointer;transition:all .17s" onmouseover="this.style.borderColor='var(--g400)'" onmouseout="this.style.borderColor='var(--cream3)'">+ Adicionar alimento com peso</button>
-
-      <!-- Total -->
-      <div style="margin-top:12px;padding:12px 14px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Total de proteína</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:1px" id="protMeta">—</div>
-        </div>
-        <span id="protTotal" style="font-size:24px;font-weight:700;color:var(--g600)">0 g</span>
-      </div>
-      <input id="ciProt" type="hidden" value="0"/>
-    </div>
     <div class="row" style="margin-top:14px">
-      <button class="btn bp" onclick="salvarCI()">✅ Salvar check-in</button>
+      <button class="btn bp" onclick="salvarAgua()">💧 Salvar água</button>
+    </div>
+  </div>
+
+  <!-- CARD PROTEÍNA — independente -->
+  <div class="card">
+    <div class="ct">🥩 Proteína</div>
+    <div class="cs">O que você comeu hoje? Registre por alimento.</div>
+
+    <div id="protFoodList" style="display:flex;flex-direction:column;gap:8px"></div>
+    <button onclick="addProtFood()" style="margin-top:8px;width:100%;padding:11px;border-radius:9px;border:1.5px dashed var(--cream3);background:transparent;color:var(--g600);font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;transition:all .17s" onmouseover="this.style.borderColor='var(--g400)'" onmouseout="this.style.borderColor='var(--cream3)'">+ Adicionar alimento</button>
+
+    <div style="margin-top:12px;padding:12px 14px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Total de proteína</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:1px" id="protMeta">—</div>
+      </div>
+      <span id="protTotal" style="font-size:24px;font-weight:700;color:var(--g600)">0 g</span>
+    </div>
+    <input id="ciProt" type="hidden" value="0"/>
+
+    <div class="row" style="margin-top:14px">
+      <button class="btn bp" onclick="salvarProteina()">🥩 Salvar proteína</button>
+    </div>
+  </div>
+
+  <!-- CARD SALVAR TUDO (saciedade + sintomas) -->
+  <div class="card">
+    <div class="ct">✅ Finalizar check-in</div>
+    <div class="cs">Salva saciedade e sintomas do dia.</div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn bp" onclick="salvarCI()">✅ Salvar check-in completo</button>
     </div>
   </div>
 </div>
@@ -1112,7 +1130,7 @@ tr:hover td{background:var(--g50)}
 <!-- ═══ CANETA ═══ -->
 <div class="sec" id="sec-caneta">
   <div class="pg-title">💉 Minha Caneta</div>
-  <div class="pg-sub">Tratamento, protocolo e calculadora de diluição.</div>
+  <div class="pg-sub">Tratamento, acompanhamento e calculadora para manipulado.</div>
   <div class="ch-hero" id="chHero">
     <div class="ch-tag">TRATAMENTO ATUAL</div>
     <div class="ch-drug" id="chDrug">Nenhum fármaco configurado</div>
@@ -1120,11 +1138,23 @@ tr:hover td{background:var(--g50)}
     <div class="ch-row" id="chRow"></div>
   </div>
 
-  <!-- CALCULADORA -->
+  <!-- CARD 1: CANETA INDUSTRIAL -->
+  <div class="card">
+    <div class="ct">💊 Caneta industrial</div>
+    <div class="cs">Para quem usa Ozempic, Mounjaro, Wegovy, Saxenda ou similar — caneta descartável pronta para uso.</div>
+    <div style="padding:10px 12px;background:var(--g50);border-radius:10px;font-size:13px;line-height:1.7;color:var(--ink3)">
+      ✅ Sua caneta já vem com a dose correta.<br>
+      ✅ Não precisa calcular nada — siga a prescrição do médico.<br>
+      ✅ Aplique no abdômen, coxa ou braço.<br>
+      ✅ Gire o local de aplicação a cada semana.
+    </div>
+  </div>
+
+  <!-- CARD 2: CANETA MANIPULADA -->
   <div class="calc-hero">
-    <div class="calc-tag">💡 EXCLUSIVO EQUILIBRA</div>
-    <div class="calc-title">Calculadora de Diluição</div>
-    <div class="calc-sub">Identifique sua caneta ou frasco e calcule as unidades na seringa de insulina.</div>
+    <div class="calc-tag">🧪 CANETA MANIPULADA — FRASCO + SERINGA</div>
+    <div class="calc-title">Calculadora de diluição</div>
+    <div class="calc-sub">Para quem usa frasco manipulado com seringa de insulina. Informe o que está escrito no frasco e calcule quantas unidades aspirar.</div>
     <div class="calc-form">
       <div class="calc-fi">
         <label>Fármaco</label>
@@ -1142,9 +1172,7 @@ tr:hover td{background:var(--g50)}
         </select>
       </div>
     </div>
-    <!-- Campos que aparecem apenas para frascos-ampola -->
     <div id="calcAmpolaWrap" style="display:none;margin-top:12px">
-      <!-- Linha do frasco: mg / mL -->
       <div id="calcConcWrap" style="margin-bottom:14px">
         <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">O que está escrito no seu frasco?</div>
         <div style="display:flex;align-items:center;gap:10px">
@@ -1164,7 +1192,6 @@ tr:hover td{background:var(--g50)}
         </div>
         <div id="calcConcResult" style="display:none;margin-top:8px;text-align:center;font-size:12px;color:rgba(255,255,255,.45)"></div>
       </div>
-      <!-- Dose prescrita -->
       <div>
         <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Dose prescrita pelo médico</div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
@@ -2741,8 +2768,8 @@ var PROT_ALIMENTOS=[
   {id:'peixe',    nm:'🐟 Peixe grelhado',             fator:0.25},
   {id:'camarao',  nm:'🦐 Camarão cozido',             fator:0.24},
   {id:'atum_lata',nm:'🥫 Atum em lata escorrido',     fator:0.28},
-  {id:'ovo',      nm:'🥚 Ovo inteiro',                fator:0.125},
-  {id:'claras',   nm:'🥚 Só claras (unidade)',        fator:0.11},
+  {id:'ovo',      nm:'🥚 Ovo inteiro',                fator:7,    unidade:'unid'},
+  {id:'claras',   nm:'🥚 Clara de ovo',               fator:4,    unidade:'unid'},
   {id:'whey',     nm:'💪 Whey protein (pó)',          fator:0.80},
   {id:'cottage',  nm:'🧇 Cottage cheese',             fator:0.12},
   {id:'iogurte',  nm:'🥛 Iogurte grego integral',     fator:0.09},
@@ -2766,35 +2793,7 @@ var PROT_CHIPS=[
   {ic:'🐟',nm:'Peixe',sub:'150g',alim:'peixe',g:150}
 ];
 
-var protFoods=[];    // itens do modo peso real: [{alimId, grams}]
-var protChipsAdded=[];  // itens do modo chips: [{chipIdx, qty}]
-
-/* ── Chips rápidos ── */
-function buildProtChips(){
-  var wrap=el('protChipsWrap');if(!wrap) return;
-  wrap.innerHTML='';
-  PROT_CHIPS.forEach(function(c,i){
-    var btn=document.createElement('button');
-    btn.id='pchip_'+i;
-    btn.onclick=function(){toggleProtChip(i);};
-    var qty=protChipsAdded.filter(function(x){return x.chipIdx===i;}).length;
-    btn.style.cssText='padding:7px 12px;border-radius:999px;border:1.5px solid var(--cream3);background:'+(qty>0?'var(--g100)':'transparent')+';color:'+(qty>0?'var(--g700)':'var(--ink3)')+';font-family:var(--ss);font-size:12px;font-weight:600;cursor:pointer;transition:all .17s;display:flex;align-items:center;gap:5px';
-    btn.innerHTML=c.ic+' '+c.nm+'<span style="color:var(--muted);font-weight:400"> '+c.sub+'</span>'+(qty>1?' <span style="background:var(--g600);color:#fff;border-radius:999px;padding:1px 6px;font-size:10px">×'+qty+'</span>':'');
-    wrap.appendChild(btn);
-  });
-}
-
-function toggleProtChip(i){
-  // Se já adicionado, remove o mais recente. Senão, adiciona.
-  var existing=protChipsAdded.map(function(x,j){return x.chipIdx===i?j:-1;}).filter(function(j){return j>=0;});
-  if(existing.length>0){
-    protChipsAdded.splice(existing[existing.length-1],1);
-  } else {
-    protChipsAdded.push({chipIdx:i});
-  }
-  buildProtChips();
-  calcProtTotal();
-}
+var protFoods=[];    // itens: [{alimId, grams}]
 
 /* ── Peso real (dropdown + gramas) ── */
 function addProtFood(){
@@ -2816,31 +2815,28 @@ function renderProtFoods(){
     var alimOpts=PROT_ALIMENTOS.map(function(a){
       return '<option value="'+a.id+'"'+(a.id===item.alimId?' selected':'')+'>'+a.nm+'</option>';
     }).join('');
+    var alimAtual=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;})||PROT_ALIMENTOS[0];
+    var isUnid=alimAtual.unidade==='unid';
+    var stepVal=isUnid?1:10;
+    var placeholderVal=isUnid?'unid':'g';
     div.innerHTML=''
-      +'<select onchange="protFoods['+idx+'].alimId=this.value;calcProtTotal()" '
+      +'<select onchange="protFoods['+idx+'].alimId=this.value;protFoods['+idx+'].grams=\'\';renderProtFoods();calcProtTotal()" '
       +'style="flex:1;padding:9px 10px;border-radius:9px;border:1.5px solid var(--cream3);background:var(--cream);color:var(--ink);font-family:var(--ss);font-size:13px;outline:none">'
       +alimOpts+'</select>'
       +'<div style="display:flex;align-items:center;gap:4px;flex-shrink:0">'
-      +'<input id="pfg_'+idx+'" type="number" min="0" step="5" placeholder="g" value="'+(item.grams||'')+'" '
+      +'<input id="pfg_'+idx+'" type="number" min="0" step="'+stepVal+'" placeholder="'+placeholderVal+'" value="'+(item.grams||'')+'" '
       +'oninput="protFoods['+idx+'].grams=this.value;calcProtTotal()" '
       +'style="width:72px;padding:9px 8px;border-radius:9px;border:1.5px solid var(--cream3);background:var(--cream);color:var(--ink);font-family:var(--ss);font-size:15px;font-weight:700;text-align:center;outline:none"/>'
-      +'<span style="font-size:12px;color:var(--muted)">g</span>'
+      +'<span style="font-size:12px;color:var(--muted)">'+placeholderVal+'</span>'
       +'</div>'
       +'<button onclick="removeProtFood('+idx+')" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:none;background:var(--cream2);color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✕</button>';
     wrap.appendChild(div);
   });
 }
 
-/* ── Cálculo total combinado ── */
+/* ── Cálculo total ── */
 function calcProtTotal(){
   var total=0;
-  // De chips
-  protChipsAdded.forEach(function(x){
-    var c=PROT_CHIPS[x.chipIdx];
-    var a=PROT_ALIMENTOS.find(function(a){return a.id===c.alim;});
-    if(a) total+=Math.round(c.g*a.fator);
-  });
-  // De peso real
   protFoods.forEach(function(item){
     var alim=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;});
     var g=parseFloat(item.grams)||0;
@@ -2848,7 +2844,6 @@ function calcProtTotal(){
   });
   el('protTotal').textContent=total+' g';
   el('ciProt').value=total>0?total:'';
-  // Atualiza meta se disponível
   var M=calcMetrics();
   var pm=el('protMeta');
   if(pm&&M){
@@ -2856,24 +2851,102 @@ function calcProtTotal(){
     var cor=pct>=100?'var(--g600)':pct>=70?'var(--warn)':'var(--red)';
     pm.innerHTML='<span style="color:'+cor+';font-weight:700">'+pct+'%</span> da meta ('+Math.round(M.pm)+'g)';
   }
+  return total;
 }
 
 function resetProtFoods(){
   protFoods=[];
-  protChipsAdded=[];
   renderProtFoods();
-  buildProtChips();
-  el('protTotal').textContent='0 g';
-  el('ciProt').value='';
+  if(el('protTotal')) el('protTotal').textContent='0 g';
+  if(el('ciProt')) el('ciProt').value='';
   var pm=el('protMeta');if(pm) pm.textContent='—';
 }
 
-/* Inicializa chips ao carregar a aba */
 function initProtChips(){
-  if(el('protChipsWrap')&&el('protChipsWrap').childElementCount===0) buildProtChips();
+  // começa vazio — usuário adiciona manualmente
 }
 
-/* ══ CHECK-IN ══ */
+/* ══ EXERCÍCIO RESISTIDO ══ */
+var EXERCICIOS=[
+  {id:'musculacao',ic:'🏋️',nm:'Musculação'},
+  {id:'bike',ic:'🚴',nm:'Bike/Spinning'},
+  {id:'natacao',ic:'🏊',nm:'Natação'},
+  {id:'pilates',ic:'🧘',nm:'Pilates/Yoga'},
+  {id:'caminhada',ic:'🚶',nm:'Caminhada rápida'},
+  {id:'corrida',ic:'🏃',nm:'Corrida'},
+  {id:'funcional',ic:'🤸',nm:'Funcional'},
+  {id:'nao',ic:'😴',nm:'Hoje não fiz'}
+];
+
+function renderExercicioCard(){
+  var wrap=el('exercOpcoes');if(!wrap) return;
+  var hoje_date=hoje();
+  var dh=S.daily.find(function(d){return d.date===hoje_date;})||{};
+  var selecionado=dh.exercicio||null;
+  wrap.innerHTML='';
+  EXERCICIOS.forEach(function(ex){
+    var ativo=selecionado===ex.id;
+    var btn=document.createElement('button');
+    btn.style.cssText='padding:8px 12px;border-radius:99px;border:1.5px solid '+(ativo?'var(--g500)':'var(--cream3)')+';background:'+(ativo?'var(--g100)':'transparent')+';color:'+(ativo?'var(--g700)':'var(--ink3)')+';font-family:var(--ss);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s';
+    btn.innerHTML=ex.ic+' '+ex.nm;
+    btn.onclick=function(){salvarExercicio(ex.id);};
+    wrap.appendChild(btn);
+  });
+  // Feedback
+  var fb=el('exercFeedback');
+  if(fb&&selecionado){
+    if(selecionado==='nao'){
+      fb.style.cssText='margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:block;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--ink)';
+      fb.innerHTML='Tudo bem — um dia de descanso faz parte. 🙏<br>Mas lembre: seu músculo precisa de estímulo para sobreviver ao emagrecimento. <strong>Qualquer movimento conta.</strong> Amanhã é uma nova chance.';
+    } else {
+      fb.style.cssText='margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:block;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:var(--ink)';
+      fb.innerHTML='💪 Incrível! Exercício resistido é o melhor aliado do GLP-1. <strong>Você está preservando o que importa.</strong> Seu músculo agradece!';
+    }
+  } else if(fb){
+    fb.style.display='none';
+  }
+}
+
+function salvarExercicio(id){
+  var d=hoje();
+  var existing=S.daily.find(function(x){return x.date===d;})||{};
+  var entry=Object.assign({},existing,{date:d,exercicio:id});
+  var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
+  salvar();
+  renderExercicioCard();
+}
+
+/* ══ MENSAGEM PROGRESSO PROTEÍNA ══ */
+function msgProteina(pct){
+  if(pct===0) return '💬 Ainda não registramos proteína hoje. Cada grama conta — vamos lá!';
+  if(pct<=30) return '💬 Começo de jornada. Ainda tem muito chão — mas você já começou, e isso importa.';
+  if(pct<=50) return '💬 Metade do caminho ainda por vir. Seu músculo precisa de você hoje.';
+  if(pct<=70) return '💬 Mais da metade! Você está no caminho certo — não para agora.';
+  if(pct<=89) return '💬 Quase lá! Um pouco mais de proteína e você protege o que mais importa.';
+  if(pct<=99) return '💬 Incrível! Só um detalhe para fechar o dia perfeito.';
+  return '✅ Meta batida! Hoje você escolheu saúde de verdade. 💪';
+}
+
+/* ══ MENSAGEM DIA SEGUINTE ══ */
+function verificarMetaOntem(){
+  var aviso=el('avisoMetaOntem');if(!aviso) return;
+  var datas=S.daily.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  if(datas.length<1){aviso.style.display='none';return;}
+  var ontem=new Date(agoraBR());ontem.setDate(ontem.getDate()-1);
+  var ontemStr=ontem.toISOString().slice(0,10);
+  var dhOntem=S.daily.find(function(d){return d.date===ontemStr;});
+  var M=calcMetrics();
+  if(!M||!dhOntem){aviso.style.display='none';return;}
+  var protOntem=dhOntem.proteinG||0;
+  if(protOntem<M.pm*0.8){
+    aviso.style.display='block';
+    aviso.innerHTML='☀️ <strong>Bom dia!</strong> Ontem a proteína ficou abaixo da meta — sem drama.<br>Hoje é um novo dia. Uma nova chance de proteger seu músculo. <strong>Vamos lá? 💪</strong>';
+  } else {
+    aviso.style.display='none';
+  }
+}
+
+
 var ciSac=null,ciSint=[];
 function setSac(v){ciSac=v;el('ciS1').className='ci-card'+(v==='saciado'?' good':'');el('ciS2').className='ci-card'+(v==='fome'?' bad':'');el('ciActFome').className='ci-act'+(v==='fome'?' show':'');}
 function setSint(v){el('ciQ1').className='ci-card'+(v==='ok'?' good':'');el('ciQ2').className='ci-card'+(v==='sim'?' bad':'');el('sintWrap').style.display=v==='sim'?'block':'none';if(v==='ok'){ciSint=[];atuChips();}}
@@ -2924,6 +2997,31 @@ function addAgua(ml){
   var disp=el('aguaCoposDisplay');
   if(disp) disp.textContent=copos+' copo'+(copos!==1?'s':'')+ ' ('+((c+ml)/1000).toFixed(1)+'L)';
 }
+function salvarAgua(){
+  var d=hoje();
+  var aguaVal=nv(el('ciAgua').value,null);
+  if(!aguaVal){toast('Informe a quantidade de água 💧');return;}
+  var existing=S.daily.find(function(x){return x.date===d;})||{};
+  var entry=Object.assign({},existing,{date:d,waterMl:aguaVal,urine:el('ciUrina').value||existing.urine||null});
+  var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
+  salvar();render();
+  el('ciAgua').value='';
+  var disp=el('aguaCoposDisplay');if(disp) disp.textContent='';
+  toast('💧 Água salva! '+aguaVal+'ml registrados.');
+}
+
+function salvarProteina(){
+  var d=hoje();
+  var protVal=calcProtTotal();
+  if(!protVal||protVal===0){toast('Adicione pelo menos um alimento 🥩');return;}
+  var existing=S.daily.find(function(x){return x.date===d;})||{};
+  var entry=Object.assign({},existing,{date:d,proteinG:protVal});
+  var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
+  salvar();render();
+  resetProtFoods();
+  toast('🥩 Proteína salva! '+protVal+'g registrados.');
+}
+
 function salvarCI(){
   var d=hoje();
   // Busca entry existente para preservar campos não preenchidos
@@ -2959,15 +3057,15 @@ function setFase(v){
 var chartPK=null;
 var PK_PARAMS={
   Tirzepatida:{tmax:24,thalf:120,period:168,unit:'Semanal',
-    desc:'Pico em ~24h · Meia-vida: 5 dias',
-    zone:[35,100], // % acima = zona saciedade
+    desc:'Pico de saciedade em ~24h · Efeito dura ~5 dias no corpo',
+    zone:[35,100],
     color:'#3b82f6',colorA:'rgba(59,130,246,'},
   Semaglutida:{tmax:24,thalf:168,period:168,unit:'Semanal',
-    desc:'Pico em ~24h · Meia-vida: 7 dias',
+    desc:'Pico de saciedade em ~24h · Efeito dura ~7 dias no corpo',
     zone:[30,100],
     color:'#6366f1',colorA:'rgba(99,102,241,'},
   Liraglutida:{tmax:8,thalf:13,period:24,unit:'Diária',
-    desc:'Pico em ~8h · Meia-vida: 13h',
+    desc:'Pico de saciedade em ~8h · Efeito dura ~13h no corpo',
     zone:[40,100],
     color:'#06b6d4',colorA:'rgba(6,182,212,'}
 };
@@ -3068,7 +3166,7 @@ function buildPKChart(){
   var kData=[
     {l:'Fase atual',v:phase.l,h:Math.round(curPct)+'% do pico',c:phase.c},
     {l:'Próxima dose',v:daysLeftStr,h:ultima?'Última: '+ultima:'—'},
-    {l:'Meia-vida',v:farm==='Liraglutida'?'13h':'~'+(farm==='Tirzepatida'?'5':'7')+'d',h:p.desc},
+    {l:'Quanto tempo age',v:farm==='Liraglutida'?'~13h':'~'+(farm==='Tirzepatida'?'5':'7')+'d',h:p.desc},
     {l:'Frequência',v:p.unit,h:farm==='Liraglutida'?'Mesmo horário todo dia':'Mesmo dia toda semana'}
   ];
   kData.forEach(function(k){
@@ -3194,6 +3292,8 @@ function render(){
   renderProxDose();
   renderCanaetaPainel();
   renderGuiaRapido();
+  renderExercicioCard();
+  verificarMetaOntem();
   var ms=checkMS(perd);el('msEl').style.display=(ms&&perd>0)?'flex':'none';if(ms&&perd>0){el('msIc').textContent=ms.ic;el('msMsg').textContent=ms.msg;el('msSub').textContent=ms.sub;}
   var nr=buildNarr(M,rl,perd,dh,pd);var _nt=el('narrTag');if(_nt){_nt.textContent=nr.tag;el('narrMsg').textContent=nr.msg;el('narrDet').textContent=nr.det;el('narrBtn').style.display=nr.btn?'inline-flex':'none';}
   var _sb=el('stBar');if(_sb){if(rh){_sb.style.display='flex';_sb.className='sbar '+rh.bar;el('stLbl').textContent=rh.lbl;el('stMsg').textContent=rh.msg;el('stTag').className='tag '+rh.cls;el('stTag').textContent=rh.lbl;}else _sb.style.display='none';}
@@ -3266,7 +3366,6 @@ function render(){
   }
   // TENDÊNCIA SEMANAL — substitui o gráfico
 
-  buildProtChips();
   calcProtTotal();
   // Placar de proteína no hero
   if(M){
@@ -3340,13 +3439,29 @@ function renderGuiaRapido(){
   if(protFalta>0){
     var fFrango=Math.round(protFalta/0.31);
     var fCarne=Math.round(protFalta/0.26);
-    var fOvos=Math.round(protFalta/0.125);
-    var fWhey=Math.round(protFalta/0.80);
-    txtProt+='<br><span style="opacity:.7;font-size:11px">Faltam <strong>'+protFalta+'g</strong> — equivale a:<br>'
-      +'🍗 '+fFrango+'g de frango &nbsp;|&nbsp; 🥩 '+fCarne+'g de carne<br>'
-      +'🥚 '+fOvos+' ovos &nbsp;|&nbsp; 💪 '+fWhey+'g de whey ('+Math.round(fWhey/30)+' scoops)</span>';
+    var fOvos=Math.ceil(protFalta/7);
+    var fWheyScoops=Math.ceil(protFalta/24);
+    // Exemplo prático combinado
+    var exFrango=Math.min(200,fFrango);
+    var exProtFrango=Math.round(exFrango*0.31);
+    var exOvos=2;
+    var exProtOvos=exOvos*7;
+    var exWhey=1;
+    var exProtWhey=24;
+    var exTotal=exProtFrango+exProtOvos+exProtWhey;
+    txtProt+='<br><span style="opacity:.9;font-size:11px;line-height:1.9">'
+      +'Você ainda precisa de <strong>'+protFalta+'g de proteína pura</strong> hoje.<br>'
+      +'<span style="opacity:.7">⚠️ Proteína pura não é o peso do alimento — é o que existe dentro dele.</span><br><br>'
+      +'Para completar sua meta, escolha ou combine:<br>'
+      +'🍗 <strong>'+fFrango+'g</strong> de frango cozido<br>'
+      +'🥩 <strong>'+fCarne+'g</strong> de carne magra<br>'
+      +'🥚 <strong>'+fOvos+' ovos</strong> inteiros<br>'
+      +'💪 <strong>'+fWheyScoops+' scoops</strong> de whey protein<br><br>'
+      +'<span style="opacity:.7">💡 Exemplo: '+exFrango+'g de frango ('+exProtFrango+'g) + '+exOvos+' ovos ('+exProtOvos+'g) + '+exWhey+' scoop whey ('+exProtWhey+'g) = '+exTotal+'g de proteína</span>'
+      +'</span>';
+    txtProt+='<br><em style="opacity:.6;font-size:11px">'+msgProteina(protPct)+'</em>';
   }else{
-    txtProt+=' ✅ Meta batida!';
+    txtProt+=' ✅ Meta batida! Hoje você escolheu saúde de verdade. 💪';
   }
   itens.push({
     ic:'🥩',
