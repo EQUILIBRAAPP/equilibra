@@ -683,6 +683,12 @@ tr:hover td{background:var(--g50)}
   <div class="alert alert-w" id="alAgua" style="display:none">💧 Sem registro de água hoje. Hidratação é fundamental no uso de GLP-1.</div>
   <div class="alert alert-g" id="alDose" style="display:none"></div>
 
+  <!-- DISCLAIMER MISSÃO -->
+  <div style="background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:12px 16px;margin-bottom:14px;color:#fff">
+    <div style="font-size:12px;font-weight:700;color:var(--g300);letter-spacing:.5px;margin-bottom:4px">💧🥩 NOSSO OBJETIVO</div>
+    <div style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.9)">Foque em <strong>proteína e água</strong>. A balança vai cair — mas não às custas do seu músculo.</div>
+  </div>
+
   <!-- 1º — O QUE FAZER HOJE (PRIORIDADE MÁXIMA) -->
   <div id="guiaRapidoWrap" style="display:none;margin-bottom:14px">
     <div id="guiaHoje" style="background:linear-gradient(135deg,var(--g800),var(--g700));border-radius:14px;padding:16px 18px;color:#fff">
@@ -1700,7 +1706,15 @@ function anaStep0(){
     anaTextInput('Seu nome...', function(nome){
       ANA.data.nome=nome;
       anaMsg('usr',nome);
-      anaMsg('bot','Prazer, <strong>'+nome+'</strong>! Vamos começar.',null,function(){anaStep1();});
+      anaMsg('bot','Prazer, <strong>'+nome+'</strong>!',null,function(){
+        anaMsg('bot','Antes de começar, preciso te contar uma coisa importante sobre o tratamento com GLP-1.',null,function(){
+          anaMsg('bot','A medicação <strong>vai fazer você perder peso</strong> — isso é certo.<br><br>Mas perder peso e perder gordura são coisas diferentes.<br><br>Sem proteína e acompanhamento, o corpo perde <strong>músculo junto com a gordura</strong>. A balança cai, mas a saúde não melhora.','clinical',function(){
+            anaMsg('bot','O <strong>Equilibra</strong> está aqui para garantir que você perde o que deve perder — <strong>gordura</strong> — e preserva o que importa: <strong>seu músculo e sua saúde</strong>. 💪',null,function(){
+              anaMsg('bot','Vamos começar?',null,function(){anaStep1();});
+            });
+          });
+        });
+      });
     });
   },400);
 }
