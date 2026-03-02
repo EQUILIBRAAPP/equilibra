@@ -2905,7 +2905,20 @@ function addAgua(ml){
 }
 function salvarCI(){
   var d=hoje();
-  var entry={date:d,saciedade:ciSac,waterMl:nv(el('ciAgua').value,null),urine:el('ciUrina').value||null,symptom:ciSint.length?ciSint.join(','):'OK',intensity:ciSint.length>=2?2:ciSint.length>=1?1:0,proteinG:nv(el('ciProt').value,null)};
+  // Busca entry existente para preservar campos não preenchidos
+  var existing=S.daily.find(function(x){return x.date===d;})||{};
+  var aguaVal=nv(el('ciAgua').value,null);
+  var protVal=calcProtTotal();
+  if(protVal===0) protVal=nv(el('ciProt')?el('ciProt').value:null,null);
+  var entry={
+    date:d,
+    saciedade:ciSac||existing.saciedade||null,
+    waterMl:aguaVal!==null?aguaVal:existing.waterMl||null,
+    urine:el('ciUrina').value||existing.urine||null,
+    symptom:ciSint.length?ciSint.join(','):(existing.symptom||'OK'),
+    intensity:ciSint.length>=2?2:ciSint.length>=1?1:(existing.intensity||0),
+    proteinG:protVal!==null?protVal:existing.proteinG||null
+  };
   var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
   ciSac=null;ciSint=[];el('ciAgua').value='';el('ciUrina').value='';var disp=el('aguaCoposDisplay');if(disp) disp.textContent='';
   resetProtFoods();
@@ -3282,7 +3295,7 @@ function renderGuiaRapido(){
     }
   }
 
-  // Hidratação
+  // Hidratação com barra
   var aguaHoje=dh.waterMl||0;
   var aguaMeta=M?Math.round(M.agua):2000;
   var aguaPct=Math.min(100,Math.round((aguaHoje/aguaMeta)*100));
@@ -3292,28 +3305,51 @@ function renderGuiaRapido(){
     ic:'💧',
     txt:'Hidratação: <strong>'+aguaHoje+'ml</strong> de <strong>'+aguaMeta+'ml</strong> ('+aguaPct+'%)'+(aguaFalta>0?' — faltam <strong>'+aguaFalta+'ml</strong> ('+aguaCopos+' copos)':' ✅ Meta batida!'),
     cor:aguaPct>=100?'rgba(34,197,94,.1)':'rgba(59,130,246,.08)',
-    brd:aguaPct>=100?'rgba(34,197,94,.3)':'rgba(59,130,246,.2)'
+    brd:aguaPct>=100?'rgba(34,197,94,.3)':'rgba(59,130,246,.2)',
+    pct:aguaPct,
+    barCor:aguaPct>=100?'#22c55e':'#38bdf8'
   });
 
-  // Proteína
+  // Proteína com barra e equivalência
   var protHoje=dh.proteinG||0;
   var protMeta=M?Math.round(M.pm):120;
   var protPct=Math.min(100,Math.round((protHoje/protMeta)*100));
   var protFalta=Math.max(0,protMeta-protHoje);
-  var protFaltaAlimento=Math.round(protFalta/0.26);
+  var txtProt='Proteína: <strong>'+protHoje+'g</strong> de <strong>'+protMeta+'g</strong> ('+protPct+'%)';
+  if(protFalta>0){
+    var fFrango=Math.round(protFalta/0.31);
+    var fCarne=Math.round(protFalta/0.26);
+    var fOvos=Math.round(protFalta/0.125);
+    var fWhey=Math.round(protFalta/0.80);
+    txtProt+='<br><span style="opacity:.7;font-size:11px">Faltam <strong>'+protFalta+'g</strong> — equivale a:<br>'
+      +'🍗 '+fFrango+'g de frango &nbsp;|&nbsp; 🥩 '+fCarne+'g de carne<br>'
+      +'🥚 '+fOvos+' ovos &nbsp;|&nbsp; 💪 '+fWhey+'g de whey ('+Math.round(fWhey/30)+' scoops)</span>';
+  }else{
+    txtProt+=' ✅ Meta batida!';
+  }
   itens.push({
     ic:'🥩',
-    txt:'Proteína: <strong>'+protHoje+'g</strong> de <strong>'+protMeta+'g</strong> ('+protPct+'%)'+(protFalta>0?' — faltam <strong>'+protFalta+'g</strong> ≈ '+protFaltaAlimento+'g de carne':' ✅ Meta batida!'),
+    txt:txtProt,
     cor:protPct>=100?'rgba(34,197,94,.1)':'rgba(251,191,36,.08)',
-    brd:protPct>=100?'rgba(34,197,94,.3)':'rgba(251,191,36,.2)'
+    brd:protPct>=100?'rgba(34,197,94,.3)':'rgba(251,191,36,.2)',
+    pct:protPct,
+    barCor:protPct>=100?'#22c55e':'#4ade80'
   });
 
   var hojeDiv=el('guiaHojeItems');hojeDiv.innerHTML='';
   itens.forEach(function(it){
     var d=document.createElement('div');
-    d.style.cssText='display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;background:'+it.cor+';border:1px solid '+(it.brd||'transparent');
-    d.innerHTML='<span style="font-size:16px;flex-shrink:0;margin-top:1px">'+it.ic+'</span>'
-      +'<span style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.9)">'+it.txt+'</span>';
+    d.style.cssText='padding:10px 12px;border-radius:10px;background:'+it.cor+';border:1px solid '+(it.brd||'transparent')+';margin-bottom:0';
+    var barHtml='';
+    if(it.pct!==undefined){
+      barHtml='<div style="margin-top:7px;height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">'
+        +'<div style="height:100%;border-radius:99px;background:'+it.barCor+';width:'+it.pct+'%;transition:width .5s ease"></div>'
+        +'</div>';
+    }
+    d.innerHTML='<div style="display:flex;align-items:flex-start;gap:10px">'
+      +'<span style="font-size:16px;flex-shrink:0;margin-top:1px">'+it.ic+'</span>'
+      +'<span style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.9)">'+it.txt+'</span>'
+      +'</div>'+barHtml;
     hojeDiv.appendChild(d);
   });
 
