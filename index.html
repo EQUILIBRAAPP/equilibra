@@ -678,11 +678,12 @@ tr:hover td{background:var(--g50)}
 
 <!-- ═══ DASHBOARD ═══ -->
 <div class="sec on" id="sec-dashboard">
+  <!-- ALERTAS -->
   <div class="alert alert-r" id="alSint" style="display:none">⚠️ Sintomas intensos registrados. Avalie consultar seu médico.</div>
   <div class="alert alert-w" id="alAgua" style="display:none">💧 Sem registro de água hoje. Hidratação é fundamental no uso de GLP-1.</div>
   <div class="alert alert-g" id="alDose" style="display:none"></div>
 
-  <!-- GUIA RÁPIDO -->
+  <!-- 1º — O QUE FAZER HOJE (PRIORIDADE MÁXIMA) -->
   <div id="guiaRapidoWrap" style="display:none;margin-bottom:14px">
     <div id="guiaHoje" style="background:linear-gradient(135deg,var(--g800),var(--g700));border-radius:14px;padding:16px 18px;color:#fff">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--g300);margin-bottom:10px">📅 O QUE FAZER HOJE</div>
@@ -690,10 +691,29 @@ tr:hover td{background:var(--g50)}
       <button onclick="go('checkin')" id="guiaCheckinBtn" style="display:none;margin-top:12px;width:100%;padding:13px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;text-align:center">
         💧🥩 Registrar água e proteína →
       </button>
+      <!-- Alerta massa muscular — aparece quando proteína < 50% -->
+      <div id="alertaMuscular" style="display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
+        <div style="font-size:12px;color:rgba(255,255,255,.9);line-height:1.6">
+          💪 <strong>Atenção à proteína!</strong> Com GLP-1 você come menos — mas sem proteína suficiente, parte do peso perdido pode ser <strong>músculo, não gordura</strong>. Registre sua proteína hoje.
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- CARD PROGRESSO HERO -->
+  <!-- 2º — CANETA (próxima dose) -->
+  <div id="proxDoseCard" style="display:none;margin-bottom:14px">
+    <div id="proxDoseInner" onclick="go('caneta')" style="cursor:pointer;border-radius:var(--rlg);padding:16px 18px;display:flex;align-items:center;gap:14px">
+      <div id="proxDoseIc" style="font-size:28px;flex-shrink:0"></div>
+      <div style="flex:1">
+        <div id="proxDoseTag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px"></div>
+        <div id="proxDoseTtl" style="font-family:var(--fs);font-size:18px;font-weight:500;line-height:1.2"></div>
+        <div id="proxDoseSub" style="font-size:12px;margin-top:3px;opacity:.75"></div>
+      </div>
+      <div style="font-size:18px;opacity:.4">→</div>
+    </div>
+  </div>
+
+  <!-- 3º — PROGRESSO DE PESO -->
   <div class="prog-hero" id="progHero">
     <div class="prog-tag" id="progTag">PESO &amp; PROGRESSO</div>
 
@@ -843,19 +863,6 @@ tr:hover td{background:var(--g50)}
     <canvas id="chartMain" height="0" style="display:none"></canvas>
   </div>
 
-
-  <!-- AVISO PRÓXIMA DOSE -->
-  <div id="proxDoseCard" style="display:none;margin-bottom:14px">
-    <div id="proxDoseInner" onclick="go('caneta')" style="cursor:pointer;border-radius:var(--rlg);padding:16px 18px;display:flex;align-items:center;gap:14px">
-      <div id="proxDoseIc" style="font-size:28px;flex-shrink:0"></div>
-      <div style="flex:1">
-        <div id="proxDoseTag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px"></div>
-        <div id="proxDoseTtl" style="font-family:var(--fs);font-size:18px;font-weight:500;line-height:1.2"></div>
-        <div id="proxDoseSub" style="font-size:12px;margin-top:3px;opacity:.75"></div>
-      </div>
-      <div style="font-size:18px;opacity:.4">→</div>
-    </div>
-  </div>
 
   <!-- FARMACOCINÉTICA -->
   <div class="pk-hero" id="pkCard" style="display:none">
@@ -3356,6 +3363,10 @@ function renderGuiaRapido(){
   // Botão check-in: aparece sempre
   var btn=el('guiaCheckinBtn');
   if(btn) btn.style.display='block';
+
+  // Alerta muscular — aparece quando proteína < 50% da meta
+  var am=el('alertaMuscular');
+  if(am) am.style.display=(protPct<50)?'block':'none';
 }
 /* ══ PRÓXIMA DOSE ══ */
 function renderProxDose(){
