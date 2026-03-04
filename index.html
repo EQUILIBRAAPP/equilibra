@@ -681,40 +681,110 @@ tr:hover td{background:var(--g50)}
   <!-- ALERTAS -->
   <div class="alert alert-r" id="alSint" style="display:none">⚠️ Sintomas intensos registrados. Avalie consultar seu médico.</div>
   <div class="alert alert-w" id="alAgua" style="display:none">💧 Sem registro de água hoje. Hidratação é fundamental no uso de GLP-1.</div>
-  <div class="alert alert-g" id="alDose" style="display:none"></div>
+  <div class="alert alert-g" id="alDose" style="display:none;margin-bottom:10px"></div>
 
-  <!-- DISCLAIMER MISSÃO -->
+  <!-- AVISO META ONTEM -->
+  <div id="avisoMetaOntem" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink)"></div>
+
+  <!-- 1 LEIA TODO DIA -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:14px;border:1px solid rgba(74,222,128,.2)">
+    <button onclick="toggleLeiaTodoDia()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,rgba(5,46,22,.97),rgba(22,101,52,.92));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">📖</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:#fff">Leia todo dia</div>
+          <div style="font-size:11px;color:var(--g300);font-style:italic">"Emagrecer é diferente de murchar."</div>
+        </div>
+      </div>
+      <span id="leiaTodoDiaArr" style="font-size:16px;color:var(--g300);transition:transform .3s">▾</span>
+    </button>
+    <div id="leiaTodoDiaBody" style="display:none;padding:16px 18px;background:linear-gradient(135deg,rgba(5,46,22,.98),rgba(22,101,52,.95));border-top:1px solid rgba(74,222,128,.12);font-size:13px;line-height:1.9;color:rgba(255,255,255,.9)">
+      Proteína, água e exercício resistido são os três pilares que protegem seu músculo durante o emagrecimento.<br><br>
+      Sem eles, o corpo perde <strong>30 a 40% de músculo</strong> junto com a gordura. Isso tem nome: <strong>sarcopenia</strong> — perda progressiva de massa muscular que deixa você mais fraco, mais lento, mais velho por dentro. A balança cai, mas o corpo murcha.<br><br>
+      🥩 <strong>Proteína todo dia</strong> — constrói e protege músculo. Sem ela, o corpo devora o próprio músculo para obter energia.<br><br>
+      💧 <strong>Água todo dia</strong> — Os GLP-1 suprimem não só a fome, mas também a <strong>sede</strong>. Você pode estar desidratado sem sentir. Sem água, os rins não eliminam toxinas, o metabolismo trava, a pressão cai, as náuseas pioram e o músculo não se recupera. Beba mesmo sem sentir sede.<br><br>
+      💪 <strong>Exercício resistido</strong> — o único estímulo que preserva músculo durante o emagrecimento. Sem ele, mesmo comendo proteína, o músculo enfraquece.<br><br>
+      <strong style="color:var(--g300)">A medicação faz o trabalho pesado. Você faz a diferença.</strong>
+    </div>
+  </div>
+
+  <!-- 2 EMAGRECER COM SAUDE -->
   <div style="background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
     <div style="font-size:11px;font-weight:700;color:var(--g300);letter-spacing:.5px;margin-bottom:8px">💪 EMAGRECER COM SAÚDE</div>
     <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.9)">
       A medicação faz a balança cair. Mas quem decide o que você perde — gordura ou músculo — é o que você come.<br><br>
       Sem proteína suficiente, o corpo "devora" o próprio músculo. Isso tem nome: <strong>sarcopenia</strong> — a perda progressiva de massa muscular que enfraquece o corpo, acelera o envelhecimento e abre porta para doenças.<br><br>
       <strong>Bata sua meta de proteína. Beba sua água.</strong><br>
-      <span style="color:var(--g300)">Deixa a balança cair do jeito certo.</span>
+      <span style="color:var(--g300)">Deixa a balanca cair do jeito certo.</span>
     </div>
   </div>
 
-  <!-- AVISO META ONTEM -->
-  <div id="avisoMetaOntem" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink)"></div>
+  <!-- 3 META DO DIA RAINHA -->
+  <div style="background:linear-gradient(135deg,var(--g800),var(--g700));border-radius:18px;padding:22px 20px;color:#fff;margin-bottom:14px;box-shadow:0 6px 28px rgba(0,0,0,.22)">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--g300);margin-bottom:16px">👑 META DO DIA</div>
 
-  <!-- 1º — O QUE FAZER HOJE (PRIORIDADE MÁXIMA) -->
-  <div id="guiaRapidoWrap" style="display:none;margin-bottom:14px">
-    <div id="guiaHoje" style="background:linear-gradient(135deg,var(--g800),var(--g700));border-radius:14px;padding:16px 18px;color:#fff">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--g300);margin-bottom:10px">📅 O QUE FAZER HOJE</div>
-      <div id="guiaHojeItems" style="display:flex;flex-direction:column;gap:8px"></div>
-      <button onclick="go('checkin')" id="guiaCheckinBtn" style="display:none;margin-top:12px;width:100%;padding:13px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;text-align:center">
-        💧🥩 Registrar água e proteína →
-      </button>
-      <!-- Alerta massa muscular — aparece quando proteína < 50% -->
-      <div id="alertaMuscular" style="display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
-        <div style="font-size:12px;color:rgba(255,255,255,.9);line-height:1.6">
-          💪 <strong>Atenção à proteína!</strong> Com GLP-1 você come menos — mas sem proteína suficiente, parte do peso perdido pode ser <strong>músculo, não gordura</strong>. Registre sua proteína hoje.
-        </div>
+    <!-- AGUA -->
+    <div style="margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px">
+        <span style="font-size:15px;font-weight:700">💧 Água</span>
+        <span id="metaAguaLabel" style="font-size:12px;opacity:.75">&#8212; ml</span>
+      </div>
+      <div style="height:10px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:11px">
+        <div id="metaAguaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#0ea5e9);width:0%;transition:width .6s ease"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="metaAddAgua(250)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+1 copo<br><span style="font-size:10px;font-weight:400;opacity:.65">250ml</span></button>
+        <button onclick="metaAddAgua(500)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+2 copos<br><span style="font-size:10px;font-weight:400;opacity:.65">500ml</span></button>
+        <button onclick="metaAddAgua(1000)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+1 litro<br><span style="font-size:10px;font-weight:400;opacity:.65">1000ml</span></button>
       </div>
     </div>
+
+    <div style="height:1px;background:rgba(255,255,255,.1);margin-bottom:18px"></div>
+
+    <!-- PROTEINA -->
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px">
+        <span style="font-size:15px;font-weight:700">🥩 Proteína</span>
+        <span id="metaProtLabel" style="font-size:12px;opacity:.75">&#8212; g</span>
+      </div>
+      <div style="height:10px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:11px">
+        <div id="metaProtBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#4ade80,#22c55e);width:0%;transition:width .6s ease"></div>
+      </div>
+      <div id="metaProtEquiv" style="font-size:12px;line-height:1.9;opacity:.85;margin-bottom:11px"></div>
+      <div id="metaProtSeletor" style="display:none;background:rgba(0,0,0,.25);border-radius:12px;padding:13px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g300);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Escolha sua proteína</div>
+        <div id="metaProtFoodList" style="display:flex;flex-direction:column;gap:9px"></div>
+        <button onclick="metaAddProtFood()" style="margin-top:9px;width:100%;padding:9px;border-radius:9px;border:1px dashed rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.7);font-family:var(--ss);font-size:12px;cursor:pointer">+ Adicionar alimento</button>
+        <button onclick="metaSalvarProt()" style="margin-top:8px;width:100%;padding:12px;border-radius:10px;border:none;background:var(--g500);color:#fff;font-family:var(--ss);font-size:14px;font-weight:700;cursor:pointer">✅ Salvar proteína</button>
+      </div>
+      <button onclick="toggleMetaProtSeletor()" id="metaProtBtn" style="width:100%;padding:12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer">🥩 Registrar proteína</button>
+    </div>
+
+    <div id="alertaMuscular" style="display:none;margin-top:15px;padding:12px 14px;border-radius:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);font-size:12px;color:rgba(255,255,255,.9);line-height:1.6">
+      💪 <strong>Atenção à proteína!</strong> Com GLP-1 você come menos — mas sem proteína suficiente, parte do peso perdido pode ser <strong>músculo, não gordura</strong>.
+    </div>
   </div>
 
-  <!-- 2º — CANETA (próxima dose) -->
+  <!-- 4 EXERCICIO RESISTIDO SEMANAL -->
+  <div class="card" id="exercicioCard">
+    <div class="ct">💪 Estímulo muscular</div>
+    <div class="cs">Músculo se preserva com estímulo. O que você fez hoje?</div>
+    <div id="exercOpcoes" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
+    <div id="exercFeedback" style="margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:none"></div>
+    <div id="exercSemanaWrap" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--cream3)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3)">Esta semana</div>
+        <div id="exercSemanaCount" style="font-size:11px;font-weight:600;color:var(--g600)">0 de 3x</div>
+      </div>
+      <div id="exercSemanaDias" style="display:flex;justify-content:space-between;margin-bottom:9px"></div>
+      <div style="height:7px;background:var(--cream3);border-radius:99px;overflow:hidden">
+        <div id="exercSemanaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g500),var(--g400));width:0%;transition:width .5s ease"></div>
+      </div>
+      <div id="exercSemanaMsg" style="margin-top:9px;font-size:12px;color:var(--ink3);line-height:1.5;font-style:italic"></div>
+    </div>
+  </div>
+
+  <!-- 5 PROXIMA DOSE -->
   <div id="proxDoseCard" style="display:none;margin-bottom:14px">
     <div id="proxDoseInner" onclick="go('caneta')" style="cursor:pointer;border-radius:var(--rlg);padding:16px 18px;display:flex;align-items:center;gap:14px">
       <div id="proxDoseIc" style="font-size:28px;flex-shrink:0"></div>
@@ -727,28 +797,18 @@ tr:hover td{background:var(--g50)}
     </div>
   </div>
 
-  <!-- 3º — PROGRESSO DE PESO -->
+  <!-- 5 PROGRESSO DE PESO -->
   <div class="prog-hero" id="progHero">
     <div class="prog-tag" id="progTag">PESO &amp; PROGRESSO</div>
-
-    <!-- TOP: anel + peso atual -->
     <div class="prog-top">
       <div class="prog-ring-wrap">
         <svg width="90" height="90" viewBox="0 0 90 90">
           <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="7"/>
           <circle id="progRingFill" cx="45" cy="45" r="38" fill="none" stroke="url(#ringGrad)" stroke-width="7"
             stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="239" style="transition:stroke-dashoffset .9s cubic-bezier(.34,1.56,.64,1)"/>
-          <defs>
-            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#22c55e"/>
-              <stop offset="100%" stop-color="#4ade80"/>
-            </linearGradient>
-          </defs>
+          <defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#4ade80"/></linearGradient></defs>
         </svg>
-        <div class="prog-ring-center">
-          <div class="prog-ring-pct" id="progRingPct">—</div>
-          <div class="prog-ring-lbl">da meta</div>
-        </div>
+        <div class="prog-ring-center"><div class="prog-ring-pct" id="progRingPct">—</div><div class="prog-ring-lbl">da meta</div></div>
       </div>
       <div class="prog-info">
         <div class="prog-weight" id="progWeight">— kg</div>
@@ -757,196 +817,72 @@ tr:hover td{background:var(--g50)}
         <div id="progUrineTag"></div>
       </div>
     </div>
-
-    <!-- BARRA DE JORNADA -->
     <div class="prog-journey" id="progJourneyWrap">
       <div class="prog-journey-lbl">SUA JORNADA</div>
       <div class="prog-road"><div class="prog-road-fill" id="progRoadFill" style="width:0%"></div></div>
       <div class="prog-dots">
-        <div class="prog-dot-wrap">
-          <div class="prog-dot start"></div>
-          <div class="prog-dot-lbl">Início</div>
-          <div class="prog-dot-val" id="pdStart">—</div>
-        </div>
-        <div class="prog-dot-wrap" id="midMarkerWrap" style="display:none">
-          <div class="prog-dot" id="midMarkerDot"></div>
-          <div class="prog-dot-lbl" id="midMarkerLbl">—</div>
-          <div class="prog-dot-val" id="midMarkerVal">—</div>
-        </div>
-        <div class="prog-dot-wrap">
-          <div class="prog-dot current"></div>
-          <div class="prog-dot-lbl">Agora</div>
-          <div class="prog-dot-val" id="pdNow">—</div>
-        </div>
-        <div class="prog-dot-wrap">
-          <div class="prog-dot goal"></div>
-          <div class="prog-dot-lbl">Meta</div>
-          <div class="prog-dot-val" id="pdGoal">—</div>
-        </div>
+        <div class="prog-dot-wrap"><div class="prog-dot start"></div><div class="prog-dot-lbl">Início</div><div class="prog-dot-val" id="pdStart">—</div></div>
+        <div class="prog-dot-wrap" id="midMarkerWrap" style="display:none"><div class="prog-dot" id="midMarkerDot"></div><div class="prog-dot-lbl" id="midMarkerLbl">—</div><div class="prog-dot-val" id="midMarkerVal">—</div></div>
+        <div class="prog-dot-wrap"><div class="prog-dot current"></div><div class="prog-dot-lbl">Agora</div><div class="prog-dot-val" id="pdNow">—</div></div>
+        <div class="prog-dot-wrap"><div class="prog-dot goal"></div><div class="prog-dot-lbl">Meta</div><div class="prog-dot-val" id="pdGoal">—</div></div>
       </div>
     </div>
-
-    <!-- KPIs -->
     <div class="prog-kpis" id="progKpis">
-      <div class="prog-kpi highlight">
-        <div class="prog-kpl">Perdido</div>
-        <div class="prog-kpv" id="pkPerd">—</div>
-        <div class="prog-kph">total</div>
-      </div>
-      <div class="prog-kpi">
-        <div class="prog-kpl">Faltam</div>
-        <div class="prog-kpv" id="pkFaltam">—</div>
-        <div class="prog-kph">para meta</div>
-      </div>
-      <div class="prog-kpi">
-        <div class="prog-kpl">Ritmo</div>
-        <div class="prog-kpv" id="pkRitmo">—</div>
-        <div class="prog-kph">kg/semana</div>
-      </div>
+      <div class="prog-kpi highlight"><div class="prog-kpl">Perdido</div><div class="prog-kpv" id="pkPerd">—</div><div class="prog-kph">total</div></div>
+      <div class="prog-kpi"><div class="prog-kpl">Faltam</div><div class="prog-kpv" id="pkFaltam">—</div><div class="prog-kph">para meta</div></div>
+      <div class="prog-kpi"><div class="prog-kpl">Ritmo</div><div class="prog-kpv" id="pkRitmo">—</div><div class="prog-kph">kg/semana</div></div>
     </div>
-
-    <!-- Sem meta -->
-    <div class="prog-no-goal" id="progNoGoal" style="display:none" onclick="go('perfil')">
-      🎯 Defina seu peso meta no Perfil para ver o progresso completo →
-    </div>
-
-    <!-- Projeção quando tem meta -->
+    <div class="prog-no-goal" id="progNoGoal" style="display:none" onclick="go('perfil')">🎯 Defina seu peso meta no Perfil →</div>
     <div id="progProj" style="display:none;font-size:12px;color:var(--g300);margin-bottom:10px;text-align:center"></div>
-
-    <!-- BARRAS ÁGUA E PROTEÍNA -->
-    <div id="narrBars" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:7px">
-      <div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">
-          <span>💧 Água hoje</span><span id="narrAguaPct">—</span>
-        </div>
-        <div style="height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
-          <div id="narrAguaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#0ea5e9);width:0%;transition:width .6s ease"></div>
-        </div>
-      </div>
-      <div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">
-          <span>🥩 Proteína hoje</span><span id="narrProtPct">—</span>
-        </div>
-        <div style="height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
-          <div id="narrProtBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#4ade80,#22c55e);width:0%;transition:width .6s ease"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TENDÊNCIA SEMANAL -->
-    <!-- PLACAR PROTEÍNA -->
-    <div id="protPlacarWrap" style="margin-top:12px;display:none">
-      <div onclick="go('checkin')" style="cursor:pointer;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45)">🥩 PROTEÍNA HOJE</div>
-          <div style="font-size:10px;color:var(--g300)">toque para registrar →</div>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <div id="protPlacarVal" style="font-family:var(--fs);font-size:28px;font-weight:600;color:#fff">0g</div>
-          <div id="protPlacarMeta" style="font-size:13px;color:rgba(255,255,255,.4)">/ — g</div>
-          <div id="protPlacarPct" style="margin-left:auto;font-size:14px;font-weight:700;color:var(--g400)">0%</div>
-        </div>
-        <div style="height:6px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden">
-          <div id="protPlacarBar" style="height:100%;border-radius:999px;background:linear-gradient(90deg,var(--g500),var(--g400));transition:width .5s ease;width:0%"></div>
-        </div>
-        <div id="protPlacarMsg" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:6px">Registre sua proteína no check-in</div>
-      </div>
-    </div>
-
-    <!-- CARD CANETA NO PAINEL -->
-    <div id="canaetaPainelWrap" style="margin-top:10px;display:none">
-      <div onclick="go('caneta')" style="cursor:pointer;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);margin-bottom:10px">💉 SUA CANETA</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-          <div>
-            <div id="caPainelFarm" style="font-family:var(--fs);font-size:18px;font-weight:500;color:#fff;line-height:1.2">—</div>
-            <div id="caPainelDose" style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px">—</div>
-          </div>
-          <div style="text-align:right">
-            <div id="caPainelProxTag" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"></div>
-            <div id="caPainelProxVal" style="font-size:15px;font-weight:700;color:var(--g400)"></div>
-          </div>
-        </div>
-        <div style="margin-top:10px;height:4px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden">
-          <div id="caPainelBar" style="height:100%;border-radius:999px;background:linear-gradient(90deg,var(--g500),var(--g400));transition:width .5s;width:0%"></div>
-        </div>
-        <div id="caPainelCiclo" style="font-size:10px;color:rgba(255,255,255,.35);margin-top:5px;text-align:center"></div>
-      </div>
-    </div>
-    <!-- Canvas oculto mantido para compatibilidade interna -->
     <canvas id="chartMain" height="0" style="display:none"></canvas>
   </div>
 
-
-  <!-- FARMACOCINÉTICA -->
+  <!-- FARMACOCINETICA -->
   <div class="pk-hero" id="pkCard" style="display:none">
     <div class="pk-tag">📈 EXCLUSIVO EQUILIBRA</div>
-    <div class="pk-title" style="display:flex;align-items:center;gap:8px">📊 Nível do remédio no sangue <span class="tip tip-dark" onclick="mostrarDica('farmaco')">ⓘ</span></div>
-    <div class="pk-sub">Estimativa farmacocinética ao longo do ciclo. A zona verde indica quando a saciedade é esperada.</div>
-    <div class="pk-kpis" id="pkKpis"></div>
-    <div class="pk-chart-wrap">
-      <div class="pk-zone-label">Zona de saciedade</div>
-      <canvas id="chartPK" height="110"></canvas>
+    <div class="pk-title" style="display:flex;align-items:center;gap:8px">Potência da medicação <span class="tip tip-dark" onclick="mostrarDica('farmaco')">ⓘ</span></div>
+
+    <!-- VELOCÍMETRO CONTA-GIROS -->
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:16px">
+      <div style="position:relative;width:200px;height:110px">
+        <canvas id="pkGauge" width="200" height="110" style="display:block"></canvas>
+        <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+          <div id="pkRingPct" style="font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.5)">—</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1.5px;margin-top:2px">POTÊNCIA</div>
+        </div>
+      </div>
+      <!-- Legenda fase -->
+      <div style="text-align:center;margin-top:4px">
+        <div id="pkFaseLabel" style="font-size:15px;font-weight:700;color:#4ade80;line-height:1.2">—</div>
+        <div id="pkFaseSub" style="font-size:10px;color:rgba(255,255,255,.45);line-height:1.5;margin-top:3px;max-width:180px"></div>
+      </div>
     </div>
+
+    <div class="pk-kpis" id="pkKpis"></div>
+    <div class="pk-chart-wrap"><div class="pk-zone-label">Zona de saciedade</div><canvas id="chartPK" height="100"></canvas></div>
     <div class="pk-legend">
-      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#3b82f6"></div>Nível estimado</div>
+      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#3b82f6"></div>Concentração plasmática</div>
       <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#22c55e"></div>Zona de saciedade</div>
       <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#fff;border:2px solid #3b82f6"></div>Agora</div>
       <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#f59e0b"></div>Próxima dose</div>
     </div>
     <div class="pk-alert" id="pkAlert"></div>
-    <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;line-height:1.5">⚠️ Curva estimada com base na farmacocinética publicada. Variações individuais existem. Não substitui orientação médica.</div>
+    <div style="margin-top:12px;padding:10px 12px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:10px;font-size:11px;color:rgba(255,255,255,.6);line-height:1.6">
+      ⚠️ <strong style="color:rgba(251,191,36,.8)">Mesmo com atividade baixa, não antecipe a dose.</strong> O intervalo semanal é definido pelo seu médico e não deve ser alterado. Curva estimada — variações individuais existem.
+    </div>
   </div>
-
 
   <div class="streak" id="streakEl" style="display:none!important;visibility:hidden;height:0;overflow:hidden;margin:0;padding:0">
     <div style="font-size:22px">🔥</div>
     <div style="flex:1;font-size:13px;color:var(--g200)">Sequência de check-ins</div>
-    <div style="text-align:right">
-      <div class="streak-num" id="streakNum">0</div>
-      <div class="streak-lbl">dias seguidos</div>
-    </div>
+    <div style="text-align:right"><div class="streak-num" id="streakNum">0</div><div class="streak-lbl">dias seguidos</div></div>
   </div>
   <div class="milestone" id="msEl" style="display:none;cursor:pointer" onclick="abrirConquista()">
     <div style="font-size:28px" id="msIc">🏆</div>
     <div><div style="font-size:14px;font-weight:600" id="msMsg">—</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px" id="msSub">—</div></div>
   </div>
 
-
-  <!-- SEMÁFORO DO PRATO -->
-  <div class="card" id="pratoCard">
-    <div class="ct" style="display:flex;align-items:center;gap:6px">🍽️ Como montar seu prato <span class="tip" onclick="mostrarDica('prato')">ⓘ</span></div>
-    <div class="cs">A ordem em que você come faz diferença com GLP-1</div>
-    <div class="prato-visual">
-      <div class="prato-item prato-proteina">
-        <div style="font-size:24px">🥩</div>
-        <div style="font-size:11px;font-weight:700;margin-top:4px">1º PROTEÍNA</div>
-        <div style="font-size:10px;opacity:.7;margin-top:2px">Tamanho da palma</div>
-      </div>
-      <div class="prato-item prato-salada">
-        <div style="font-size:24px">🥗</div>
-        <div style="font-size:11px;font-weight:700;margin-top:4px">2º SALADA</div>
-        <div style="font-size:10px;opacity:.7;margin-top:2px">Encher o prato</div>
-      </div>
-      <div class="prato-item prato-carboidrato">
-        <div style="font-size:24px">🍚</div>
-        <div style="font-size:11px;font-weight:700;margin-top:4px">3º CARBOIDRATO</div>
-        <div style="font-size:10px;opacity:.7;margin-top:2px">Punho fechado</div>
-      </div>
-    </div>
-    <div style="font-size:12px;color:var(--ink3);padding:10px 12px;background:var(--g50);border-radius:8px;line-height:1.6">
-      💡 <strong>Por quê?</strong> Proteína primeiro aumenta saciedade, estabiliza glicose e protege músculo durante a perda de peso.
-    </div>
-  </div>
-
-  <!-- CARD EXERCÍCIO RESISTIDO -->
-  <div class="card" id="exercicioCard">
-    <div class="ct">💪 Estímulo muscular</div>
-    <div class="cs">Músculo se preserva com estímulo. O que você fez hoje?</div>
-    <div id="exercOpcoes" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
-    <div id="exercFeedback" style="margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:none"></div>
-  </div>
-
+  <!-- 6 METABOLISMO E METAS -->
   <div class="card">
     <div class="ct" style="display:flex;align-items:center;gap:6px">⚡ Metabolismo &amp; Metas <span class="tip" onclick="mostrarDica('metabolismo')">ⓘ</span></div>
     <div class="cs">Toque em <strong>O que é?</strong> para entender cada número.</div>
@@ -983,7 +919,7 @@ tr:hover td{background:var(--g50)}
       <div class="pbar-lbl">💧 Água — <span id="aguaPct">0%</span> da meta</div>
       <div class="pbar"><div class="pbar-fill" id="aguaFill" style="width:0%"></div></div>
     </div>
-    <div class="peq" id="peqEl">—</div>
+    <div class="peq" id="peqEl" style="display:none">—</div>
   </div>
 
   <div class="diet-wrap" id="dietCard" style="display:none">
@@ -1155,6 +1091,23 @@ tr:hover td{background:var(--g50)}
     <div class="calc-tag">🧪 CANETA MANIPULADA — FRASCO + SERINGA</div>
     <div class="calc-title">Calculadora de diluição</div>
     <div class="calc-sub">Para quem usa frasco manipulado com seringa de insulina. Informe o que está escrito no frasco e calcule quantas unidades aspirar.</div>
+    <!-- ABAS: Ampola / Caneta -->
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button id="abaAmpolaBtn" onclick="setAbaCaneta('ampola')"
+        style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--g500);background:var(--g700);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer">
+        💉 Frasco / Ampola
+      </button>
+      <button id="abaCanetaBtn" onclick="setAbaCaneta('caneta')"
+        style="flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer">
+        ✏️ Caneta pré-cheia
+      </button>
+    </div>
+    <div id="abaAmpolaInfo" style="margin-bottom:12px;padding:10px 12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.6">
+      💉 <strong>Frasco / Ampola:</strong> Aspirar com seringa de insulina U-100. Informe a dose prescrita e o app calcula quantas unidades aspirar.
+    </div>
+    <div id="abaCanetaInfo" style="display:none;margin-bottom:12px;padding:10px 12px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:10px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.6">
+      ✏️ <strong>Caneta pré-cheia:</strong> Dose já vem medida de fábrica. Não precisa de seringa de insulina.
+    </div>
     <div class="calc-form">
       <div class="calc-fi">
         <label>Fármaco</label>
@@ -2587,6 +2540,18 @@ function buildNarr(M,rl,perd,dh,pd){
 }
 
 /* ══ CALCULADORA DILUIÇÃO ══ */
+function setAbaCaneta(tipo){
+  window._abaFiltro=tipo;
+  var btnC=el('abaCanetaBtn'),btnA=el('abaAmpolaBtn');
+  var infoC=el('abaCanetaInfo'),infoA=el('abaAmpolaInfo');
+  var on='flex:1;padding:10px;border-radius:10px;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--g500);background:var(--g700);color:#fff;';
+  var off='flex:1;padding:10px;border-radius:10px;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);';
+  if(btnC)btnC.style.cssText=tipo==='caneta'?on:off;
+  if(btnA)btnA.style.cssText=tipo==='ampola'?on:off;
+  if(infoC)infoC.style.display=tipo==='caneta'?'block':'none';
+  if(infoA)infoA.style.display=tipo==='ampola'?'block':'none';
+  updateCalcApres();
+}
 function updateCalcApres(){
   var f=el('calcFarm').value,s=el('calcApres');
   s.innerHTML='<option value="">— selecione a apresentação —</option>';
@@ -2597,9 +2562,10 @@ function updateCalcApres(){
   // Separar canetas e ampolas em grupos
   var temCaneta=list.some(function(a){return a.tipo==='caneta';});
   var temAmpola=list.some(function(a){return a.tipo==='ampola'||a.tipo==='ampola_manual';});
-  if(temCaneta){var og=document.createElement('optgroup');og.label='🖊️ Canetas pré-cheias (dose já medida)';
+  var filtro=window._abaFiltro||'ampola';
+  if(temCaneta&&filtro==='caneta'){var og=document.createElement('optgroup');og.label='✏️ Canetas pré-cheias';
     list.forEach(function(a,i){if(a.tipo==='caneta'){var o=document.createElement('option');o.value=i;o.textContent=a.lbl;og.appendChild(o);}});s.appendChild(og);}
-  if(temAmpola){var og2=document.createElement('optgroup');og2.label='💉 Frascos / Ampolas (calcular seringa)';
+  if(temAmpola&&filtro==='ampola'){var og2=document.createElement('optgroup');og2.label='💉 Frascos / Ampolas';
     list.forEach(function(a,i){if(a.tipo==='ampola'||a.tipo==='ampola_manual'){var o=document.createElement('option');o.value=i;o.textContent=a.lbl;og2.appendChild(o);}});s.appendChild(og2);}
 }
 function updateCalcTipo(){
@@ -2794,11 +2760,13 @@ var PROT_CHIPS=[
 ];
 
 var protFoods=[];    // itens: [{alimId, grams}]
+// Carrega proteínas do dia ao iniciar
+function initProtFoods(){var dh=getDH();if(dh&&dh.proteinFoods&&dh.proteinFoods.length){protFoods=JSON.parse(JSON.stringify(dh.proteinFoods));renderProtFoods();calcProtTotal();}}
 
 /* ── Peso real (dropdown + gramas) ── */
 function addProtFood(){
   var idx=protFoods.length;
-  protFoods.push({alimId:'frango',grams:''});
+  protFoods.push({alimId:'',grams:''});
   renderProtFoods();
   setTimeout(function(){var g=document.getElementById('pfg_'+idx);if(g) g.focus();},50);
 }
@@ -2812,11 +2780,13 @@ function renderProtFoods(){
   protFoods.forEach(function(item,idx){
     var div=document.createElement('div');
     div.style.cssText='display:flex;gap:8px;align-items:center';
-    var alimOpts=PROT_ALIMENTOS.map(function(a){
+    var phOpt='<option value="" disabled'+((!item.alimId||item.alimId==='')?'selected':'')+'>— selecione —</option>';
+    var alimOpts=phOpt+PROT_ALIMENTOS.map(function(a){
       return '<option value="'+a.id+'"'+(a.id===item.alimId?' selected':'')+'>'+a.nm+'</option>';
     }).join('');
-    var alimAtual=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;})||PROT_ALIMENTOS[0];
-    var isUnid=alimAtual.unidade==='unid';
+    var alimAtual=item.alimId?PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;})||null:null;
+    var isUnid=alimAtual&&alimAtual.unidade==='unid';
+
     var stepVal=isUnid?1:10;
     var placeholderVal=isUnid?'unid':'g';
     div.innerHTML=''
@@ -2838,6 +2808,7 @@ function renderProtFoods(){
 function calcProtTotal(){
   var total=0;
   protFoods.forEach(function(item){
+    if(!item.alimId) return;
     var alim=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;});
     var g=parseFloat(item.grams)||0;
     if(alim&&g>0) total+=Math.round(g*alim.fator);
@@ -2855,7 +2826,13 @@ function calcProtTotal(){
 }
 
 function resetProtFoods(){
-  protFoods=[];
+  // Carregar alimentos já registrados hoje se existir
+  var dh=getDH();
+  if(dh&&dh.proteinFoods&&dh.proteinFoods.length){
+    protFoods=JSON.parse(JSON.stringify(dh.proteinFoods));
+  } else {
+    protFoods=[];
+  }
   renderProtFoods();
   if(el('protTotal')) el('protTotal').textContent='0 g';
   if(el('ciProt')) el('ciProt').value='';
@@ -2878,6 +2855,167 @@ var EXERCICIOS=[
   {id:'nao',ic:'😴',nm:'Hoje não fiz'}
 ];
 
+
+/* META DO DIA FUNCOES */
+function metaAddAgua(ml){
+  var d=hoje();
+  var e=S.daily.find(function(x){return x.date===d;})||{};
+  var a=(e.waterMl||0)+ml;
+  var n=Object.assign({},e,{date:d,waterMl:a});
+  var i=S.daily.findIndex(function(x){return x.date===d;});
+  if(i>=0)S.daily[i]=n;else S.daily.push(n);
+  salvar();renderMetaDia();
+  toast('💧 +'+(ml>=1000?(ml/1000)+'L':ml+'ml')+' registrado!');
+}
+var metaProtFoods=[];
+function toggleMetaProtSeletor(){
+  var s=el('metaProtSeletor');var btn=el('metaProtBtn');if(!s)return;
+  if(s.style.display==='none'){s.style.display='block';btn.textContent='✕ Fechar';metaProtFoods=[];metaAddProtFood();}
+  else{s.style.display='none';btn.textContent='🥩 Registrar proteina';}
+}
+function metaAddProtFood(){
+  var idx=metaProtFoods.length;
+  metaProtFoods.push({alimId:'',grams:''});
+  renderMetaProtFoods();
+  setTimeout(function(){var g=document.getElementById('mpfg_'+idx);if(g)g.focus();},50);
+}
+function renderMetaProtFoods(){
+  var wrap=el('metaProtFoodList');if(!wrap)return;
+  wrap.innerHTML='';
+  if(metaProtFoods.length===0){
+    wrap.innerHTML='<div style="text-align:center;padding:12px;font-size:12px;color:rgba(255,255,255,.45)">Toque em &quot;+ Adicionar alimento&quot; para começar</div>';
+    return;
+  }
+  metaProtFoods.forEach(function(item,idx){
+    var div=document.createElement('div');
+    div.style.cssText='display:flex;gap:6px;align-items:center;margin-bottom:2px';
+    var al=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;})||PROT_ALIMENTOS[0];
+    var isU=al.unidade==='unid';
+    var sel=document.createElement('select');
+    sel.style.cssText='flex:1;padding:7px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:var(--ss);font-size:12px;outline:none';
+    var ph=document.createElement('option');ph.value='';ph.textContent='— selecione —';ph.disabled=true;if(!item.alimId)ph.selected=true;sel.appendChild(ph);
+    PROT_ALIMENTOS.forEach(function(a){var o=document.createElement('option');o.value=a.id;o.textContent=a.nm;if(a.id===item.alimId)o.selected=true;sel.appendChild(o);});
+    sel.onchange=(function(i){return function(){metaProtFoods[i].alimId=this.value;metaProtFoods[i].grams='';renderMetaProtFoods();};})(idx);
+    var inp=document.createElement('input');
+    inp.id='mpfg_'+idx;inp.type='number';inp.min='0';inp.step=isU?'1':'10';
+    inp.placeholder=isU?'un':'g';inp.value=item.grams||'';
+    inp.style.cssText='width:58px;padding:7px 4px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:var(--ss);font-size:14px;font-weight:700;text-align:center;outline:none';
+    inp.oninput=(function(i){return function(){metaProtFoods[i].grams=this.value;};})(idx);
+    var un=document.createElement('span');
+    un.style.cssText='font-size:11px;color:rgba(255,255,255,.5)';un.textContent=isU?'un':'g';
+    var del=document.createElement('button');
+    del.style.cssText='width:24px;height:24px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:rgba(255,255,255,.6);cursor:pointer;font-size:12px;flex-shrink:0';
+    del.textContent='✕';
+    del.onclick=(function(i){return function(){metaProtFoods.splice(i,1);renderMetaProtFoods();};})(idx);
+    div.appendChild(sel);div.appendChild(inp);div.appendChild(un);div.appendChild(del);
+    wrap.appendChild(div);
+  });
+}
+function metaSalvarProt(){
+  var total=0;
+  metaProtFoods.forEach(function(item){
+    var al=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;});
+    var g=parseFloat(item.grams)||0;
+    if(al&&g>0)total+=Math.round(g*al.fator);
+  });
+  if(!total){toast('Adicione pelo menos um alimento 🥩');return;}
+  var d=hoje();var e=S.daily.find(function(x){return x.date===d;})||{};
+  var n=Object.assign({},e,{date:d,proteinG:(e.proteinG||0)+total});
+  var i=S.daily.findIndex(function(x){return x.date===d;});
+  if(i>=0)S.daily[i]=n;else S.daily.push(n);
+  salvar();metaProtFoods=[];
+  var s=el('metaProtSeletor');if(s)s.style.display='none';
+  var btn=el('metaProtBtn');if(btn)btn.textContent='🥩 Registrar proteina';
+  renderMetaDia();toast('🥩 +'+total+'g de proteina salvo!');
+}
+function toggleLeiaTodoDia(){
+  var b=el('leiaTodoDiaBody');var a=el('leiaTodoDiaArr');if(!b)return;
+  if(b.style.display==='none'){b.style.display='block';if(a)a.style.transform='rotate(180deg)';}
+  else{b.style.display='none';if(a)a.style.transform='rotate(0deg)';}
+}
+function renderMetaDia(){
+  var M=calcMetrics();if(!M)return;
+  if(!el('metaAguaBar'))return;
+  var d=hoje();var dh=S.daily.find(function(x){return x.date===d;})||{};
+  var aw=dh.waterMl||0;var am=Math.round(M.agua);
+  var ap=Math.min(100,Math.round((aw/am)*100));
+  var af=Math.max(0,am-aw);var ac=Math.ceil(af/250);
+  var ab=el('metaAguaBar');if(ab)ab.style.width=ap+'%';
+  var al=el('metaAguaLabel');
+  if(al)al.textContent=aw+'ml de '+am+'ml ('+ap+'%)'+(af>0?' — faltam '+ac+(ac===1?' copo':' copos'):'  ✅');
+  var ph=dh.proteinG||0;var pm=Math.round(M.pm);
+  var pp=Math.min(100,Math.round((ph/pm)*100));var pf=Math.max(0,pm-ph);
+  var pb=el('metaProtBar');if(pb)pb.style.width=pp+'%';
+  var pl=el('metaProtLabel');if(pl)pl.textContent=ph+'g de '+pm+'g ('+pp+'%)';
+  var eq=el('metaProtEquiv');
+  if(eq){
+    if(pf>0){
+      var ff=Math.round(pf/0.31);var fc=Math.round(pf/0.26);
+      var fo=Math.ceil(pf/7);var fw=Math.ceil(pf/24);
+      var ef=Math.min(200,ff);var ep=Math.round(ef*0.31);
+      eq.innerHTML='Faltam <strong>'+pf+'g de proteína pura</strong> hoje.<br>'
+        +'<em style="opacity:.65;font-size:10px">⚠️ Proteína pura não é o peso do alimentoso do alimento — eh o que existe dentro dele.</em><br><br>'
+        +'Para completar, escolha ou combine:<br>'
+        +'🍗 <strong>'+ff+'g</strong> de frango &nbsp;OU&nbsp; 🥩 <strong>'+fc+'g</strong> carne magra<br>'
+        +'🥚 <strong>'+fo+'</strong> ovos &nbsp;OU&nbsp; 💪 <strong>'+fw+' scoops</strong> whey<br><br>'
+        +'<em style="opacity:.6">&#128161; Ex: '+ef+'g frango ('+ep+'g) + 2 ovos (14g) + 1 scoop whey (24g)</em><br>'
+        +'<em style="opacity:.55">'+msgProteina(pp)+'</em>';
+    }else{
+      eq.innerHTML='<strong style="color:#4ade80">&#9989; Meta batida! Hoje voce escolheu saude de verdade. &#128170;</strong>';
+    }
+  }
+  var amsc=el('alertaMuscular');if(amsc)amsc.style.display=(pp<50)?'block':'none';
+}
+
+/* EXERCICIO SEMANAL */
+function inicioSemana(){
+  var d=new Date();
+  var dia=d.getDay();
+  var diff=d.getDate()-(dia===0?6:dia-1);
+  var seg=new Date(d.getFullYear(),d.getMonth(),diff);
+  return seg.toISOString().slice(0,10);
+}
+function renderExercicioSemanal(){
+  var diasNm=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
+  var seg=inicioSemana();
+  var wrapD=el('exercSemanaDias');
+  var countEl=el('exercSemanaCount');
+  var barEl=el('exercSemanaBar');
+  var msgEl=el('exercSemanaMsg');
+  if(!wrapD)return;
+  wrapD.innerHTML='';
+  var feitos=0;
+  for(var i=0;i<7;i++){
+    var dt=new Date(seg);dt.setDate(dt.getDate()+i);
+    var dtStr=dt.toISOString().slice(0,10);
+    var dh=S.daily.find(function(x){return x.date===dtStr;})||{};
+    var fez=dh.exercicio&&dh.exercicio!=='nao';
+    var isHoje=dtStr===hoje();
+    if(fez)feitos++;
+    var div=document.createElement('div');
+    div.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px';
+    var cirStyle=fez
+      ?'background:var(--g500);color:#fff;border:none'
+      :isHoje?'border:2px solid var(--g400);background:rgba(74,222,128,.08)':'background:var(--cream2);border:1px solid var(--cream3)';
+    div.innerHTML='<div style="font-size:10px;color:var(--ink3);font-weight:'+(isHoje?700:400)+'">'+diasNm[i]+'</div>'
+      +'<div style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;'+cirStyle+'">'
+      +(fez?'&#10003;':isHoje?'&#8226;':'')+'</div>';
+    wrapD.appendChild(div);
+  }
+  var meta=3;
+  var pct=Math.min(100,Math.round(feitos/meta*100));
+  if(countEl)countEl.textContent=feitos+' de '+meta+'x na semana';
+  if(barEl)barEl.style.width=pct+'%';
+  if(msgEl){
+    var msg='';
+    if(feitos===0)msg='Seu músculo precisa de você. Qualquer movimento conta!';
+    else if(feitos===1)msg='Começou! Continue — a consistência é o que preserva.';
+    else if(feitos===2)msg='Quase na meta! Mais uma vez e você protege sua massa magra. 💪';
+    else if(feitos===3)msg='Meta batida! Parabéns — você está preservando o que importa. 🏆';
+    else msg='Acima da meta! Excelente — seu músculo agradece muito. 💪';
+    msgEl.textContent=msg;
+  }
+}
 function renderExercicioCard(){
   var wrap=el('exercOpcoes');if(!wrap) return;
   var hoje_date=hoje();
@@ -2893,6 +3031,7 @@ function renderExercicioCard(){
     wrap.appendChild(btn);
   });
   // Feedback
+  renderExercicioSemanal();
   var fb=el('exercFeedback');
   if(fb&&selecionado){
     if(selecionado==='nao'){
@@ -2914,6 +3053,7 @@ function salvarExercicio(id){
   var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
   salvar();
   renderExercicioCard();
+  renderExercicioSemanal();
 }
 
 /* ══ MENSAGEM PROGRESSO PROTEÍNA ══ */
@@ -3015,10 +3155,9 @@ function salvarProteina(){
   var protVal=calcProtTotal();
   if(!protVal||protVal===0){toast('Adicione pelo menos um alimento 🥩');return;}
   var existing=S.daily.find(function(x){return x.date===d;})||{};
-  var entry=Object.assign({},existing,{date:d,proteinG:protVal});
+  var entry=Object.assign({},existing,{date:d,proteinG:protVal,proteinFoods:JSON.parse(JSON.stringify(protFoods.filter(function(f){return f.alimId&&f.grams;})))});
   var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
   salvar();render();
-  resetProtFoods();
   toast('🥩 Proteína salva! '+protVal+'g registrados.');
 }
 
@@ -3036,7 +3175,8 @@ function salvarCI(){
     urine:el('ciUrina').value||existing.urine||null,
     symptom:ciSint.length?ciSint.join(','):(existing.symptom||'OK'),
     intensity:ciSint.length>=2?2:ciSint.length>=1?1:(existing.intensity||0),
-    proteinG:protVal!==null?protVal:existing.proteinG||null
+    proteinG:protVal!==null?protVal:existing.proteinG||null,
+    proteinFoods:protVal!==null?JSON.parse(JSON.stringify(protFoods.filter(function(f){return f.alimId&&f.grams;}))):existing.proteinFoods||[]
   };
   var i=S.daily.findIndex(function(x){return x.date===d;});if(i>=0) S.daily[i]=entry;else S.daily.push(entry);
   ciSac=null;ciSint=[];el('ciAgua').value='';el('ciUrina').value='';var disp=el('aguaCoposDisplay');if(disp) disp.textContent='';
@@ -3078,6 +3218,97 @@ function pkLevel(t,p){
   return Math.max(0,raw);
 }
 
+
+function drawPkGauge(pct){
+  var canvas=el('pkGauge');
+  if(!canvas||!canvas.getContext) return;
+  var ctx=canvas.getContext('2d');
+  var W=200,H=110,cx=100,cy=105,R=82,rInner=62;
+  ctx.clearRect(0,0,W,H);
+
+  // Ângulos: 180° (esquerda) a 0° (direita) = semicírculo superior
+  var startA=Math.PI; // 180°
+  var endA=0;         // 0°
+  var totalA=Math.PI; // 180°
+
+  // 11 traços = 0,10,20,...100%
+  for(var i=0;i<=10;i++){
+    var frac=i/10;
+    var angle=startA+frac*totalA;
+    var val=i*10;
+    // Cor por zona
+    var col=val>=50?'#22c55e':val>=30?'#f59e0b':'#ef4444';
+    var filled=(val<=pct);
+    ctx.save();
+    ctx.strokeStyle=filled?col:'rgba(255,255,255,.15)';
+    // Traços maiores nos múltiplos de 50
+    var isMajor=(i%5===0);
+    ctx.lineWidth=isMajor?5:3;
+    var r1=isMajor?rInner-6:rInner;
+    var r2=R+(isMajor?6:0);
+    ctx.lineCap='round';
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(angle)*r1, cy+Math.sin(angle)*r1);
+    ctx.lineTo(cx+Math.cos(angle)*r2, cy+Math.sin(angle)*r2);
+    ctx.stroke();
+    ctx.restore();
+
+    // Label numérico nos múltiplos de 50
+    if(isMajor){
+      ctx.save();
+      ctx.fillStyle='rgba(255,255,255,.35)';
+      ctx.font='9px sans-serif';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      var lr=R+18;
+      ctx.fillText(val+'%', cx+Math.cos(angle)*lr, cy+Math.sin(angle)*lr);
+      ctx.restore();
+    }
+  }
+
+  // Arco de fundo tracejado conectando os traços
+  ctx.save();
+  ctx.strokeStyle='rgba(255,255,255,.06)';
+  ctx.lineWidth=2;
+  ctx.setLineDash([3,6]);
+  ctx.beginPath();
+  ctx.arc(cx,cy,(rInner+R)/2,startA,startA+totalA);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Ponteiro
+  if(pct!==null&&!isNaN(pct)){
+    var pAngle=startA+(pct/100)*totalA;
+    var pLen=R-4;
+    var px2=cx+Math.cos(pAngle)*pLen;
+    var py2=cy+Math.sin(pAngle)*pLen;
+    var pCol=pct>=50?'#4ade80':pct>=30?'#f59e0b':'#ef4444';
+
+    // Linha do ponteiro
+    ctx.save();
+    ctx.strokeStyle=pCol;
+    ctx.lineWidth=3;
+    ctx.lineCap='round';
+    ctx.shadowColor=pCol;
+    ctx.shadowBlur=8;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(px2,py2);
+    ctx.stroke();
+    ctx.restore();
+
+    // Bolinha no centro
+    ctx.save();
+    ctx.fillStyle=pCol;
+    ctx.shadowColor=pCol;
+    ctx.shadowBlur=6;
+    ctx.beginPath();
+    ctx.arc(cx,cy,5,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
 function buildPKChart(){
   var farm=S.caneta.farmaco,ultima=S.caneta.ultima;
   var card=el('pkCard');
@@ -3097,6 +3328,19 @@ function buildPKChart(){
   var curIdx=Math.round(Math.min(hoursEl,period)/step);
   var curPct=pctArr[curIdx]||0;
   var nextIdx=Math.round(period/step); // next dose at end
+
+  // Atualizar gauge conta-giros
+  var ringPct=el('pkRingPct');
+  var faseLabel=el('pkFaseLabel');
+  var faseSub=el('pkFaseSub');
+  if(ringPct) ringPct.textContent=Math.round(curPct)+'%';
+  var faseInfo=curPct>=80?{l:'Pico de ação',s:'Máxima concentração plasmática. Saciedade intensa esperada.',c:'#4ade80'}
+    :curPct>=p.zone[0]?{l:'Fase ativa',s:'Concentração na zona terapêutica. Saciedade presente.',c:'#4ade80'}
+    :curPct>=30?{l:'Declínio gradual',s:'Concentração caindo. Normal antes da próxima dose.',c:'#f59e0b'}
+    :{l:'Nível baixo',s:'Próximo ao vale. Não antecipe a dose — siga a prescrição.',c:'#ef4444'};
+  if(faseLabel){faseLabel.textContent=faseInfo.l;faseLabel.style.color=faseInfo.c;}
+  if(faseSub) faseSub.textContent=faseInfo.s;
+  drawPkGauge(Math.round(curPct));
 
   // Labels
   var dias=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
@@ -3161,13 +3405,22 @@ function buildPKChart(){
 
   // KPIs
   var kpis=el('pkKpis');kpis.innerHTML='';
-  var daysLeft=Math.max(0,(period-hoursEl)/24),daysLeftStr=daysLeft<1?'Hoje':daysLeft<2?'Amanhã':Math.ceil(daysLeft)+'d';
-  var phase=curPct>=80?{l:'Pico',c:'#4ade80'}:curPct>=p.zone[0]?{l:'Ativo',c:'#4ade80'}:curPct>=20?{l:'Declínio',c:'#fbbf24'}:{l:'Trough',c:'#f87171'};
+  var daysLeft=Math.max(0,(period-hoursEl)/24);
+  var diasSem2=['dom','seg','ter','qua','qui','sex','sáb'];
+  var dtNext2=ultima?new Date(new Date(ultima+'T12:00:00').getTime()+period*3600*1000):null;
+  var diaNext=dtNext2?diasSem2[dtNext2.getDay()]:'';
+  var daysLeftStr=daysLeft<1?'Hoje 💉':daysLeft<2?'Amanhã ('+diaNext+')':'Em '+Math.ceil(daysLeft)+' dias ('+diaNext+')';;
+  var phase=curPct>=80?{l:'Potência máxima',c:'#4ade80'}:curPct>=p.zone[0]?{l:'Ativa',c:'#4ade80'}:curPct>=30?{l:'Caindo',c:'#fbbf24'}:{l:'Trough',c:'#f87171'};
+  var isSemanal=farm!=='Liraglutida';
+  var tempoAcaoVal=farm==='Liraglutida'?'~13 horas':(farm==='Tirzepatida'?'~5 dias':'~7 dias');
+  var tempoAcaoH=isSemanal?'Não antecipe a dose — o intervalo é definido pelo seu médico.':'Aplique sempre no mesmo horário — o efeito dura cerca de 13 horas.';
+  var freqLabel=isSemanal?'1x por semana':'1x por dia';
+  var ultimaFmt=ultima?'Aplicada em: '+(function(){var p=ultima.split('-');return p[2]+'/'+p[1]+'/'+p[0];})():'Registre a última aplicação';
   var kData=[
-    {l:'Fase atual',v:phase.l,h:Math.round(curPct)+'% do pico',c:phase.c},
-    {l:'Próxima dose',v:daysLeftStr,h:ultima?'Última: '+ultima:'—'},
-    {l:'Quanto tempo age',v:farm==='Liraglutida'?'~13h':'~'+(farm==='Tirzepatida'?'5':'7')+'d',h:p.desc},
-    {l:'Frequência',v:p.unit,h:farm==='Liraglutida'?'Mesmo horário todo dia':'Mesmo dia toda semana'}
+    {l:'Fase atual',v:phase.l,h:Math.round(curPct)+'% de potência',c:phase.c},
+    {l:'Próxima dose',v:daysLeftStr,h:ultimaFmt},
+    {l:'Tempo de ação',v:tempoAcaoVal,h:tempoAcaoH},
+    {l:'Frequência',v:freqLabel,h:isSemanal?'Mesmo dia toda semana':'Mesmo horário todo dia'}
   ];
   kData.forEach(function(k){
     var d=document.createElement('div');d.className='pk-kpi';
@@ -3178,7 +3431,7 @@ function buildPKChart(){
   // Alert
   var al=el('pkAlert');
   if(curPct<20&&hoursEl>period*0.7){al.textContent='⚠️ Nível próximo ao trough — normal sentir mais fome agora. A próxima dose restaurará a saciedade.';al.classList.add('show');}
-  else if(hoursEl>period){al.textContent='⚠️ Dose possivelmente atrasada. Atualize a data da última aplicação.';al.classList.add('show');}
+  else if(hoursEl>period){al.textContent='⚠️ Parece que a dose está atrasada. Atualize a data da última aplicação na aba Caneta.';al.classList.add('show');}
   else al.classList.remove('show');
 }
 
@@ -3195,11 +3448,17 @@ var MOTIS=[
 
 function renderProgresso(cw,sw,rl,dh,ma){
   if(!cw){
-    el('progWeight').textContent='— kg';el('progDelta').textContent='';el('progMoti').textContent='Configure seu perfil para ver o progresso.';
-    el('progRingPct').textContent='—';el('progNoGoal').style.display='none';el('progProj').style.display='none';
-    el('pkPerd').textContent='—';el('pkFaltam').textContent='—';el('pkRitmo').textContent='—';
-    el('pdStart').textContent='—';el('pdNow').textContent='—';el('pdGoal').textContent='—';
-    el('progRingFill').style.strokeDashoffset='239';
+    var _pw0=el('progWeight');if(_pw0)_pw0.textContent='— kg';
+    var _pd0=el('progDelta');if(_pd0)_pd0.textContent='';
+    var _pm0=el('progMoti');if(_pm0)_pm0.textContent='Configure seu perfil para ver o progresso.';
+    var _prp=el('progRingPct');if(_prp)_prp.textContent='—';var _png=el('progNoGoal');if(_png)_png.style.display='none';var _ppj=el('progProj');if(_ppj)_ppj.style.display='none';
+    var _pp0=el('pkPerd');if(_pp0)_pp0.textContent='—';
+    var _pf0=el('pkFaltam');if(_pf0)_pf0.textContent='—';
+    var _pr0=el('pkRitmo');if(_pr0)_pr0.textContent='—';
+    var _ps0=el('pdStart');if(_ps0)_ps0.textContent='—';
+    var _pn0=el('pdNow');if(_pn0)_pn0.textContent='—';
+    var _pg0=el('pdGoal');if(_pg0)_pg0.textContent='—';
+    var _prf0=el('progRingFill');if(_prf0)_prf0.style.strokeDashoffset='239';
     return;
   }
   var gw=S.profile.weightGoalKg;
@@ -3208,58 +3467,58 @@ function renderProgresso(cw,sw,rl,dh,ma){
   var pct=total&&perd?Math.min(100,Math.round((perd/total)*100)):null;
 
   // Peso atual
-  el('progWeight').textContent=rd(cw,1)+' kg';
+  var _pw=el('progWeight');if(_pw)_pw.textContent=rd(cw,1)+' kg';
 
   // Delta
   if(perd&&perd>0) el('progDelta').innerHTML='<span style="color:#4ade80">−'+rd(perd,1)+' kg perdidos ▼</span>';
   else if(perd&&perd<0) el('progDelta').innerHTML='<span style="color:#f87171">+'+rd(Math.abs(perd),1)+' kg ▲</span>';
-  else el('progDelta').textContent='';
+  else{var _pd=el('progDelta');if(_pd)_pd.textContent='';}
 
   // Motivação
   var moti=MOTIS[0];
   if(pct!==null) MOTIS.forEach(function(m){if(pct>=m.min&&pct<m.max) moti=m;});
-  el('progMoti').textContent=moti.s;
-  el('progTag').textContent=moti.t;
+  var _pm=el('progMoti');if(_pm)_pm.textContent=moti.s;
+  var _pt=el('progTag');if(_pt)_pt.textContent=moti.t;
 
   // Anel SVG
   var circumference=239;
   if(pct!==null){
     var offset=circumference-(pct/100)*circumference;
-    el('progRingPct').textContent=pct+'%';
-    setTimeout(function(){el('progRingFill').style.strokeDashoffset=offset;},50);
+    var _prpA=el('progRingPct');if(_prpA)_prpA.textContent=pct+'%';
+    setTimeout(function(){var _prf=el('progRingFill');if(_prf)_prf.style.strokeDashoffset=offset;},50);
   }else{
-    el('progRingPct').textContent=perd?'—':'0%';
-    el('progRingFill').style.strokeDashoffset=circumference;
+    var _prpB=el('progRingPct');if(_prpB)_prpB.textContent=perd?'—':'0%';
+    var _prf2=el('progRingFill');if(_prf2)_prf2.style.strokeDashoffset=circumference;
   }
 
   // Urina tag
-  var ut=el('progUrineTag');ut.innerHTML='';
+  var ut=el('progUrineTag');if(ut)ut.innerHTML='';
   if(dh&&dh.urine){
     var umap={Clara:{cls:'tg',txt:'💧 Bem hidratado'},Media:{cls:'tw',txt:'⚠️ Beba mais água'},Escura:{cls:'tr',txt:'🔴 Desidratado'}};
     var um=umap[dh.urine];if(um) ut.innerHTML='<span class="prog-urine" style="'+(dh.urine==='Clara'?'border-color:rgba(74,222,128,.3);color:#4ade80':dh.urine==='Media'?'border-color:rgba(251,191,36,.3);color:#fbbf24':'border-color:rgba(248,113,113,.3);color:#f87171')+'">'+um.txt+'</span>';
   }
 
   // Barra de jornada
-  el('pdStart').textContent=sw?rd(sw,1)+' kg':'—';
-  el('pdNow').textContent=rd(cw,1)+' kg';
-  el('pdGoal').textContent=gw?rd(gw,1)+' kg':'?';
+  var _ps=el('pdStart');if(_ps)_ps.textContent=sw?rd(sw,1)+' kg':'—';
+  var _pn=el('pdNow');if(_pn)_pn.textContent=rd(cw,1)+' kg';
+  var _pgo=el('pdGoal');if(_pgo)_pgo.textContent=gw?rd(gw,1)+' kg':'?';
   var roadPct=pct!==null?pct:sw&&cw?Math.min(100,Math.max(0,Math.round(((sw-cw)/(sw*(gw?1:0.15)))*100))):0;
-  setTimeout(function(){el('progRoadFill').style.width=roadPct+'%';},80);
+  setTimeout(function(){var _prd=el('progRoadFill');if(_prd)_prd.style.width=roadPct+'%';},80);
 
   // Marco intermediário (50%)
   if(total&&sw){
     var mid=sw-total*0.5;
-    el('midMarkerWrap').style.display='flex';
-    el('midMarkerDot').className='prog-dot'+(cw<=mid?' current':'');
-    el('midMarkerLbl').textContent='50%';
-    el('midMarkerVal').textContent=rd(mid,1)+' kg';
+    var _mmw=el('midMarkerWrap');if(_mmw)_mmw.style.display='flex';
+    var _mmd=el('midMarkerDot');if(_mmd)_mmd.className='prog-dot'+(cw<=mid?' current':'');
+    var _mml=el('midMarkerLbl');if(_mml)_mml.textContent='50%';
+    var _mmv=el('midMarkerVal');if(_mmv)_mmv.textContent=rd(mid,1)+' kg';
   }else el('midMarkerWrap').style.display='none';
 
   // KPIs
-  el('pkPerd').textContent=perd&&perd>0?'−'+rd(perd,1)+' kg':'—';
-  el('pkFaltam').textContent=gw&&cw?rd(Math.max(0,cw-gw),1)+' kg':'—';
+  var _pp=el('pkPerd');if(_pp)_pp.textContent=perd&&perd>0?'−'+rd(perd,1)+' kg':'—';
+  var _pfa=el('pkFaltam');if(_pfa)_pfa.textContent=gw&&cw?rd(Math.max(0,cw-gw),1)+' kg':'—';
   var maArr=ma||calcMA7();var rl2=rl!==null?rl:perdaSemana(maArr);
-  el('pkRitmo').textContent=rl2!==null?rd(rl2,2)+' kg/sem':'—';
+  var _pri=el('pkRitmo');if(_pri)_pri.textContent=rl2!==null?rd(rl2,2)+' kg/sem':'—';
 
   // Projeção para meta
   if(gw&&cw&&rl2&&rl2>0){
@@ -3287,26 +3546,27 @@ function render(){
   var sw=S.profile.weightStartKg,cw=M?M.w:null,lma=ma.length?ma[ma.length-1].avg:null;
   var perd=sw&&cw&&sw>cw?sw-cw:null,dh=getDH(),pd=proxDose();
   var streak=calcStreak();
-  el('streakEl').style.display=streak>=2?'flex':'none';if(streak>=2) el('streakNum').textContent=streak;
+  var _se=el('streakEl');if(_se)_se.style.display=streak>=2?'flex':'none';if(streak>=2) el('streakNum').textContent=streak;
   renderConquistas(perd);
   renderProxDose();
   renderCanaetaPainel();
+  renderMetaDia();
   renderGuiaRapido();
   renderExercicioCard();
+  renderExercicioSemanal();
   verificarMetaOntem();
-  var ms=checkMS(perd);el('msEl').style.display=(ms&&perd>0)?'flex':'none';if(ms&&perd>0){el('msIc').textContent=ms.ic;el('msMsg').textContent=ms.msg;el('msSub').textContent=ms.sub;}
+  var ms=checkMS(perd);var _me=el('msEl');if(_me){_me.style.display=(ms&&perd>0)?'flex':'none';if(ms&&perd>0){var _mi=el('msIc');var _mm=el('msMsg');var _ms2=el('msSub');if(_mi)_mi.textContent=ms.ic;if(_mm)_mm.textContent=ms.msg;if(_ms2)_ms2.textContent=ms.sub;}}
   var nr=buildNarr(M,rl,perd,dh,pd);var _nt=el('narrTag');if(_nt){_nt.textContent=nr.tag;el('narrMsg').textContent=nr.msg;el('narrDet').textContent=nr.det;el('narrBtn').style.display=nr.btn?'inline-flex':'none';}
   var _sb=el('stBar');if(_sb){if(rh){_sb.style.display='flex';_sb.className='sbar '+rh.bar;el('stLbl').textContent=rh.lbl;el('stMsg').textContent=rh.msg;el('stTag').className='tag '+rh.cls;el('stTag').textContent=rh.lbl;}else _sb.style.display='none';}
   var ld=S.daily.slice().sort(porData),lastD=ld.length?ld[ld.length-1]:null;
-  el('alSint').style.display=(lastD&&(lastD.intensity||0)>=2)?'block':'none';
-  el('alAgua').style.display=(!dh||!dh.waterMl)&&new Date().getHours()>=9?'block':'none';
+  var _as=el('alSint');if(_as)_as.style.display=(lastD&&(lastD.intensity||0)>=2)?'block':'none';
+  var _aw=el('alAgua');if(_aw)_aw.style.display=(!dh||!dh.waterMl)&&new Date().getHours()>=9?'block':'none';
   var al=el('alDose');
   if(pd&&pd.diff===0){al.textContent='💉 Hoje é dia da sua dose de '+S.caneta.farmaco+'. Não esqueça!';al.style.display='block';al.className='alert alert-g';}
   else if(pd&&pd.diff===1){al.textContent='💉 Amanhã é dia da sua dose de '+S.caneta.farmaco+'.';al.style.display='block';al.className='alert alert-g';}
   else if(S.caneta.ultima){
     var diasDesde=Math.round((Date.now()-new Date(S.caneta.ultima+'T12:00:00').getTime())/(24*3600*1000));
-    if(diasDesde>=0&&diasDesde<=2){al.textContent='💧 Pós-dose: hidratação extra importante! GLP-1 pode causar náusea quando desidratado. Beba pelo menos '+Math.round((M?M.agua:2500)/1000*1.2)+' litros hoje.';al.style.display='block';al.className='alert alert-w';}
-    else al.style.display='none';
+    al.style.display='none'; // aviso pos-dose removido
   } else al.style.display='none';
 
   // PROGRESSO HERO
@@ -3327,19 +3587,19 @@ function render(){
     el('kTMB').textContent=Math.round(M.tmb);el('kGET').textContent=Math.round(M.tdee);el('kMeta').textContent=Math.round(M.meta);el('kDefH').textContent='déficit ~'+Math.round(M.def)+' kcal/dia';el('kPEst').textContent=rd(M.perda,2)+' kg';
     el('kPMin').textContent=Math.round(M.pm)+'g';el('kPIdeal').textContent=Math.round(M.pi1)+'–'+Math.round(M.pi2)+'g';el('kAgua').textContent=Math.round(M.agua);
     var _wml=dh&&dh.waterMl?dh.waterMl:0;var _copos=Math.round(_wml/250);
-    el('kAguaH').textContent=_wml?_copos+' copo'+(_copos!==1?'s':''):'—';
+    var _kah=el('kAguaH');if(_kah)_kah.textContent=_wml?_copos+' copo'+(_copos!==1?'s':''):'—';
     el('kAguaHH').textContent=_wml?_wml+' ml':'Registre no check-in';
     if(dh&&dh.waterMl){var ap2=Math.min(100,Math.round((dh.waterMl/M.agua)*100));el('aguaBarWrap').style.display='block';el('aguaPct').textContent=ap2+'%';el('aguaFill').style.width=ap2+'%';el('aguaFill').className='pbar-fill'+(ap2<50?' danger':ap2<80?' warn':'');}
-    else el('aguaBarWrap').style.display='none';
-    el('peqEl').innerHTML='<b>Equivalência proteica:</b><br>'+proteqiv(Math.round(M.pm));
+    else{var _abw=el('aguaBarWrap');if(_abw)_abw.style.display='none';}
+    var _peq=el('peqEl');if(_peq)_peq.innerHTML='<b>Equivalência proteica:</b><br>'+proteqiv(Math.round(M.pm));
     el('efTMB').innerHTML='Seu perfil → <strong>TMB: '+Math.round(M.tmb)+' kcal/dia</strong>';el('efMeta').innerHTML='GET: '+Math.round(M.tdee)+' → Meta: <strong>'+Math.round(M.meta)+' kcal/dia</strong>';el('efProt').innerHTML='Peso: '+rd(cw||0,1)+'kg → Mín: <strong>'+Math.round(M.pm)+'g</strong> | Ideal: <strong>'+Math.round(M.pi1)+'–'+Math.round(M.pi2)+'g</strong>';
     var diet=buildDiet(M);
     if(diet){el('dietCard').style.display='block';el('dietSub').textContent='Meta: ~'+Math.round(M.meta)+' kcal, ~'+Math.round(M.pm)+'g proteína.';var dm2=el('dietMeals');dm2.innerHTML='';diet.forEach(function(meal){var d=document.createElement('div');d.className='diet-meal';d.innerHTML='<div class="diet-time">'+meal.t+'</div><div><div class="diet-desc">'+meal.d+'</div><div class="diet-prot">'+meal.p+'</div></div>';dm2.appendChild(d);});}
-    else el('dietCard').style.display='none';
-  }else{['kTMB','kGET','kMeta','kPEst','kPMin','kPIdeal','kAgua','kAguaH'].forEach(function(id){el(id).textContent='—';});el('kDefH').textContent='—';el('kAguaHH').textContent='Configure seu perfil';el('aguaBarWrap').style.display='none';el('peqEl').textContent='Configure seu perfil.';el('dietCard').style.display='none';}
+    else{var _dc=el('dietCard');if(_dc)_dc.style.display='none';}
+  }else{['kTMB','kGET','kMeta','kPEst','kPMin','kPIdeal','kAgua','kAguaH'].forEach(function(id){var _e=el(id);if(_e)_e.textContent='—';});var _kdh=el('kDefH');if(_kdh)_kdh.textContent='—';var _kahh=el('kAguaHH');if(_kahh)_kahh.textContent='Configure seu perfil';var _abw2=el('aguaBarWrap');if(_abw2)_abw2.style.display='none';var _peq2=el('peqEl');if(_peq2)_peq2.textContent='Configure seu perfil.';var _dc2=el('dietCard');if(_dc2)_dc2.style.display='none';}
   if(S.caneta.farmaco){
     el('proxCard').style.display='block';
-    buildPKChart();el('dFarm').textContent=S.caneta.farmaco;el('dDose').textContent=S.caneta.dose||'—';var sem2=calcSemanas();el('dSem').textContent=sem2!==null?'Semana '+sem2:'—';
+    setTimeout(buildPKChart,50);el('dFarm').textContent=S.caneta.farmaco;el('dDose').textContent=S.caneta.dose||'—';var sem2=calcSemanas();el('dSem').textContent=sem2!==null?'Semana '+sem2:'—';
     if(pd){var pv=pd.diff<=0?'Hoje! 💉':pd.diff===1?'Amanhã':'Em '+pd.diff+' dia'+(pd.diff>1?'s':'')+' ('+dataBR(pd.date)+')';el('proxVal').textContent=pv;el('proxTag').className=pd.diff<=0?'tag tr':pd.diff<=2?'tag tw':'tag tg';el('proxTag').textContent=pd.diff<=0?'Hoje':pd.diff<=2?'Em breve':'Aguardando';}
     el('chDrug').textContent=S.caneta.farmaco;el('chDose').textContent=S.caneta.dose?'Dose atual: '+S.caneta.dose:'Dose não configurada';
     var crow=el('chRow');crow.innerHTML='';
@@ -3372,18 +3632,18 @@ function render(){
     var protHoje=dh&&dh.proteinG?dh.proteinG:0;
     var protMeta=Math.round(M.pm);
     var protPct=Math.min(100,Math.round((protHoje/protMeta)*100));
-    el('protPlacarWrap').style.display='block';
-    el('protPlacarVal').textContent=protHoje+'g';
-    el('protPlacarMeta').textContent='/ '+protMeta+'g';
-    el('protPlacarPct').textContent=protPct+'%';
-    el('protPlacarBar').style.width=protPct+'%';
-    el('protPlacarBar').style.background=protPct>=80?'linear-gradient(90deg,var(--g500),var(--g400))':protPct>=40?'linear-gradient(90deg,var(--warn),#fbbf24)':'linear-gradient(90deg,var(--red),#f87171)';
-    el('protPlacarPct').style.color=protPct>=80?'var(--g400)':protPct>=40?'var(--warn)':'#f87171';
+    var _ppw=el('protPlacarWrap');if(_ppw)_ppw.style.display='block';
+    var _ppv=el('protPlacarVal');if(_ppv)_ppv.textContent=protHoje+'g';
+    var _ppm=el('protPlacarMeta');if(_ppm)_ppm.textContent='/ '+protMeta+'g';
+    var _ppp=el('protPlacarPct');if(_ppp)_ppp.textContent=protPct+'%';
+    var _ppb=el('protPlacarBar');if(_ppb)_ppb.style.width=protPct+'%';
+    if(_ppb)_ppb.style.background=protPct>=80?'linear-gradient(90deg,var(--g500),var(--g400))':protPct>=40?'linear-gradient(90deg,var(--warn),#fbbf24)':'linear-gradient(90deg,var(--red),#f87171)';
+    if(_ppp)_ppp.style.color=protPct>=80?'var(--g400)':protPct>=40?'var(--warn)':'#f87171';
     var msgs=['Registre sua proteína no check-in','Bom começo! Continue caprichando 💪','Ótimo! Quase na meta 🎯','Meta batida! Músculos protegidos ✅'];
     var mi=protPct>=100?3:protPct>=70?2:protPct>=30?1:0;
-    el('protPlacarMsg').textContent=msgs[mi];
+    var _ppmsg=el('protPlacarMsg');if(_ppmsg)_ppmsg.textContent=msgs[mi];
   } else {
-    el('protPlacarWrap').style.display='none';
+    if(_ppw)_ppw.style.display='none';
   }
   var co2={responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b8f77',font:{size:10}},grid:{color:'rgba(15,26,19,.05)'}},y:{ticks:{color:'#6b8f77',font:{size:10}},grid:{color:'rgba(15,26,19,.05)'}}}};
   var ds2=[{label:'Peso',data:dw,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.07)',pointRadius:3,pointBackgroundColor:'#16a34a',borderWidth:2,tension:0.3},{label:'Média 7d',data:dm,borderColor:'#2563eb',backgroundColor:'transparent',pointRadius:0,borderWidth:2,tension:0.4,spanGaps:true}];
@@ -3559,13 +3819,13 @@ function renderCanaetaPainel(){
   var ultima=S.caneta.ultima;
   if(!f){wrap.style.display='none';return;}
   wrap.style.display='block';
-  el('caPainelFarm').textContent=f;
-  el('caPainelDose').textContent=dose?'Dose atual: '+dose+' mg'+(S.caneta.freq==='diaria'?' · Diário':' · Semanal'):'Dose não configurada';
+  var _cpf=el('caPainelFarm');if(_cpf)_cpf.textContent=f;
+  var _cpd=el('caPainelDose');if(_cpd)_cpd.textContent=dose?'Dose atual: '+dose+' mg'+(S.caneta.freq==='diaria'?' · Diário':' · Semanal'):'Dose não configurada';
   if(!ultima){
-    el('caPainelProxTag').textContent='';
-    el('caPainelProxVal').textContent='Registre a última dose';
-    el('caPainelBar').style.width='0%';
-    el('caPainelCiclo').textContent='';
+    var _cpt=el('caPainelProxTag');if(_cpt)_cpt.textContent='';
+    var _cpv=el('caPainelProxVal');if(_cpv)_cpv.textContent='Registre a última dose';
+    var _cpb=el('caPainelBar');if(_cpb)_cpb.style.width='0%';
+    var _cpc=el('caPainelCiclo');if(_cpc)_cpc.textContent='';
     return;
   }
   var freq=S.caneta.freq||'semanal';
@@ -3577,20 +3837,20 @@ function renderCanaetaPainel(){
   var diffD=Math.ceil(diffMs/(24*3600*1000));
   var passadoMs=agora.getTime()-dtUlt.getTime();
   var pct=Math.min(100,Math.round((passadoMs/(diasCiclo*24*3600*1000))*100));
-  el('caPainelBar').style.width=pct+'%';
-  el('caPainelBar').style.background=pct>85?'linear-gradient(90deg,#f59e0b,#ef4444)':pct>60?'linear-gradient(90deg,#f59e0b,#fbbf24)':'linear-gradient(90deg,var(--g500),var(--g400))';
+  var _cpb2=el('caPainelBar');if(_cpb2)_cpb2.style.width=pct+'%';
+  if(_cpb2)_cpb2.style.background=pct>85?'linear-gradient(90deg,#f59e0b,#ef4444)':pct>60?'linear-gradient(90deg,#f59e0b,#fbbf24)':'linear-gradient(90deg,var(--g500),var(--g400))';
   if(diffMs<0){
-    el('caPainelProxTag').style.color='#ef4444';el('caPainelProxTag').textContent='DOSE ATRASADA';
-    el('caPainelProxVal').style.color='#ef4444';el('caPainelProxVal').textContent='Aplicar agora';
-    el('caPainelCiclo').textContent='Registre a aplicação na aba Caneta';
+    var _cpt2=el('caPainelProxTag');if(_cpt2){_cpt2.style.color='#ef4444';_cpt2.textContent='DOSE ATRASADA';}
+    var _cpv2=el('caPainelProxVal');if(_cpv2){_cpv2.style.color='#ef4444';_cpv2.textContent='Aplicar agora';}
+    var _cpc2=el('caPainelCiclo');if(_cpc2)_cpc2.textContent='Registre a aplicação na aba Caneta';
   } else if(diffD===0){
-    el('caPainelProxTag').style.color='#f59e0b';el('caPainelProxTag').textContent='DOSE HOJE';
-    el('caPainelProxVal').style.color='#f59e0b';el('caPainelProxVal').textContent='Aplicar hoje';
-    el('caPainelCiclo').textContent=dtProx.toLocaleDateString('pt-BR',{weekday:'long'});
+    var _cpt3=el('caPainelProxTag');if(_cpt3){_cpt3.style.color='#f59e0b';_cpt3.textContent='DOSE HOJE';}
+    var _cpv3=el('caPainelProxVal');if(_cpv3){_cpv3.style.color='#f59e0b';_cpv3.textContent='Aplicar hoje';}
+    var _cpc3=el('caPainelCiclo');if(_cpc3)_cpc3.textContent=dtProx.toLocaleDateString('pt-BR',{weekday:'long'});
   } else {
-    el('caPainelProxTag').style.color='rgba(255,255,255,.5)';el('caPainelProxTag').textContent='PRÓXIMA DOSE';
-    el('caPainelProxVal').style.color='var(--g400)';var diasSemana=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];el('caPainelProxVal').textContent='em '+diffD+' dia'+(diffD>1?'s':'')+' — '+diasSemana[dtProx.getDay()];
-    el('caPainelCiclo').textContent=dtProx.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'short'});
+    var _cpt4=el('caPainelProxTag');if(_cpt4){_cpt4.style.color='rgba(255,255,255,.5)';_cpt4.textContent='PRÓXIMA DOSE';}
+    var _cpv4=el('caPainelProxVal');if(_cpv4){_cpv4.style.color='var(--g400)';var diasSemana=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];_cpv4.textContent='em '+diffD+' dia'+(diffD>1?'s':'')+' — '+diasSemana[dtProx.getDay()];}
+    var _cpc4=el('caPainelCiclo');if(_cpc4)_cpc4.textContent=dtProx.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'short'});
   }
 }
 
@@ -3941,7 +4201,7 @@ function salvarPerfil(){
 function salvarCaneta(){
   var f=el('cFarm').value;if(!f){alert('Selecione o fármaco.');return;}
   S.caneta.farmaco=f;S.caneta.dose=el('cDose').value;S.caneta.freq=el('cFreq').value;S.caneta.inicio=el('cIni').value;S.caneta.ultima=el('cUlt').value;S.caneta.diaSem=nv(el('cDia').value,1);S.caneta.obs=el('cObs').value;
-  render();toast('Tratamento salvo! 💉');
+  render();setTimeout(buildPKChart,80);setTimeout(drawPkGauge.bind(null,null),80);toast('Tratamento salvo! 💉');
 }
 function updateDoses(){
   var f=el('cFarm').value,s=el('cDose');s.innerHTML='<option value="">— selecione a dose —</option>';
