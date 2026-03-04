@@ -651,8 +651,8 @@ tr:hover td{background:var(--g50)}
     <button class="tb" id="nb-caneta" onclick="go('caneta')">
       <span class="tb-ic">💉</span><span>Caneta</span><span class="tb-dot"></span>
     </button>
-    <button class="tb" id="nb-sintomas" onclick="go('sintomas')">
-      <span class="tb-ic">🩺</span><span>Sintomas</span><span class="tb-dot"></span>
+    <button class="tb" id="nb-faq" onclick="go('faq')">
+      <span class="tb-ic">❓</span><span>Dúvidas</span><span class="tb-dot"></span>
     </button>
     <button class="tb" id="nb-mais" onclick="abrirMais()">
       <span class="tb-ic">☰</span><span>Mais</span><span class="tb-dot"></span>
@@ -667,6 +667,7 @@ tr:hover td{background:var(--g50)}
     <div style="padding:0 8px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
       <button onclick="fecharMais();go('perfil')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">⚙️</span>Perfil</button>
       <button onclick="fecharMais();go('historico')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">📋</span>Histórico</button>
+      <button onclick="fecharMais();go('sintomas')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">🩺</span>Sintomas</button>
       <button onclick="fecharMais();go('educacao')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">📚</span>Entenda</button>
       <button onclick="fecharMais();go('faq')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">❓</span>Dúvidas</button>
       <button onclick="fecharMais();go('manual')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;grid-column:span 2"><span style="font-size:22px">📖</span>Manual de Aplicação</button>
@@ -683,8 +684,23 @@ tr:hover td{background:var(--g50)}
   <div class="alert alert-w" id="alAgua" style="display:none">💧 Sem registro de água hoje. Hidratação é fundamental no uso de GLP-1.</div>
   <div class="alert alert-g" id="alDose" style="display:none;margin-bottom:10px"></div>
 
+  <!-- ALERTA ANTI-FLACIDEZ -->
+  <div id="alertaFlacidez" style="display:none;margin-bottom:14px;padding:12px 14px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.1);font-size:13px;line-height:1.6;color:var(--ink)"></div>
+
   <!-- AVISO META ONTEM -->
   <div id="avisoMetaOntem" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink)"></div>
+
+  <!-- ATALHO FAQ -->
+  <button onclick="go('faq')" style="width:100%;margin-bottom:14px;padding:13px 16px;border-radius:14px;border:1.5px solid rgba(74,222,128,.25);background:linear-gradient(135deg,rgba(5,46,22,.7),rgba(22,101,52,.5));color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:20px">❓</span>
+      <div style="text-align:left">
+        <div style="font-size:13px;font-weight:700">Central de Dúvidas</div>
+        <div style="font-size:11px;color:var(--g300);opacity:.85">51 respostas sobre GLP-1 · Sintomas · Alertas</div>
+      </div>
+    </div>
+    <span style="color:var(--g300);font-size:16px">›</span>
+  </button>
 
   <!-- 1 LEIA TODO DIA -->
   <div style="border-radius:14px;overflow:hidden;margin-bottom:14px;border:1px solid rgba(74,222,128,.2)">
@@ -704,6 +720,7 @@ tr:hover td{background:var(--g50)}
       🥩 <strong>Proteína todo dia</strong> — constrói e protege músculo. Sem ela, o corpo devora o próprio músculo para obter energia.<br><br>
       💧 <strong>Água todo dia</strong> — Os GLP-1 suprimem não só a fome, mas também a <strong>sede</strong>. Você pode estar desidratado sem sentir. Sem água, os rins não eliminam toxinas, o metabolismo trava, a pressão cai, as náuseas pioram e o músculo não se recupera. Beba mesmo sem sentir sede.<br><br>
       💪 <strong>Exercício resistido</strong> — o único estímulo que preserva músculo durante o emagrecimento. Sem ele, mesmo comendo proteína, o músculo enfraquece.<br><br>
+      🧠 <strong>Reeducação alimentar</strong> — o GLP-1 faz algo que nenhuma dieta consegue: silencia a compulsão. Use essa janela para criar novos hábitos. O remédio um dia para — os hábitos ficam para sempre. Quem emagrece comendo mal e não muda, recupera o peso quando para. Quem usa esse período para aprender a comer de verdade, chega na meta transformado.<br><br>
       <strong style="color:var(--g300)">A medicação faz o trabalho pesado. Você faz a diferença.</strong>
     </div>
   </div>
@@ -1167,6 +1184,7 @@ tr:hover td{background:var(--g50)}
     </div>
     <div class="row" style="margin-top:12px">
       <button class="btn bp" onclick="addPeso()">Salvar pesagem</button>
+      <div id="alertaVelocidadePeso" style="display:none;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid;font-size:12px;line-height:1.6"></div>
       <button class="btn bg2" style="padding:7px 12px;font-size:12px" onclick="delPeso()">Apagar última</button>
     </div>
     <div class="chw"><canvas id="chartCaneta" height="70"></canvas></div>
@@ -2933,6 +2951,30 @@ function toggleLeiaTodoDia(){
   if(b.style.display==='none'){b.style.display='block';if(a)a.style.transform='rotate(180deg)';}
   else{b.style.display='none';if(a)a.style.transform='rotate(0deg)';}
 }
+function checkAlertaFlacidez(){
+  var el2=document.getElementById('alertaFlacidez');
+  if(!el2) return;
+  var M=calcMetrics();if(!M){el2.style.display='none';return;}
+  var meta=Math.round(M.pm);
+  // Verificar últimos 3 dias (excluindo hoje)
+  var diasAbaixo=0;
+  for(var i=1;i<=3;i++){
+    var d=new Date();d.setDate(d.getDate()-i);
+    var ds=d.toISOString().slice(0,10);
+    var dh=S.daily.find(function(x){return x.date===ds;})||{};
+    var prot=dh.proteinG||0;
+    if(prot>0 && prot<meta*0.8) diasAbaixo++;
+    else if(prot===0) diasAbaixo++; // sem registro = abaixo
+  }
+  if(diasAbaixo>=3){
+    el2.style.display='block';
+    el2.innerHTML='⚠️ <strong>Atenção à flacidez!</strong> Você ficou abaixo da meta de proteína por 3 dias seguidos. '
+      +'Com GLP-1, isso aumenta o risco de perder músculo junto com a gordura — e músculo é o que dá firmeza. '
+      +'<strong>Hoje é o dia de priorizar sua proteína!</strong> Meta: '+meta+'g';
+  } else {
+    el2.style.display='none';
+  }
+}
 function renderMetaDia(){
   var M=calcMetrics();if(!M)return;
   if(!el('metaAguaBar'))return;
@@ -3550,7 +3592,7 @@ function render(){
   renderConquistas(perd);
   renderProxDose();
   renderCanaetaPainel();
-  renderMetaDia();
+  renderMetaDia();checkAlertaFlacidez();
   renderGuiaRapido();
   renderExercicioCard();
   renderExercicioSemanal();
@@ -4065,28 +4107,107 @@ function renderChartSemanal(){
 
 /* ══ FAQ ══ */
 var FAQ=[
-  {cat:'💉 Medicação',ic:'💉',q:'Esqueci de tomar a dose semanal. O que faço?',a:'Se lembrou no mesmo dia ou no dia seguinte: aplique normalmente. Se já passou mais de 2 dias: pule essa dose e aplique na próxima data prevista. Nunca tome duas doses para compensar.'},
+/* ─── 💉 MEDICAÇÃO ─── */
+  {cat:'💉 Medicação',ic:'💉',q:'Por que sinto mais fome antes da próxima dose?',a:'É completamente normal. O medicamento age como uma onda — começa forte logo após a aplicação e vai diminuindo ao longo da semana. Nos últimos 1 a 2 dias antes da próxima dose, a concentração no sangue está no ponto mais baixo — chamado "vale" do medicamento. A saciedade diminui e a fome volta. Não significa que o remédio parou de funcionar — significa que está na hora da próxima dose.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Por que a balança parou mas estou emagrecendo?',a:'Seu corpo não perde peso em linha reta. Em muitos momentos você está perdendo gordura mas retendo água — e a balança não mostra isso. Outros fatores que travam a balança: intestino preso, menstruação, início de musculação e variação de sal na alimentação. Se as roupas estão folgando e você está se sentindo melhor — o processo está acontecendo. Se passar de 3 semanas sem nenhuma mudança, converse com seu médico.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Esqueci de tomar a dose semanal. O que faço?',a:'Se faltam mais de 2 dias para a próxima dose: aplique assim que lembrar e mantenha o dia habitual na semana seguinte. Se faltam menos de 2 dias: pule essa dose e aplique normalmente no dia habitual. Nunca aplique duas doses para compensar. Para medicamentos diários como Saxenda: aplique no mesmo dia se lembrar dentro de 12 horas — depois disso, pule e retome no dia seguinte.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Posso beber álcool durante o tratamento?',a:'Não é proibido, mas exige cuidado. O álcool pode piorar o enjoo, especialmente nas primeiras semanas. Pode causar hipoglicemia em quem usa o medicamento para diabetes. Bebidas gaseificadas pioram o desconforto abdominal. Se for beber, prefira quantidades pequenas, com comida, e evite nos dias próximos à aplicação quando o efeito está mais forte.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Medicamento manipulado é seguro?',a:'A semaglutida manipulada não tem aprovação da Anvisa — apenas a versão original tem. Isso não significa que seja necessariamente perigosa, mas significa que não passou pelos mesmos testes de qualidade, concentração e pureza. Tirzepatida manipulada é mais comum por conta do custo do Mounjaro original. Se você usa manipulado: escolha farmácia certificada, exija laudo de análise e use sempre a calculadora do Equilibra para calcular a dose corretamente.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Posso guardar o medicamento fora da geladeira?',a:'Sim, por tempo limitado. Ozempic e Wegovy: até 6 semanas fora da geladeira abaixo de 30°C. Mounjaro: até 21 dias fora da geladeira. Saxenda: até 30 dias. O que nunca pode: congelar, expor ao sol direto ou deixar em carro quente. Medicamento que foi congelado deve ser descartado — perde a eficácia.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Por que começo com dose baixa e vou aumentando?',a:'Para dar tempo ao seu corpo de se adaptar. A dose inicial (ex: 0,25mg do Ozempic) não é dose terapêutica — é só para o estômago aprender a trabalhar com o medicamento. Pular essa etapa aumenta muito o enjoo, vômito e dor abdominal. Cada escalonamento de dose pode trazer uma nova onda leve de sintomas — isso é normal e passa em 1 a 2 semanas.'},
+  {cat:'💉 Medicação',ic:'💉',q:'É normal sentir menos fome logo após aplicar?',a:'Sim, e isso é o medicamento funcionando. O efeito de saciedade começa nas primeiras horas após a aplicação e atinge o pico entre 24 e 72 horas depois. Aproveite esse período para priorizar proteína — mesmo sem fome, tente comer pequenas quantidades de alimentos proteicos. É o momento mais importante da semana para proteger seus músculos.'},
   {cat:'💉 Medicação',ic:'💉',q:'Posso mudar o dia da aplicação semanal?',a:'Sim. Você pode mudar o dia desde que mantenha pelo menos 4 dias de intervalo entre as doses. Após a mudança, mantenha o novo dia fixo toda semana.'},
-  {cat:'💉 Medicação',ic:'💉',q:'Posso tomar com outros remédios?',a:'Informe sempre ao seu médico todos os medicamentos em uso. Atenção especial com: insulina, antidiabéticos orais, anticoagulantes e remédios para tireoide. O GLP-1 pode alterar a absorção de medicamentos orais.'},
-  {cat:'💉 Medicação',ic:'💉',q:'Por quanto tempo vou precisar usar o GLP-1?',a:'O tratamento é geralmente de longo prazo. Estudos mostram que interromper sem mudança de hábitos leva à recuperação de peso em até 12 meses. Converse com seu médico sobre a duração ideal para você.'},
-  {cat:'💉 Medicação',ic:'💉',q:'Posso tomar álcool durante o tratamento?',a:'Álcool é permitido com moderação, mas pode piorar náusea e tontura. Além disso, bebidas alcoólicas são calóricas e podem comprometer os resultados. Se tomar, prefira nas refeições e hidrate bem.'},
-  {cat:'💉 Medicação',ic:'💉',q:'O remédio precisa de geladeira?',a:'Sim. Frascos e canetas não abertos: guardar entre 2°C e 8°C na geladeira. Após abrir: pode ficar em temperatura ambiente (até 30°C) por até 28 dias. Nunca congele. Proteja da luz solar.'},
-  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Náusea intensa — é normal? Quanto tempo dura?',a:'Náusea é o efeito colateral mais comum, especialmente nas primeiras semanas ou após aumento de dose. Dicas: coma devagar, volumes menores, proteína primeiro, não deite após comer. Geralmente melhora em 2 a 4 semanas. Se persistir intensa por mais de 7 dias, avise seu médico.'},
-  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Estou com constipação (intestino preso). O que faço?',a:'Aumente a ingestão de água imediatamente — esse é o passo mais importante. Adicione fibras gradualmente (frutas, legumes, aveia). Ameixa, mamão e kiwi ajudam. Se passar de 5 dias sem evacuar, avise seu médico. Não use laxantes sem orientação.'},
-  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Estou sem apetite nenhum. Preciso comer mesmo assim?',a:'Sim! Ausência de fome é efeito do GLP-1, mas você precisa comer o mínimo de proteína diária para proteger seus músculos. Foque em: ovos, cottage, iogurte grego, whey protein — alimentos proteicos de fácil ingestão mesmo sem fome. Avise seu médico se não conseguir comer.'},
-  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Sinto tontura. O que pode ser?',a:'Pode ser desidratação (beba mais água), queda de pressão ao levantar rápido (levante devagar), ou hipoglicemia se usar insulina concomitantemente. Tontura intensa com suor frio → procure emergência imediatamente.'},
-  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Estou com refluxo e azia. O que faço?',a:'O GLP-1 retarda o esvaziamento gástrico, o que pode causar refluxo. Dicas: não deite por 2 a 3 horas após comer, refeições menores e mais frequentes, evite café e alimentos gordurosos à noite, eleve a cabeceira da cama. Se persistente, avise seu médico.'},
-  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Parei de emagrecer. O que está acontecendo?',a:'Platôs são normais e esperados — o corpo se adapta. Verifique: proteína está na meta? Água em dia? Sono de qualidade? Atividade física? Às vezes o platô coincide com aumento de dose. Não entre em pânico — continue os hábitos e o peso voltará a cair.'},
-  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Engordei um pouco essa semana. Errei?',a:'Não necessariamente. Variações de 1 a 2 kg no dia a dia são normais e refletem água, sal, intestino e ciclo menstrual. Confie na tendência de 7 a 14 dias, não no peso de um único dia. Pesar sempre no mesmo horário (manhã, em jejum) dá mais consistência.'},
-  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Posso pesar todo dia?',a:'Pode, mas com cautela emocional. Pesar diariamente ajuda a ver tendências, mas variações normais podem gerar ansiedade desnecessária. Se te afeta emocionalmente, pese 2 a 3 vezes por semana, sempre no mesmo horário e condições.'},
-  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Preciso fazer dieta restritiva junto com o GLP-1?',a:'Não precisa de dieta radical. O GLP-1 reduz a fome naturalmente. Foque em: proteína em toda refeição, comer devagar, volumes menores. Evite ultra-processados e excesso de açúcar. A meta calórica do app já está calculada para você.'},
-  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Posso fazer jejum intermitente junto?',a:'É possível, mas não é necessário e pode ser contraproducente com GLP-1 — você já come menos naturalmente. Se optar pelo jejum, garanta que a janela de alimentação seja suficiente para atingir a meta de proteína. Converse com seu médico antes.'},
-  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Preciso tomar suplementos?',a:'Com alimentação reduzida, os mais relevantes são: proteína (whey se não atingir a meta), vitamina D (a maioria tem deficiência), B12 (se vegetariano ou dieta muito restrita), magnésio (ajuda no sono e energia). Converse com seu médico para solicitar exames.'},
+  {cat:'💉 Medicação',ic:'💉',q:'Posso tomar com outros remédios?',a:'Informe sempre ao seu médico todos os medicamentos em uso. Atenção especial com insulina, antidiabéticos orais, anticoagulantes e remédios para tireoide. O GLP-1 pode alterar a absorção de medicamentos orais — tome outros medicamentos orais pelo menos 1 hora antes ou 4 horas após o GLP-1 oral.'},
+/* ─── 🤢 EFEITOS COLATERAIS ─── */
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Náusea — é normal e o que fazer?',a:'<strong>Sim, é o sintoma mais comum.</strong> O medicamento retarda o esvaziamento do estômago — a comida fica mais tempo lá dentro, gerando saciedade mas também enjoo no início.<br><br><strong>O que fazer:</strong> Coma devagar e em volumes menores · Evite deitar logo após comer · Prefira alimentos leves · Evite frituras · Beba água em pequenos goles · Gengibre (chá ou cápsulas) pode ajudar.<br><br><strong>⚠️ Pode ser sinal de dose elevada:</strong> Náusea intensa ou persistente pode indicar que a dose está acima do necessário para o seu organismo. Converse com seu médico sobre revisar a dose antes de desistir do tratamento.<br><br><strong>🚨 Vá ao médico se:</strong> Vômitos que não param por mais de 24h · Não consegue beber água sem vomitar · Boca muito seca, urina escura, tontura ao levantar · Dor abdominal intensa junto com o enjoo.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Constipação (intestino preso) — o que fazer?',a:'<strong>Muito comum com GLP-1.</strong> O mesmo mecanismo que retarda o estômago também retarda o intestino. Com menos comida e menos fibra, fica ainda mais lento.<br><br><strong>O que fazer:</strong> Aumente água — mínimo 2 litros por dia (passo mais importante!) · Inclua fibras: frutas com casca, verduras, aveia, chia · Ameixa, mamão e kiwi ajudam · Movimento físico — mesmo uma caminhada · Horário fixo para ir ao banheiro.<br><br><strong>🚨 Vá ao médico se:</strong> Mais de 5 dias sem evacuar · Dor abdominal intensa · Abdômen distendido e duro · Sangue nas fezes.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Diarreia — o que fazer?',a:'<strong>Menos comum que a constipação</strong>, mas acontece especialmente no início ou após aumento de dose. Geralmente é temporária.<br><br><strong>O que fazer:</strong> Hidratação rigorosa — água, água de coco, soro caseiro · Alimentos de fácil digestão: arroz, frango, banana · Evite laticínios temporariamente · Evite adoçantes (sorbitol e manitol pioram a diarreia).<br><br><strong>⚠️ Pode ser sinal de dose elevada:</strong> Diarreia persistente toda semana pode indicar dose acima do necessário. Não normalize esse sintoma. Converse com seu médico.<br><br><strong>🚨 Vá ao médico se:</strong> Diarreia por mais de 3 dias seguidos · Sinais de desidratação · Sangue ou muco nas fezes · Febre junto com diarreia.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Refluxo e azia — o que fazer?',a:'<strong>Com o esvaziamento gástrico mais lento</strong>, o estômago fica cheio por mais tempo, aumentando a pressão e facilitando o refluxo.<br><br><strong>O que fazer:</strong> Não deite por pelo menos 2h após comer · Eleve a cabeceira da cama · Evite café, chocolate, frituras e álcool · Refeições menores e mais frequentes · Não use roupas apertadas após as refeições.<br><br><strong>🚨 Vá ao médico se:</strong> Dor no peito · Dificuldade para engolir · Refluxo que não melhora com nenhuma medida · Vômito com sangue.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Cansaço e fadiga — é normal?',a:'<strong>Algum cansaço inicial é comum</strong> — você está comendo menos e o corpo está se adaptando. Mas fadiga persistente merece atenção.<br><br><strong>Verifique:</strong> Está atingindo a meta de proteína? · Está comendo carboidrato suficiente para energia no treino? · Está hidratado? · Está dormindo bem?<br><br><strong>🚨 Vá ao médico se:</strong> Cansaço intenso que não melhora · Fraqueza muscular progressiva · Tontura ao levantar junto com cansaço.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Queda de cabelo — é do remédio?',a:'<strong>Não é causada diretamente pelo medicamento</strong>, mas pela perda de peso acelerada. Chama-se eflúvio telógeno — o folículo capilar sofre estresse nutricional durante o emagrecimento rápido.<br><br><strong>O que ajuda:</strong> Proteína suficiente (prioritário) · Zinco e biotina (converse com seu médico) · Evitar dietas muito restritivas · Paciência — o cabelo costuma se recuperar após estabilização do peso.<br><br><strong>🚨 Vá ao médico se:</strong> Queda muito intensa ou em placas.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Dor no local da aplicação — o que fazer?',a:'<strong>Comum e geralmente leve.</strong> Pode aparecer como vermelhão, coceira ou nódulo pequeno no local.<br><br><strong>O que fazer:</strong> Gire sempre o local de aplicação — abdômen, coxa e braço em rodízio · Retire o medicamento da geladeira 30 min antes (aplicar frio aumenta dor) · Deixe o álcool secar completamente antes de aplicar · Aplique devagar e segure por 10 segundos.<br><br><strong>🚨 Vá ao médico se:</strong> Inchaço grande ou endurecimento no local · Vermelhão que espalha · Febre associada.'},
+  {cat:'🤢 Efeitos colaterais',ic:'🤢',q:'Fome voltou forte antes da próxima dose — e agora?',a:'É o "vale" do medicamento — concentração no ponto mais baixo antes da próxima dose. É normal e esperado. O Equilibra mostra exatamente em que fase você está.<br><br><strong>Estratégias para o vale:</strong> Proteína em todas as refeições · Alimentos com fibra (saciam mais) · Água antes das refeições · Não pule refeições (fome em jejum é mais difícil de controlar) · Se muito intenso, converse com seu médico — pode ser sinal de que a dose precisa de ajuste.'},
+/* ─── ⚖️ SOBRE O PESO ─── */
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Quanto tempo para ver resultado?',a:'A maioria das pessoas nota diferença nas roupas antes de ver na balança — especialmente nas primeiras 2 a 4 semanas. Perda de gordura real começa a aparecer entre a 4ª e 8ª semana. Resultados mais expressivos geralmente aparecem entre o 2º e 4º mês, quando a dose terapêutica está estabelecida. Cada organismo responde diferente — não compare seu ritmo com o de outros.'},
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Parei de emagrecer. O que está acontecendo?',a:'Platôs são normais e esperados — o corpo se adapta. Verifique: proteína está na meta? Água em dia? Sono de qualidade? Atividade física? Às vezes o platô coincide com período de aumento de dose. Não entre em pânico — continue os hábitos. Se passar de 3 semanas sem mudança, converse com seu médico.'},
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Estou perdendo peso rápido demais — é perigoso?',a:'Perder mais de 1 kg por semana de forma consistente aumenta o risco de perder músculo junto com a gordura. O ideal é entre 0,5 e 1 kg por semana. Se estiver perdendo mais: aumente a proteína imediatamente · Intensifique exercício de força · Não reduza calorias além do que o app indica · Avise seu médico.'},
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Perdi peso mas fiquei com flacidez — o que aconteceu?',a:'Flacidez acontece quando a perda de peso é rápida e não acompanhada de proteína e exercício suficientes. O corpo perde gordura e músculo junto — e o músculo é o que dá firmeza à pele. A prevenção é sempre mais fácil que o tratamento: proteína na meta + musculação 2 a 3x por semana durante todo o tratamento. Se já tem flacidez: foque em reconstruir músculo com exercício resistido.'},
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'As roupas estão folgando mas o peso não caiu — normal?',a:'Sim! Esse é um dos melhores sinais possíveis. Significa que você está perdendo gordura e ganhando (ou mantendo) músculo. Como músculo é mais denso que gordura, o volume do corpo diminui mesmo sem perda expressiva na balança. Confie no espelho e nas roupas tanto quanto na balança.'},
+  {cat:'⚖️ Sobre o peso',ic:'⚖️',q:'Engordei um pouco essa semana. Errei?',a:'Não necessariamente. Variações de 1 a 2 kg no dia a dia são normais — refletem água, sal, intestino e ciclo menstrual. Confie na tendência de 7 a 14 dias, não no peso de um único dia. Pese sempre no mesmo horário (manhã, em jejum) para ter consistência.'},
+/* ─── 🍽️ ALIMENTAÇÃO ─── */
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'O que comer quando não tenho fome?',a:'Com GLP-1 a fome diminui muito — mas o corpo continua precisando de nutrientes, especialmente proteína. A estratégia não é esperar a fome chegar: coma por horário, em volumes menores, priorizando proteína.<br><br><strong>Opções de alta proteína com pouco volume:</strong><br>• 2 ovos mexidos = 12g de proteína pura<br>• Iogurte grego 200g = 20g de proteína pura<br>• Atum em lata 100g = 26g de proteína pura<br>• Queijo cottage 100g = 12g de proteína pura<br><br>Se passar mais de 4-5 horas sem comer nada, seu corpo começa a buscar energia nos músculos.'},
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Quanto de proteína preciso por dia?',a:'A recomendação para quem usa GLP-1 é entre 1,2g e 1,6g de <strong>proteína pura</strong> por quilo de peso por dia.<br><br><strong>⚠️ Atenção — confusão muito comum:</strong> Proteína pura não é o mesmo que peso do alimento. Quando você come 100g de frango, não ingere 100g de proteína — ingere cerca de 31g de proteína pura.<br><br><strong>Tabela de proteína pura por alimento:</strong><br>• Peito de frango cozido 100g = 31g<br>• Atum em lata escorrido 100g = 26g<br>• Patinho cozido 100g = 28g<br>• Ovo inteiro 1 unidade = 6g<br>• Iogurte grego 200g = 20g<br>• Whey protein 1 scoop (30g pó) = 22-25g<br>• Grão-de-bico cozido 100g = 9g<br><br>O Equilibra calcula sua meta personalizada e mostra gramas de proteína pura — não o peso do alimento.'},
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Posso comer carboidrato?',a:'Sim — e carboidrato é importante, especialmente para quem está treinando. É o principal combustível para o exercício de força. Cortar carboidrato demais causa fadiga, queda de rendimento no treino e pode acelerar a perda muscular.<br><br><strong>Prefira carboidratos de digestão lenta:</strong><br>✅ Arroz integral · Batata doce · Aveia · Frutas com casca · Pão integral<br><br><strong>Evite em excesso:</strong><br>❌ Refrigerante · Doces · Pão branco · Suco de fruta (prefira a fruta inteira)<br><br><strong>Dica prática:</strong> Coma uma porção de carboidrato antes do treino — uma batata doce pequena ou uma fruta. Isso garante energia para o exercício e protege seus músculos.'},
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Posso tomar whey protein?',a:'Sim — pode ser muito útil. Com o apetite reduzido, whey protein é uma forma prática de complementar a proteína sem precisar comer grande volume de comida. Escolha versões sem açúcar adicionado.<br><br><strong>⚠️ Atenção na leitura do rótulo:</strong> Um scoop de whey (30g de pó) não é 30g de proteína — verifique sempre a coluna "Proteínas" na tabela nutricional. A maioria entrega 20 a 25g de proteína por scoop de 30g.<br><br>Se tiver intolerância à lactose: prefira whey isolado ou proteínas vegetais como ervilha e soja.'},
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'O que comer no dia da aplicação?',a:'Não existe restrição no dia da aplicação. Mas como os efeitos ficam mais fortes nas primeiras 24-48 horas, muitas pessoas sentem mais enjoo nesse período.<br><br><strong>Nesse caso:</strong><br>✅ Refeições menores e mais frequentes · Proteínas leves (ovo, iogurte) · Muita água<br>❌ Evite frituras · Bebidas gaseificadas · Refeições muito volumosas'},
+  {cat:'🍽️ Alimentação',ic:'🍽️',q:'Preciso fazer dieta restritiva junto com o GLP-1?',a:'Não. O GLP-1 reduz a fome naturalmente. Foque em proteína em toda refeição, comer devagar e volumes menores. Evite ultra-processados e excesso de açúcar. A meta do app já está calculada para você.'},
+/* ─── 🏃 EXERCÍCIO ─── */
+  {cat:'🏃 Exercício',ic:'🏃',q:'Por que posso perder músculo usando GLP-1?',a:'Quando você emagrece rápido, o corpo não perde só gordura — pode "queimar" músculo para gerar energia. Com GLP-1 isso acontece porque você come menos, e se a proteína ingerida for insuficiente, o corpo busca energia nos músculos. Estudos mostram que entre 20% e 40% do peso perdido pode vir de massa muscular quando não há cuidado com proteína e exercício.<br><br>A boa notícia: isso é evitável. Proteína suficiente + exercício de força = gordura vai embora, músculo fica.'},
+  {cat:'🏃 Exercício',ic:'🏃',q:'Que exercício devo fazer?',a:'O mais importante é o exercício de força — musculação, treino funcional com peso, pilates com resistência. Esse tipo de exercício manda um sinal claro para o corpo: "esse músculo está sendo usado, não descarte."<br><br>Caminhada e cardio são ótimos para saúde cardiovascular mas não protegem o músculo da mesma forma.<br><br><strong>Recomendação mínima:</strong> 2x por semana de exercício de força. 3x é ideal. Não precisa ser pesado — o movimento resistido já faz diferença.'},
+  {cat:'🏃 Exercício',ic:'🏃',q:'Posso malhar sentindo enjoo?',a:'Depende da intensidade. Enjoo leve: prefira exercícios mais suaves — caminhada, alongamento ou musculação leve. Evite cardio intenso que chacoalha o estômago. Enjoo forte: descanse. Forçar o treino com enjoo intenso pode piorar os sintomas e levar à desidratação.<br><br>O que não pode é ficar semanas sem nenhum movimento esperando o enjoo passar completamente. Comece devagar e aumente conforme o corpo se adapta.'},
   {cat:'🏃 Exercício',ic:'🏃',q:'Preciso malhar para emagrecer com GLP-1?',a:'Não é obrigatório para emagrecer, mas é fundamental para preservar músculo. Com GLP-1 você perde gordura E músculo se não se exercitar. Musculação 2 a 3x por semana é o ideal. Se não pode malhar, caminhadas diárias já ajudam muito.'},
-  {cat:'🏃 Exercício',ic:'🏃',q:'Qual o melhor exercício para fazer junto com GLP-1?',a:'Musculação é o mais importante — preserva músculo durante a perda de peso. Combine com cardio moderado (caminhada, bike) para saúde cardiovascular. Evite exercício intenso nas primeiras semanas se tiver náusea.'},
-  {cat:'💊 Posologia',ic:'💊',q:'Posso aumentar a dose por conta própria?',a:'Nunca. A progressão de dose é médica e individual. Aumentar sem orientação pode causar efeitos colaterais intensos e desnecessários. A dose ideal é a menor que garante saciedade — não é sempre a máxima.'},
-  {cat:'💊 Posologia',ic:'💊',q:'Qual a diferença entre Ozempic, Wegovy e Saxenda?',a:'Ozempic e Wegovy têm o mesmo princípio ativo (semaglutida), mas Wegovy tem doses mais altas aprovadas para obesidade. Saxenda usa liraglutida, de aplicação DIÁRIA. Mounjaro usa tirzepatida, com ação dupla (GLP-1 e GIP) e geralmente maior perda de peso.'},
-  {cat:'💊 Posologia',ic:'💊',q:'Saxenda é diário ou semanal?',a:'DIÁRIO. Saxenda (liraglutida) é aplicado uma vez por dia, sempre no mesmo horário. É diferente de Ozempic, Wegovy e Mounjaro que são semanais. Não confunda a posologia — aplicar semanalmente o Saxenda compromete o tratamento.'},
+/* ─── 🔄 LONGO PRAZO ─── */
+  {cat:'🔄 Longo prazo',ic:'🔄',q:'Vou engordar tudo quando parar o medicamento?',a:'O reganho de peso após parar o GLP-1 é real — mas não é inevitável. Depende diretamente do que você fez durante o tratamento.<br><br>O GLP-1 faz algo único: reduz ou elimina a compulsão alimentar. Essa é a janela de oportunidade. Com a compulsão silenciada, seu cérebro consegue aprender a preferir comida de verdade.<br><br>Quem continua comendo pizza e junk food durante o tratamento emagrece — mas quando para, a compulsão volta junto com os velhos hábitos e o peso retorna. Quem usa esse período como reeducação alimentar real chega na meta com hábitos novos instalados. O medicamento para — os hábitos ficam.'},
+  {cat:'🔄 Longo prazo',ic:'🔄',q:'Como descontinuar o medicamento gradualmente?',a:'Nunca pare abruptamente sem orientação médica. A descontinuação gradual costuma envolver redução progressiva de dose, monitoramento do peso e da fome, e ajuste de estratégias alimentares antes de parar completamente. Quanto mais consolidados os hábitos, mais segura é a parada. Converse com seu médico com antecedência — planeje a saída com pelo menos 2 a 3 meses de antecipação.'},
+  {cat:'🔄 Longo prazo',ic:'🔄',q:'Perdi o efeito do medicamento — o que pode ser?',a:'A sensação de "perda de efeito" pode ter várias causas: dose abaixo do necessário para o momento atual (o organismo pode precisar de ajuste), adaptação do corpo que exige revisar hábitos alimentares, ou uso muito prolongado sem reavaliação médica. Avise seu médico — não tente aumentar a dose por conta própria.'},
+  {cat:'🔄 Longo prazo',ic:'🔄',q:'Preciso suspender o medicamento antes de cirurgia?',a:'Geralmente sim. A recomendação mais comum é suspender GLP-1 semanal 7 dias antes de cirurgias com anestesia geral, pois o esvaziamento gástrico lento aumenta o risco de broncoaspiração. Para GLP-1 diário (Saxenda), a suspensão costuma ser de 24 a 48 horas. Informe sempre ao anestesiologista e ao cirurgião que você usa esse medicamento.'},
+/* ─── 🧠 REEDUCAÇÃO ALIMENTAR ─── */
+  {cat:'🧠 Reeducação',ic:'🧠',q:'O GLP-1 é uma oportunidade única — por quê?',a:'O GLP-1 faz algo que nenhuma dieta consegue: silencia a compulsão alimentar. Essa janela é preciosa e diferente de tudo que você já tentou antes.<br><br>Com a compulsão reduzida, seu cérebro está disponível para aprender novos hábitos. Cada dia comendo bem é um dia treinando seu cérebro. Quando parar o medicamento, esses hábitos ficam — a compulsão não volta se você não alimentar ela.<br><br>Use esse período como a maior oportunidade de transformação alimentar da sua vida.'},
+  {cat:'🧠 Reeducação',ic:'🧠',q:'Posso emagrecer comendo mal com GLP-1?',a:'Sim — o GLP-1 vai te fazer emagrecer independente do que você coma, porque você come menos. Mas existe uma diferença enorme entre emagrecer e transformar sua saúde.<br><br>Quem emagrece comendo pizza e hambúrguer com GLP-1: perde peso · mas mantém os hábitos que o fizeram engordar · quando para o medicamento, a compulsão por esses alimentos volta e o peso retorna rapidamente.<br><br>Quem usa o período para reeducar: perde o mesmo peso · mas chega na meta com preferências alimentares diferentes · o cérebro aprendeu a preferir comida de verdade.'},
+  {cat:'🧠 Reeducação',ic:'🧠',q:'Como saber se estou criando hábitos ou dependendo do remédio?',a:'Boa pergunta. Alguns sinais de que a reeducação está acontecendo: você consegue fazer escolhas alimentares melhores mesmo quando não está com náusea · você prefere naturalmente porções menores · alimentos muito gordurosos ou doces estão te agradando menos · você come mais devagar espontaneamente.<br><br>Sinais de que pode estar só dependendo do medicamento: sem o remédio os velhos padrões voltam completamente · você não pensa em comida diferente · não houve mudança nos alimentos que prefere.'},
+
+/* ─── 🩺 SINTOMAS — Comuns ─── */
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Náusea — o que fazer?',
+   a:'<strong>💬 Em resumo:</strong> É o sintoma mais comum. Na maioria dos casos é leve e melhora com o tempo.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> O medicamento retarda o esvaziamento do estômago. Isso gera saciedade — mas no início, enquanto o corpo se adapta, causa enjoo. Piora nos dias após a aplicação.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Coma devagar e em volumes menores · Não deite logo após comer · Evite frituras e gordura · Beba água em pequenos goles · Gengibre (chá ou cápsulas) pode ajudar · Se muito intenso: converse com seu médico — pode ser dose acima do necessário.<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Vômitos que não param por mais de 24h · Não consegue beber água · Boca muito seca, urina escura, tontura ao levantar · Dor abdominal intensa junto com o enjoo.'},
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Constipação (intestino preso) — o que fazer?',
+   a:'<strong>💬 Em resumo:</strong> Muito comum. O medicamento retarda o trânsito intestinal. Tem solução simples.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> O mesmo mecanismo que retarda o estômago também retarda o intestino. Com menos comida e desidratação, piora ainda mais.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Aumente água — mínimo 2L/dia (passo mais importante!) · Frutas com casca, verduras, aveia e chia · Ameixa, mamão e kiwi ajudam · Caminhada leve ativa o intestino.<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Mais de 5 dias sem evacuar · Dor abdominal intensa · Abdômen duro e distendido · Sangue nas fezes.'},
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Diarreia — o que fazer?',
+   a:'<strong>💬 Em resumo:</strong> Menos comum que a constipação. Geralmente temporária, passa em poucos dias.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> O intestino pode reagir de forma oposta em algumas pessoas. Também pode indicar dose acima do necessário.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Hidratação rigorosa — água, água de coco, soro caseiro · Alimentos leves: arroz, frango, banana · Evite laticínios e adoçantes (sorbitol piora diarreia) · ⚠️ Se toda semana: converse com médico sobre dose.<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Mais de 3 dias seguidos · Sinais de desidratação · Sangue ou muco nas fezes · Febre junto.'},
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Refluxo e azia — o que fazer?',
+   a:'<strong>💬 Em resumo:</strong> Com estômago mais cheio por mais tempo, o ácido pode subir. Gerenciável com cuidados simples.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> O esvaziamento gástrico lento aumenta a pressão no estômago, facilitando o refluxo para o esôfago.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Não deite por pelo menos 2h após comer · Refeições menores e mais frequentes · Evite café, chocolate, frituras e álcool · Eleve levemente a cabeceira da cama.<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Dor no peito · Dificuldade para engolir · Refluxo que não melhora com nenhuma medida · Vômito com sangue.'},
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Cansaço e fadiga — é normal?',
+   a:'<strong>💬 Em resumo:</strong> Algum cansaço no início é esperado. Fadiga persistente merece investigação.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> O corpo está se adaptando, comendo menos e redistribuindo energia. Pode também ser déficit de carboidrato (importante para energia no treino!) ou proteína.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Verifique: atingiu a meta de proteína? · Está comendo carboidrato para o treino? · Está hidratado? · Está dormindo bem?<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Cansaço intenso que não melhora · Fraqueza muscular progressiva · Tontura ao levantar + cansaço.'},
+  {cat:'🩺 Sintomas Comuns',ic:'🩺',q:'Queda de cabelo — é do medicamento?',
+   a:'<strong>💬 Em resumo:</strong> Não é causada diretamente pelo GLP-1, mas pela perda rápida de peso. É temporária.<br><br>'
+    +'<strong>📖 Por que acontece:</strong> Eflúvio telógeno — o folículo capilar sofre estresse nutricional durante o emagrecimento acelerado. Aparece 2 a 4 meses depois do início do tratamento.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Proteína suficiente (prioritário) · Zinco e biotina (converse com médico) · Paciência — o cabelo se recupera após estabilização do peso.<br><br>'
+    +'<strong>🚨 Vá ao médico se:</strong> Queda muito intensa ou em placas.'},
+/* ─── 🚨 SINTOMAS — Sinais de Alerta ─── */
+  {cat:'🚨 Sinais de Alerta',ic:'🚨',q:'Dor abdominal forte irradiando para as costas',
+   a:'<strong>💬 Em resumo:</strong> Este sinal específico pode indicar pancreatite. Não ignore — busque atendimento médico imediatamente.<br><br>'
+    +'<strong>📖 O que pode ser:</strong> Pancreatite aguda — inflamação do pâncreas. Rara, mas associada ao uso de GLP-1 em pacientes com predisposição. Também pode ser cálculo biliar (pedra na vesícula), mais comum com perda rápida de peso.<br><br>'
+    +'<strong>✅ O que informar ao médico:</strong> Qual medicamento usa e a dose · Há quanto tempo usa · Se já teve pancreatite ou pedra na vesícula antes · Data da última aplicação.<br><br>'
+    +'<strong>🚨 EMERGÊNCIA — Pronto-socorro imediato se:</strong> Dor intensa e constante no abdômen superior irradiando para as costas · Náusea e vômito intensos junto com a dor · Febre · Incapacidade de ficar parado pela dor.'},
+  {cat:'🚨 Sinais de Alerta',ic:'🚨',q:'Tontura intensa + suor frio + tremores',
+   a:'<strong>💬 Em resumo:</strong> Pode ser hipoglicemia (açúcar baixo) — especialmente se usar insulina ou sulfoniureia junto com o GLP-1.<br><br>'
+    +'<strong>📖 O que pode ser:</strong> Hipoglicemia grave. O GLP-1 sozinho raramente causa isso, mas combinado com outros antidiabéticos o risco aumenta muito.<br><br>'
+    +'<strong>✅ O que fazer agora:</strong> Se consciente: ingira 15g de açúcar (3 colheres, 1 copo de suco ou refrigerante não diet) · Aguarde 15 minutos · Se melhorar: coma algo com proteína e carboidrato · Avise seu médico hoje.<br><br>'
+    +'<strong>🚨 EMERGÊNCIA se:</strong> Confusão mental · Dificuldade de falar · Desmaio · Convulsão → Ligue 192 (SAMU) imediatamente.'},
+  {cat:'🚨 Sinais de Alerta',ic:'🚨',q:'Reação alérgica — inchaço, urticária, falta de ar',
+   a:'<strong>💬 Em resumo:</strong> Reações alérgicas ao GLP-1 são raras mas existem. Qualquer sinal de reação deve ser avaliado com urgência.<br><br>'
+    +'<strong>📖 O que pode ser:</strong> Hipersensibilidade ao princípio ativo ou excipientes da formulação.<br><br>'
+    +'<strong>✅ O que fazer:</strong> Interrompa o medicamento imediatamente · Avise seu médico hoje · Guarde a caneta/frasco para o médico ver.<br><br>'
+    +'<strong>🚨 EMERGÊNCIA se:</strong> Inchaço de rosto, lábios ou garganta · Dificuldade para respirar ou engolir · Queda de pressão (tontura intensa, desmaio) → Ligue 192 (SAMU) imediatamente — pode ser anafilaxia.'},
+  {cat:'🚨 Sinais de Alerta',ic:'🚨',q:'Vômitos que não param por mais de 24 horas',
+   a:'<strong>💬 Em resumo:</strong> Vômito persistente leva à desidratação grave rapidamente. Não espere melhorar sozinho.<br><br>'
+    +'<strong>📖 Risco principal:</strong> Desidratação e desequilíbrio de eletrólitos — pode ser grave especialmente em idosos e pessoas com doenças renais.<br><br>'
+    +'<strong>✅ Sinais de desidratação para observar:</strong> Boca muito seca · Urina escura ou ausente · Tontura ao ficar em pé · Fraqueza intensa · Coração acelerado.<br><br>'
+    +'<strong>🚨 Pronto-socorro se:</strong> Vômitos há mais de 24h sem melhora · Não consegue manter nenhum líquido · Qualquer sinal de desidratação acima · Dor abdominal intensa junto.'},
 ];
 
 var _faqAbertos={};
@@ -4212,7 +4333,36 @@ function addPeso(){
   var date=el('pData').value||hoje(),w=nv(el('pVal').value);if(!w){alert('Digite um peso.');return;}
   var i=S.weights.findIndex(function(x){return x.date===date;});if(i>=0) S.weights[i].weight=w;else S.weights.push({date:date,weight:w});
   S.profile.weightKg=w;if(!S.profile.weightStartKg) S.profile.weightStartKg=w;
-  el('pVal').value='';render();toast('Peso salvo ✅');
+  el('pVal').value='';
+  // Alerta de velocidade de perda
+  var sorted=S.weights.slice().sort(porData);
+  if(sorted.length>=2){
+    var ultimos7=sorted.filter(function(x){
+      var d=new Date(date+'T12:00:00')-new Date(x.date+'T12:00:00');
+      return d>=0&&d<=7*24*3600*1000;
+    });
+    if(ultimos7.length>=2){
+      var pInicio=ultimos7[0].weight,pFim=w;
+      var perdido=pInicio-pFim;
+      var alertaVel=el('alertaVelocidadePeso');
+      if(alertaVel){
+        if(perdido>1.5){
+          alertaVel.style.display='block';
+          alertaVel.style.background='rgba(239,68,68,.12)';
+          alertaVel.style.borderColor='rgba(239,68,68,.3)';
+          alertaVel.innerHTML='🚨 <strong>Ritmo muito acelerado:</strong> '+perdido.toFixed(1)+'kg em 7 dias. Risco real de perda muscular. Aumente proteína hoje e inclua exercício de força essa semana.';
+        } else if(perdido>1.0){
+          alertaVel.style.display='block';
+          alertaVel.style.background='rgba(245,158,11,.1)';
+          alertaVel.style.borderColor='rgba(245,158,11,.3)';
+          alertaVel.innerHTML='⚠️ <strong>Ritmo acelerado:</strong> '+perdido.toFixed(1)+'kg em 7 dias. Ótimo resultado! Garanta proteína na meta para preservar músculo.';
+        } else {
+          alertaVel.style.display='none';
+        }
+      }
+    }
+  }
+  render();toast('Peso salvo ✅');
 }
 function delPeso(){
   if(!S.weights.length){alert('Sem pesagens.');return;}if(!confirm('Apagar última pesagem?')) return;
@@ -4281,6 +4431,7 @@ function go(id){
   var sec=el('sec-'+id);if(sec) sec.classList.add('on');
   var tb=el('nb-'+id);if(tb) tb.classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='faq'){if(typeof buildFAQ==='function') buildFAQ();}
   if(id==='checkin'){
     initProtChips();
     var av=nv(el('ciAgua').value,0);
