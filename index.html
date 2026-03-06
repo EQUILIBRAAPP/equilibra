@@ -645,8 +645,8 @@ tr:hover td{background:var(--g50)}
     <button class="tb on" id="nb-dashboard" onclick="go('dashboard')">
       <span class="tb-ic">📊</span><span>Painel</span><span class="tb-dot"></span>
     </button>
-    <button class="tb" id="nb-checkin" onclick="go('checkin')">
-      <span class="tb-ic">✅</span><span>Check-in</span><span class="tb-dot"></span>
+    <button class="tb" id="nb-historico" onclick="go('historico')">
+      <span class="tb-ic">📋</span><span>Histórico</span><span class="tb-dot"></span>
     </button>
     <button class="tb" id="nb-caneta" onclick="go('caneta')">
       <span class="tb-ic">💉</span><span>Caneta</span><span class="tb-dot"></span>
@@ -670,7 +670,45 @@ tr:hover td{background:var(--g50)}
       <button onclick="fecharMais();go('sintomas')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">🩺</span>Sintomas</button>
       <button onclick="fecharMais();go('educacao')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">📚</span>Entenda</button>
       <button onclick="fecharMais();go('faq')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">❓</span>Dúvidas</button>
-      <button onclick="fecharMais();go('manual')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;grid-column:span 2"><span style="font-size:22px">📖</span>Manual de Aplicação</button>
+      <button onclick="fecharMais();go('manual')" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">📖</span>Manual Aplicação</button>
+      <button onclick="fecharMais();abrirGuia()" style="padding:16px 12px;border-radius:14px;border:1px solid rgba(74,222,128,.25);background:rgba(74,222,128,.08);color:#4ade80;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:22px">🗺️</span>Tour do App</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GUIA VIRTUAL SPOTLIGHT ═══ -->
+<!-- Overlay com buraco: 4 retângulos que cercam o elemento destacado -->
+<div id="guiaOv" style="display:none;position:fixed;inset:0;z-index:900;pointer-events:none">
+  <!-- Sombras ao redor do spotlight (top, bottom, left, right) -->
+  <div id="guiaSombraTop"    style="position:absolute;left:0;right:0;top:0;background:rgba(0,0,0,.78);transition:all .35s ease;pointer-events:auto"></div>
+  <div id="guiaSombraBottom" style="position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.78);transition:all .35s ease;pointer-events:auto"></div>
+  <div id="guiaSombraLeft"   style="position:absolute;background:rgba(0,0,0,.78);transition:all .35s ease;pointer-events:auto"></div>
+  <div id="guiaSombraRight"  style="position:absolute;background:rgba(0,0,0,.78);transition:all .35s ease;pointer-events:auto"></div>
+  <!-- Borda brilhante ao redor do elemento -->
+  <div id="guiaBorda" style="position:absolute;border:2.5px solid #4ade80;border-radius:16px;box-shadow:0 0 0 4px rgba(74,222,128,.2),0 0 30px rgba(74,222,128,.3);transition:all .35s ease;pointer-events:none"></div>
+  <!-- Tooltip flutuante -->
+  <div id="guiaCard" style="position:absolute;background:none;border:none;box-shadow:none;padding:14px 16px;max-width:300px;width:calc(100vw - 40px);transition:all .35s ease;pointer-events:auto;z-index:2">
+    <!-- Header: ícone + título + fechar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;gap:8px">
+      <div style="display:flex;align-items:center;gap:7px">
+        <div id="guiaIc" style="font-size:20px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.8))"></div>
+        <div id="guiaTitulo" style="font-size:14px;font-weight:900;color:#fff;line-height:1.25;text-shadow:0 2px 8px rgba(0,0,0,1),0 0 20px rgba(0,0,0,.9)"></div>
+      </div>
+      <button onclick="fecharGuia()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:2px 6px;text-shadow:0 2px 6px rgba(0,0,0,1);flex-shrink:0;line-height:1">✕</button>
+    </div>
+    <!-- Texto principal -->
+    <div id="guiaTexto" style="font-size:13px;font-weight:500;color:#fff;line-height:1.75;margin-bottom:8px;text-shadow:0 1px 6px rgba(0,0,0,1),0 0 16px rgba(0,0,0,.8)"></div>
+    <!-- Dica -->
+    <div id="guiaDica" style="display:none;font-size:12px;color:#86efac;line-height:1.6;margin-bottom:8px;text-shadow:0 1px 5px rgba(0,0,0,1)"></div>
+    <!-- Botões + dots -->
+    <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+      <div id="guiaDots" style="display:flex;gap:4px;flex:1"></div>
+      <button id="guiaBtnAnterior" onclick="guiaAnterior()" style="display:none;padding:7px 12px;border-radius:9px;border:1.5px solid rgba(255,255,255,.6);background:rgba(0,0,0,.4);color:#fff;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8)">←</button>
+      <button id="guiaBtnProximo" onclick="guiaProximo()" style="padding:8px 16px;border-radius:9px;border:none;background:var(--g600);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.5)">Próximo →</button>
+    </div>
+    <!-- Barra progresso -->
+    <div style="height:2px;background:rgba(255,255,255,.25);border-radius:99px;overflow:hidden;margin-top:10px">
+      <div id="guiaProgressBar" style="height:100%;background:#4ade80;border-radius:99px;transition:width .4s ease;width:0%"></div>
     </div>
   </div>
 </div>
@@ -679,214 +717,453 @@ tr:hover td{background:var(--g50)}
 
 <!-- ═══ DASHBOARD ═══ -->
 <div class="sec on" id="sec-dashboard">
-  <!-- ALERTAS -->
-  <div class="alert alert-r" id="alSint" style="display:none">⚠️ Sintomas intensos registrados. Avalie consultar seu médico.</div>
-  <div class="alert alert-w" id="alAgua" style="display:none">💧 Sem registro de água hoje. Hidratação é fundamental no uso de GLP-1.</div>
+
+  <!-- ALERTAS SISTEMA -->
+  <div id="alSint" style="display:none"></div>
+  <div id="alAgua" style="display:none"></div>
   <div class="alert alert-g" id="alDose" style="display:none;margin-bottom:10px"></div>
+  <div id="avisoMetaOntem" style="display:none"></div>
 
-  <!-- CARD BOM DIA / ALERTA PROTEÍNA (único) -->
-  <div id="avisoMetaOntem" style="display:none;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:13px;line-height:1.7;color:var(--ink)"></div>
+  <!-- ══ 1. LEIA TODO DIA ══ -->
+  <div style="border-radius:16px;overflow:hidden;margin-bottom:12px;border:2px solid rgba(74,222,128,.35);box-shadow:0 4px 20px rgba(74,222,128,.1)">
+    <button onclick="toggleLeiaTodoDia()" style="width:100%;padding:16px;background:linear-gradient(135deg,rgba(5,46,22,.98),rgba(22,101,52,.95));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:22px">📖</span>
+        <div style="text-align:left">
+          <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:.2px">Leia todo dia</div>
+          <div style="font-size:11px;color:var(--g300);font-style:italic;margin-top:1px">"Emagrecer é diferente de murchar."</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.3);border-radius:8px;padding:6px 10px">
+        <span id="leiaTodoDiaArr" style="font-size:14px;color:var(--g300);transition:transform .3s">▾</span>
+        <span style="font-size:9px;font-weight:800;color:var(--g400);letter-spacing:.5px;text-transform:uppercase">Abrir</span>
+      </div>
+    </button>
+    <div id="leiaTodoDiaBody" style="display:none;padding:18px;background:linear-gradient(135deg,rgba(5,46,22,.99),rgba(22,101,52,.96));border-top:1px solid rgba(74,222,128,.15);font-size:13px;line-height:1.9;color:rgba(255,255,255,.9)">
+      Proteína, água e exercício resistido são os três pilares que protegem seu músculo durante o emagrecimento.<br><br>
+      Sem eles, o corpo perde <strong>30 a 40% de músculo</strong> junto com a gordura. Isso tem nome: <strong>sarcopenia</strong> — perda progressiva de massa muscular que deixa você mais fraco, mais lento, mais velho por dentro. A balança cai, mas o corpo murcha.<br><br>
 
-  <!-- ATALHO FAQ -->
-  <button onclick="go('faq')" style="width:100%;margin-bottom:14px;padding:13px 16px;border-radius:14px;border:1.5px solid rgba(74,222,128,.25);background:linear-gradient(135deg,rgba(5,46,22,.7),rgba(22,101,52,.5));color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div style="background:rgba(74,222,128,.12);border:1.5px solid rgba(74,222,128,.35);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:15px;font-weight:800;color:#4ade80;margin-bottom:8px;letter-spacing:.2px">🥩 Proteína todo dia</div>
+        <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.88)">Constrói e protege músculo. Sem ela, o corpo <strong>devora o próprio músculo</strong> para obter energia. Com GLP-1 você come menos — por isso cada grama de proteína importa mais do que nunca.</div>
+      </div>
+
+      <div style="background:rgba(56,189,248,.1);border:1.5px solid rgba(56,189,248,.3);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:15px;font-weight:800;color:#38bdf8;margin-bottom:8px;letter-spacing:.2px">💧 Água todo dia</div>
+        <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.88)">Os GLP-1 suprimem não só a fome, mas também a <strong>sede</strong>. Você pode estar desidratado sem sentir. Sem água, os rins não eliminam toxinas, o metabolismo trava, as náuseas pioram. <strong>Beba mesmo sem sentir sede.</strong></div>
+      </div>
+
+      <div style="background:rgba(251,146,60,.1);border:1.5px solid rgba(251,146,60,.3);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:15px;font-weight:800;color:#fb923c;margin-bottom:8px;letter-spacing:.2px">💪 Exercício resistido</div>
+        <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.88)">O único estímulo que preserva músculo durante o emagrecimento. Sem ele, mesmo comendo proteína, o músculo enfraquece. <strong>Musculação, funcional, pilates com resistência.</strong> Mínimo 2x/semana.</div>
+      </div>
+
+      🧠 <strong>Reeducação alimentar</strong> — o GLP-1 silencia a compulsão. Use essa janela para criar novos hábitos. O remédio um dia para — os hábitos ficam para sempre.<br><br>
+      <strong style="color:var(--g300)">A medicação faz o trabalho pesado. Você faz a diferença.</strong>
+    </div>
+  </div>
+
+  <!-- ══ 1b. RESUMO DIÁRIO ══ -->
+  <div id="resumoDiarioCard" style="background:linear-gradient(135deg,#0f2d17,#0a1a0f);border-radius:16px;padding:16px 18px;margin-bottom:12px;border:1px solid rgba(74,222,128,.2)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:rgba(74,222,128,.6)">📋 SUA META DE HOJE</div>
+      <button onclick="abrirGuia()" style="display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:99px;border:1px solid rgba(74,222,128,.3);background:rgba(74,222,128,.1);color:rgba(74,222,128,.9);font-family:var(--ss);font-size:10px;font-weight:700;cursor:pointer;letter-spacing:.3px">🗺️ Tour</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div style="text-align:center">
+        <div style="font-size:22px;margin-bottom:2px">💧</div>
+        <div id="resumoAguaVal" style="font-size:16px;font-weight:800;color:#38bdf8;line-height:1.1">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:2px;text-transform:uppercase;letter-spacing:.5px">ml de água</div>
+      </div>
+      <div style="text-align:center;border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)">
+        <div style="font-size:22px;margin-bottom:2px">🥩</div>
+        <div id="resumoProtVal" style="font-size:16px;font-weight:800;color:#4ade80;line-height:1.1">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:2px;text-transform:uppercase;letter-spacing:.5px">g proteína pura</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:22px;margin-bottom:2px">🔥</div>
+        <div id="resumoKcalVal" style="font-size:16px;font-weight:800;color:#fb923c;line-height:1.1">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:2px;text-transform:uppercase;letter-spacing:.5px">kcal no dia</div>
+      </div>
+    </div>
+    <div id="resumoDiarioProgresso" style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:rgba(255,255,255,.5);text-align:center;line-height:1.6"></div>
+    <button onclick="toggleEntendaMeta()" style="margin-top:10px;width:100%;padding:9px;border-radius:9px;border:1px solid rgba(74,222,128,.25);background:transparent;color:rgba(74,222,128,.7);font-family:var(--ss);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+      <span id="entendaMetaArr" style="transition:transform .3s">▾</span> Entenda o porquê
+    </button>
+    <div id="entendaMetaBody" style="display:none;margin-top:10px;font-size:12px;line-height:1.8;color:rgba(255,255,255,.8)" id="entendaMetaBody"></div>
+  </div>
+
+  <!-- ══ PARABÉNS META ══ -->
+  <div id="metaBatidaCard" style="display:none;background:linear-gradient(135deg,#052e16,#14532d);border:2px solid rgba(74,222,128,.5);border-radius:16px;padding:16px 18px;margin-bottom:12px;text-align:center;box-shadow:0 0 24px rgba(74,222,128,.2)">
+    <div style="font-size:32px;margin-bottom:6px">🎉</div>
+    <div style="font-size:15px;font-weight:800;color:#4ade80;margin-bottom:4px">Meta batida!</div>
+    <div id="metaBatidaMsg" style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:10px"></div>
+    <button onclick="compartilharMeta()" style="padding:8px 18px;border-radius:99px;border:1px solid rgba(74,222,128,.4);background:rgba(74,222,128,.15);color:#4ade80;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">🔗 Compartilhar</button>
+  </div>
+
+  <!-- ══ 2. CONTA-GIRO 4 PILARES ══ -->
+  <div id="quatroGauges" style="background:linear-gradient(160deg,#0a1a0f,#0f2d17);border-radius:20px;padding:18px 14px 14px;margin-bottom:10px;border:1px solid rgba(74,222,128,.15);box-shadow:0 8px 32px rgba(0,0,0,.3)">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:rgba(74,222,128,.6);text-align:center;margin-bottom:14px">⚡ SEUS 4 PILARES HOJE</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <canvas id="gaugeAgua" width="130" height="80"></canvas>
+        <div style="margin-top:-4px;font-size:11px;font-weight:700;color:#38bdf8">💧 Água</div>
+        <div id="gaugeAguaVal" style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">— ml</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <canvas id="gaugeProt" width="130" height="80"></canvas>
+        <div style="margin-top:-4px;font-size:11px;font-weight:700;color:#4ade80">🥩 Proteína</div>
+        <div id="gaugeProtVal" style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">— g</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <canvas id="gaugeExerc" width="130" height="80"></canvas>
+        <div style="margin-top:-4px;font-size:11px;font-weight:700;color:#fb923c">💪 Exercício</div>
+        <div id="gaugeExercVal" style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">— de 3x/sem</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <canvas id="gaugePeso" width="130" height="80"></canvas>
+        <div style="margin-top:-4px;font-size:11px;font-weight:700;color:#c084fc">⚖️ Progresso</div>
+        <div id="gaugePesoVal" style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">— %</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3. REGISTRO RÁPIDO PROTEÍNA (destaque) ══ -->
+  <div style="margin-bottom:12px">
+    <button onclick="toggleProtRapido()" id="btnProtRapido" style="width:100%;padding:14px 18px;border-radius:14px;border:2px solid rgba(34,197,94,.5);background:linear-gradient(135deg,var(--g800),var(--g700));color:#4ade80;font-family:var(--ss);cursor:pointer;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(34,197,94,.15)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">🥩</span>
+        <div style="text-align:left">
+          <div style="font-size:14px;font-weight:800;color:#fff">Registrar proteína</div>
+          <div id="protRapidoBtnSub" style="font-size:11px;color:var(--g300);margin-top:1px">Toque para registrar o que comeu</div>
+        </div>
+      </div>
+      <div style="background:var(--g600);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;color:#fff">+ Adicionar</div>
+    </button>
+    <div id="protRapidoPanel" style="display:none;margin-top:6px;background:#0f2d17;border:1px solid rgba(74,222,128,.3);border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+      <div style="font-size:11px;font-weight:700;color:var(--g300);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Escolha sua proteína</div>
+      <div id="protRapidoFoodList" style="display:flex;flex-direction:column;gap:8px"></div>
+      <button onclick="protRapidoAddFood()" style="margin-top:9px;width:100%;padding:9px;border-radius:9px;border:1px dashed rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.6);font-family:var(--ss);font-size:12px;cursor:pointer">+ Adicionar alimento</button>
+      <button onclick="protRapidoSalvar()" style="margin-top:8px;width:100%;padding:12px;border-radius:10px;border:none;background:var(--g500);color:#fff;font-family:var(--ss);font-size:14px;font-weight:700;cursor:pointer">✅ Salvar proteína</button>
+    </div>
+  </div>
+
+  <!-- ══ 4. OUTROS ATALHOS RÁPIDOS ══ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+    <!-- ÁGUA -->
+    <div style="position:relative">
+      <button onclick="toggleAguaRapido()" style="width:100%;padding:14px 6px 10px;border-radius:12px;border:1.5px solid rgba(56,189,248,.3);background:linear-gradient(160deg,rgba(14,165,233,.15),rgba(56,189,248,.08));color:#38bdf8;font-family:var(--ss);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <span style="font-size:22px">💧</span>
+        <span style="font-size:10px;font-weight:700">Água</span>
+      </button>
+      <div id="aguaRapidoPanel" style="display:none;position:absolute;top:calc(100% + 6px);left:0;background:#1a2e1a;border:1px solid rgba(56,189,248,.3);border-radius:12px;padding:10px;z-index:50;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+        <div style="font-size:10px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:6px">Adicionar</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <button onclick="metaAddAgua(250);toggleAguaRapido()" style="padding:7px 16px;border-radius:8px;border:none;background:rgba(56,189,248,.15);color:#38bdf8;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">+250ml</button>
+          <button onclick="metaAddAgua(500);toggleAguaRapido()" style="padding:7px 16px;border-radius:8px;border:none;background:rgba(56,189,248,.15);color:#38bdf8;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">+500ml</button>
+          <button onclick="metaAddAgua(1000);toggleAguaRapido()" style="padding:7px 16px;border-radius:8px;border:none;background:rgba(56,189,248,.15);color:#38bdf8;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">+1 litro</button>
+        </div>
+      </div>
+    </div>
+    <!-- EXERCÍCIO -->
+    <div style="position:relative">
+      <button onclick="abrirExercAccordion()" style="width:100%;padding:14px 6px 10px;border-radius:12px;border:1.5px solid rgba(251,146,60,.3);background:linear-gradient(160deg,rgba(234,88,12,.15),rgba(251,146,60,.08));color:#fb923c;font-family:var(--ss);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <span style="font-size:22px">💪</span>
+        <span style="font-size:10px;font-weight:700">Exercício</span>
+      </button>
+      <div id="exercRapidoPanel" style="display:none"></div>
+    </div>
+    <!-- PESO -->
+    <div style="position:relative">
+      <button onclick="togglePesoRapido()" style="width:100%;padding:14px 6px 10px;border-radius:12px;border:1.5px solid rgba(192,132,252,.3);background:linear-gradient(160deg,rgba(147,51,234,.15),rgba(192,132,252,.08));color:#c084fc;font-family:var(--ss);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <span style="font-size:22px">⚖️</span>
+        <span style="font-size:10px;font-weight:700">Peso</span>
+      </button>
+      <div id="pesoRapidoPanel" style="display:none;position:absolute;top:calc(100% + 6px);right:0;background:#1a0e2e;border:1px solid rgba(192,132,252,.3);border-radius:12px;padding:12px;z-index:50;min-width:180px;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+        <div style="font-size:11px;font-weight:700;color:rgba(192,132,252,.8);margin-bottom:8px">Peso de hoje</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <input type="number" id="pesoRapidoInput" placeholder="ex: 82.5" step="0.1" min="30" max="400" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(192,132,252,.3);background:#0d0720;color:#fff;font-size:15px;font-weight:700;text-align:center;font-family:var(--ss)">
+          <span style="font-size:12px;color:rgba(255,255,255,.4)">kg</span>
+        </div>
+        <button onclick="salvarPesoRapido()" style="width:100%;padding:9px;border-radius:8px;border:none;background:rgba(147,51,234,.4);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer">✅ Salvar peso</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5. CONTA-GIRO SACIEDADE ══ -->
+  <div id="gaugeSacCard" style="background:linear-gradient(160deg,#0d1526,#1a2540);border-radius:20px;padding:16px 14px 12px;margin-bottom:12px;border:1px solid rgba(99,179,237,.2);box-shadow:0 8px 32px rgba(0,0,0,.3)">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:rgba(147,197,253,.6);text-align:center;margin-bottom:10px">💊 SACIEDADE DA MEDICAÇÃO</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+        <canvas id="gaugeSac" width="140" height="86"></canvas>
+        <div id="gaugeSacFase" style="font-size:12px;font-weight:700;color:#93c5fd;margin-top:-2px;text-align:center">—</div>
+        <div id="gaugeSacSub" style="font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;text-align:center;max-width:120px;line-height:1.4">Configure sua medicação</div>
+      </div>
+      <div style="flex:1">
+        <div id="proxDoseInfoSac" style="display:none;background:rgba(99,179,237,.08);border:1px solid rgba(99,179,237,.2);border-radius:10px;padding:10px 12px;margin-bottom:8px">
+          <div style="font-size:10px;color:rgba(147,197,253,.6);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Próxima dose</div>
+          <div id="proxDoseInfoData" style="font-size:13px;font-weight:700;color:#93c5fd">—</div>
+          <div id="proxDoseInfoDias" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:1px">—</div>
+        </div>
+        <div id="semMedicacaoInfo" style="background:rgba(99,179,237,.05);border:1px solid rgba(99,179,237,.15);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:11px;color:rgba(147,197,253,.6);line-height:1.5">
+          💉 Configure sua medicação para ativar o monitoramento de saciedade.
+        </div>
+        <button onclick="go('caneta')" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(99,179,237,.3);background:rgba(99,179,237,.1);color:#93c5fd;font-family:var(--ss);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between">
+          <span>💉 Painel da caneta</span><span>›</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6. CENTRAL DE DÚVIDAS ══ -->
+  <button onclick="go('faq')" style="width:100%;margin-bottom:12px;padding:13px 16px;border-radius:14px;border:1.5px solid rgba(74,222,128,.25);background:linear-gradient(135deg,rgba(5,46,22,.7),rgba(22,101,52,.5));color:#fff;font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
       <span style="font-size:20px">❓</span>
       <div style="text-align:left">
         <div style="font-size:13px;font-weight:700">Central de Dúvidas</div>
-        <div style="font-size:11px;color:var(--g300);opacity:.85">51 respostas sobre GLP-1 · Sintomas · Alertas</div>
+        <div style="font-size:11px;color:var(--g300);opacity:.85">Sintomas · Alertas · GLP-1</div>
       </div>
     </div>
     <span style="color:var(--g300);font-size:16px">›</span>
   </button>
 
-  <!-- 1 LEIA TODO DIA -->
-  <div style="border-radius:14px;overflow:hidden;margin-bottom:14px;border:1px solid rgba(74,222,128,.2)">
-    <button onclick="toggleLeiaTodoDia()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,rgba(5,46,22,.97),rgba(22,101,52,.92));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+  <!-- ══ 7. ACCORDIONS ══ -->
+
+  <!-- EMAGRECER COM SAÚDE -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid rgba(74,222,128,.15)">
+    <button onclick="toggleAcc('emsBody','emsArr')" style="width:100%;padding:14px 16px;background:linear-gradient(135deg,rgba(5,46,22,.9),rgba(22,101,52,.8));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:20px">📖</span>
-        <div style="text-align:left">
-          <div style="font-size:13px;font-weight:700;color:#fff">Leia todo dia</div>
-          <div style="font-size:11px;color:var(--g300);font-style:italic">"Emagrecer é diferente de murchar."</div>
-        </div>
+        <span style="font-size:18px">💪</span>
+        <div style="font-size:13px;font-weight:700;color:#fff">Emagrecer com saúde</div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-        <span id="leiaTodoDiaArr" style="font-size:16px;color:var(--g300);transition:transform .3s">▾</span>
-        <span style="font-size:9px;font-weight:700;color:var(--g300);letter-spacing:.4px;text-transform:uppercase">Toque aqui</span>
-      </div>
+      <span id="emsArr" style="font-size:16px;color:var(--g300);transition:transform .3s">▾</span>
     </button>
-    <div id="leiaTodoDiaBody" style="display:none;padding:16px 18px;background:linear-gradient(135deg,rgba(5,46,22,.98),rgba(22,101,52,.95));border-top:1px solid rgba(74,222,128,.12);font-size:13px;line-height:1.9;color:rgba(255,255,255,.9)">
-      Proteína, água e exercício resistido são os três pilares que protegem seu músculo durante o emagrecimento.<br><br>
-      Sem eles, o corpo perde <strong>30 a 40% de músculo</strong> junto com a gordura. Isso tem nome: <strong>sarcopenia</strong> — perda progressiva de massa muscular que deixa você mais fraco, mais lento, mais velho por dentro. A balança cai, mas o corpo murcha.<br><br>
-      🥩 <strong>Proteína todo dia</strong> — constrói e protege músculo. Sem ela, o corpo devora o próprio músculo para obter energia.<br><br>
-      💧 <strong>Água todo dia</strong> — Os GLP-1 suprimem não só a fome, mas também a <strong>sede</strong>. Você pode estar desidratado sem sentir. Sem água, os rins não eliminam toxinas, o metabolismo trava, a pressão cai, as náuseas pioram e o músculo não se recupera. Beba mesmo sem sentir sede.<br><br>
-      💪 <strong>Exercício resistido</strong> — o único estímulo que preserva músculo durante o emagrecimento. Sem ele, mesmo comendo proteína, o músculo enfraquece.<br><br>
-      🧠 <strong>Reeducação alimentar</strong> — o GLP-1 faz algo que nenhuma dieta consegue: silencia a compulsão. Use essa janela para criar novos hábitos. O remédio um dia para — os hábitos ficam para sempre. Quem emagrece comendo mal e não muda, recupera o peso quando para. Quem usa esse período para aprender a comer de verdade, chega na meta transformado.<br><br>
-      <strong style="color:var(--g300)">A medicação faz o trabalho pesado. Você faz a diferença.</strong>
-    </div>
-  </div>
-
-  <!-- 2 EMAGRECER COM SAUDE -->
-  <div style="background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-    <div style="font-size:11px;font-weight:700;color:var(--g300);letter-spacing:.5px;margin-bottom:8px">💪 EMAGRECER COM SAÚDE</div>
-    <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.9)">
+    <div id="emsBody" style="display:none;padding:14px 16px;background:linear-gradient(135deg,rgba(5,46,22,.95),rgba(22,101,52,.9));border-top:1px solid rgba(74,222,128,.1);font-size:13px;line-height:1.7;color:rgba(255,255,255,.9)">
       A medicação faz a balança cair. Mas quem decide o que você perde — gordura ou músculo — é o que você come.<br><br>
-      Sem proteína suficiente, o corpo "devora" o próprio músculo. Isso tem nome: <strong>sarcopenia</strong> — a perda progressiva de massa muscular que enfraquece o corpo, acelera o envelhecimento e abre porta para doenças.<br><br>
+      Sem proteína suficiente, o corpo "devora" o próprio músculo. Isso tem nome: <strong>sarcopenia</strong> — perda progressiva de massa muscular que enfraquece o corpo e acelera o envelhecimento.<br><br>
       <strong>Bata sua meta de proteína. Beba sua água.</strong><br>
-      <span style="color:var(--g300)">Deixa a balanca cair do jeito certo.</span>
+      <span style="color:var(--g300)">Deixa a balança cair do jeito certo.</span>
     </div>
   </div>
 
-  <!-- 3 META DO DIA RAINHA -->
-  <div style="background:linear-gradient(135deg,var(--g800),var(--g700));border-radius:18px;padding:22px 20px;color:#fff;margin-bottom:14px;box-shadow:0 6px 28px rgba(0,0,0,.22)">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--g300);margin-bottom:16px">👑 META DO DIA</div>
+  <!-- ATENÇÃO À FLACIDEZ (alerta inline no avisoMetaOntem) -->
+  <div style="display:none"><div id="flacidezAccCard"></div><div id="flacidezMsg"></div><div id="flacidezAccSub"></div></div>
 
-    <!-- AGUA -->
-    <div style="margin-bottom:18px">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px">
-        <span style="font-size:15px;font-weight:700">💧 Água</span>
-        <span id="metaAguaLabel" style="font-size:12px;opacity:.75">&#8212; ml</span>
-      </div>
-      <div style="height:10px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:11px">
-        <div id="metaAguaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#0ea5e9);width:0%;transition:width .6s ease"></div>
-      </div>
-      <div style="display:flex;gap:8px">
-        <button onclick="metaAddAgua(250)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+1 copo<br><span style="font-size:10px;font-weight:400;opacity:.65">250ml</span></button>
-        <button onclick="metaAddAgua(500)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+2 copos<br><span style="font-size:10px;font-weight:400;opacity:.65">500ml</span></button>
-        <button onclick="metaAddAgua(1000)" style="flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer;line-height:1.3">+1 litro<br><span style="font-size:10px;font-weight:400;opacity:.65">1000ml</span></button>
-      </div>
-    </div>
-
-    <div style="height:1px;background:rgba(255,255,255,.1);margin-bottom:18px"></div>
-
-    <!-- PROTEINA -->
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px">
-        <span style="font-size:15px;font-weight:700">🥩 Proteína</span>
-        <span id="metaProtLabel" style="font-size:12px;opacity:.75">&#8212; g</span>
-      </div>
-      <div style="height:10px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:11px">
-        <div id="metaProtBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#4ade80,#22c55e);width:0%;transition:width .6s ease"></div>
-      </div>
-      <div id="metaProtEquiv" style="font-size:12px;line-height:1.9;opacity:.85;margin-bottom:11px"></div>
-      <div id="metaProtSeletor" style="display:none;background:rgba(0,0,0,.25);border-radius:12px;padding:13px;margin-bottom:10px">
-        <div style="font-size:11px;font-weight:700;color:var(--g300);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Escolha sua proteína</div>
-        <div id="metaProtFoodList" style="display:flex;flex-direction:column;gap:9px"></div>
-        <button onclick="metaAddProtFood()" style="margin-top:9px;width:100%;padding:9px;border-radius:9px;border:1px dashed rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.7);font-family:var(--ss);font-size:12px;cursor:pointer">+ Adicionar alimento</button>
-        <button onclick="metaSalvarProt()" style="margin-top:8px;width:100%;padding:12px;border-radius:10px;border:none;background:var(--g500);color:#fff;font-family:var(--ss);font-size:14px;font-weight:700;cursor:pointer">✅ Salvar proteína</button>
-      </div>
-      <button onclick="toggleMetaProtSeletor()" id="metaProtBtn" style="width:100%;padding:12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--ss);font-size:13px;font-weight:700;cursor:pointer">🥩 Registrar proteína</button>
-    </div>
-
-    <div id="alertaMuscular" style="display:none;margin-top:15px;padding:12px 14px;border-radius:10px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);font-size:12px;color:rgba(255,255,255,.9);line-height:1.6">
-      💪 <strong>Atenção à proteína!</strong> Com GLP-1 você come menos — mas sem proteína suficiente, parte do peso perdido pode ser <strong>músculo, não gordura</strong>.
-    </div>
-  </div>
-
-  <!-- 4 EXERCICIO RESISTIDO SEMANAL -->
-  <div class="card" id="exercicioCard">
-    <div class="ct">💪 Estímulo muscular</div>
-    <div class="cs">Músculo se preserva com estímulo. O que você fez hoje?</div>
-    <div id="exercOpcoes" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
-    <div id="exercFeedback" style="margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:none"></div>
-    <div id="exercSemanaWrap" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--cream3)">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3)">Esta semana</div>
-        <div id="exercSemanaCount" style="font-size:11px;font-weight:600;color:var(--g600)">0 de 3x</div>
-      </div>
-      <div id="exercSemanaDias" style="display:flex;justify-content:space-between;margin-bottom:9px"></div>
-      <div style="height:7px;background:var(--cream3);border-radius:99px;overflow:hidden">
-        <div id="exercSemanaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g500),var(--g400));width:0%;transition:width .5s ease"></div>
-      </div>
-      <div id="exercSemanaMsg" style="margin-top:9px;font-size:12px;color:var(--ink3);line-height:1.5;font-style:italic"></div>
-    </div>
-  </div>
-
-  <!-- 5 PROXIMA DOSE -->
-  <div id="proxDoseCard" style="display:none;margin-bottom:14px">
-    <div id="proxDoseInner" onclick="go('caneta')" style="cursor:pointer;border-radius:var(--rlg);padding:16px 18px;display:flex;align-items:center;gap:14px">
-      <div id="proxDoseIc" style="font-size:28px;flex-shrink:0"></div>
-      <div style="flex:1">
-        <div id="proxDoseTag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px"></div>
-        <div id="proxDoseTtl" style="font-family:var(--fs);font-size:18px;font-weight:500;line-height:1.2"></div>
-        <div id="proxDoseSub" style="font-size:12px;margin-top:3px;opacity:.75"></div>
-      </div>
-      <div style="font-size:18px;opacity:.4">→</div>
-    </div>
-  </div>
-
-  <!-- 5 PROGRESSO DE PESO -->
-  <div class="prog-hero" id="progHero">
-    <div class="prog-tag" id="progTag">PESO &amp; PROGRESSO</div>
-    <div class="prog-top">
-      <div class="prog-ring-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="7"/>
-          <circle id="progRingFill" cx="45" cy="45" r="38" fill="none" stroke="url(#ringGrad)" stroke-width="7"
-            stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="239" style="transition:stroke-dashoffset .9s cubic-bezier(.34,1.56,.64,1)"/>
-          <defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#4ade80"/></linearGradient></defs>
-        </svg>
-        <div class="prog-ring-center"><div class="prog-ring-pct" id="progRingPct">—</div><div class="prog-ring-lbl">da meta</div></div>
-      </div>
-      <div class="prog-info">
-        <div class="prog-weight" id="progWeight">— kg</div>
-        <div class="prog-delta" id="progDelta"></div>
-        <div class="prog-moti" id="progMoti"></div>
-        <div id="progUrineTag"></div>
-      </div>
-    </div>
-    <div class="prog-journey" id="progJourneyWrap">
-      <div class="prog-journey-lbl">SUA JORNADA</div>
-      <div class="prog-road"><div class="prog-road-fill" id="progRoadFill" style="width:0%"></div></div>
-      <div class="prog-dots">
-        <div class="prog-dot-wrap"><div class="prog-dot start"></div><div class="prog-dot-lbl">Início</div><div class="prog-dot-val" id="pdStart">—</div></div>
-        <div class="prog-dot-wrap" id="midMarkerWrap" style="display:none"><div class="prog-dot" id="midMarkerDot"></div><div class="prog-dot-lbl" id="midMarkerLbl">—</div><div class="prog-dot-val" id="midMarkerVal">—</div></div>
-        <div class="prog-dot-wrap"><div class="prog-dot current"></div><div class="prog-dot-lbl">Agora</div><div class="prog-dot-val" id="pdNow">—</div></div>
-        <div class="prog-dot-wrap"><div class="prog-dot goal"></div><div class="prog-dot-lbl">Meta</div><div class="prog-dot-val" id="pdGoal">—</div></div>
-      </div>
-    </div>
-    <div class="prog-kpis" id="progKpis">
-      <div class="prog-kpi highlight"><div class="prog-kpl">Perdido</div><div class="prog-kpv" id="pkPerd">—</div><div class="prog-kph">total</div></div>
-      <div class="prog-kpi"><div class="prog-kpl">Faltam</div><div class="prog-kpv" id="pkFaltam">—</div><div class="prog-kph">para meta</div></div>
-      <div class="prog-kpi"><div class="prog-kpl">Ritmo</div><div class="prog-kpv" id="pkRitmo">—</div><div class="prog-kph">kg/semana</div></div>
-    </div>
-    <div class="prog-no-goal" id="progNoGoal" style="display:none" onclick="go('perfil')">🎯 Defina seu peso meta no Perfil →</div>
-    <div id="progProj" style="display:none;font-size:12px;color:var(--g300);margin-bottom:10px;text-align:center"></div>
-    <canvas id="chartMain" height="0" style="display:none"></canvas>
-  </div>
-
-  <!-- FARMACOCINETICA -->
-  <div class="pk-hero" id="pkCard" style="display:none">
-    <div class="pk-tag">📈 EXCLUSIVO EQUILIBRA</div>
-    <div class="pk-title" style="display:flex;align-items:center;gap:8px">Potência da medicação <span class="tip tip-dark" onclick="mostrarDica('farmaco')">ⓘ</span></div>
-
-    <!-- VELOCÍMETRO CONTA-GIROS -->
-    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:16px">
-      <div style="position:relative;width:200px;height:110px">
-        <canvas id="pkGauge" width="200" height="110" style="display:block"></canvas>
-        <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
-          <div id="pkRingPct" style="font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.5)">—</div>
-          <div style="font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1.5px;margin-top:2px">POTÊNCIA</div>
+  <!-- ESTÍMULO MUSCULAR -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid var(--cream3)">
+    <button onclick="toggleAcc('exercAccBody','exercAccArr')" style="width:100%;padding:14px 16px;background:var(--cream1);border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">🏋️</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:var(--ink)">Estímulo muscular</div>
+          <div id="exercAccSub" style="font-size:11px;color:var(--ink3)">Registrar treino e ver semana</div>
         </div>
       </div>
-      <!-- Legenda fase -->
-      <div style="text-align:center;margin-top:4px">
-        <div id="pkFaseLabel" style="font-size:15px;font-weight:700;color:#4ade80;line-height:1.2">—</div>
-        <div id="pkFaseSub" style="font-size:10px;color:rgba(255,255,255,.45);line-height:1.5;margin-top:3px;max-width:180px"></div>
+      <span id="exercAccArr" style="font-size:16px;color:var(--ink3);transition:transform .3s">▾</span>
+    </button>
+    <div id="exercAccBody" style="display:none;padding:14px 16px;background:var(--cream1);border-top:1px solid var(--cream3)">
+      <!-- Meta semanal configurável -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 12px;border-radius:10px;background:var(--cream2);border:1px solid var(--cream3)">
+        <div style="font-size:12px;font-weight:700;color:var(--ink)">Meta semanal</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onclick="ajustarMetaExerc(-1)" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--g400);background:transparent;color:var(--g600);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+          <div style="min-width:70px;text-align:center">
+            <span id="metaExercNum" style="font-size:18px;font-weight:800;color:var(--g600)">3</span>
+            <span style="font-size:11px;color:var(--ink3)">x/semana</span>
+          </div>
+          <button onclick="ajustarMetaExerc(1)" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--g400);background:transparent;color:var(--g600);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        </div>
+      </div>
+      <!-- Registro em dias anteriores -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Registrar em outro dia</div>
+        <div id="exercDiasAnteSelectWrap" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+      <!-- O que fez hoje -->
+      <div style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">O que você fez?</div>
+      <div id="exercOpcoes" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px"></div>
+      <div id="exercFeedback" style="margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;display:none"></div>
+      <div id="exercSemanaWrap" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--cream3)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3)">Esta semana</div>
+          <div id="exercSemanaCount" style="font-size:11px;font-weight:600;color:var(--g600)">0 de 3x</div>
+        </div>
+        <div id="exercSemanaDias" style="display:flex;justify-content:space-between;margin-bottom:9px"></div>
+        <div style="height:7px;background:var(--cream3);border-radius:99px;overflow:hidden">
+          <div id="exercSemanaBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g500),var(--g400));width:0%;transition:width .5s ease"></div>
+        </div>
+        <div id="exercSemanaMsg" style="margin-top:9px;font-size:12px;color:var(--ink3);line-height:1.5;font-style:italic"></div>
       </div>
     </div>
+  </div>
 
-    <div class="pk-kpis" id="pkKpis"></div>
-    <div class="pk-chart-wrap"><div class="pk-zone-label">Zona de saciedade</div><canvas id="chartPK" height="100"></canvas></div>
-    <div class="pk-legend">
-      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#3b82f6"></div>Concentração plasmática</div>
-      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#22c55e"></div>Zona de saciedade</div>
-      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#fff;border:2px solid #3b82f6"></div>Agora</div>
-      <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#f59e0b"></div>Próxima dose</div>
+  <!-- PROGRESSO DE PESO -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid rgba(74,222,128,.15)">
+    <button onclick="toggleAcc('progAccBody','progAccArr')" style="width:100%;padding:14px 16px;background:linear-gradient(135deg,rgba(5,46,22,.7),rgba(22,101,52,.5));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">⚖️</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:#fff">Progresso de peso</div>
+          <div style="font-size:11px;color:var(--g300)">Jornada · Histórico · Ritmo</div>
+        </div>
+      </div>
+      <span id="progAccArr" style="font-size:16px;color:var(--g300);transition:transform .3s">▾</span>
+    </button>
+    <div id="progAccBody" style="display:none;border-top:1px solid rgba(74,222,128,.1)">
+      <div class="prog-hero" id="progHero" style="border-radius:0;margin-bottom:0;box-shadow:none">
+        <div class="prog-tag" id="progTag">PESO &amp; PROGRESSO</div>
+        <div class="prog-top">
+          <div class="prog-ring-wrap">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="7"/>
+              <circle id="progRingFill" cx="45" cy="45" r="38" fill="none" stroke="url(#ringGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="239" style="transition:stroke-dashoffset .9s cubic-bezier(.34,1.56,.64,1)"/>
+              <defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#4ade80"/></linearGradient></defs>
+            </svg>
+            <div class="prog-ring-center"><div class="prog-ring-pct" id="progRingPct">—</div><div class="prog-ring-lbl">da meta</div></div>
+          </div>
+          <div class="prog-info">
+            <div class="prog-weight" id="progWeight">— kg</div>
+            <div class="prog-delta" id="progDelta"></div>
+            <div class="prog-moti" id="progMoti"></div>
+            <div id="progUrineTag"></div>
+          </div>
+        </div>
+        <div class="prog-journey" id="progJourneyWrap">
+          <div class="prog-journey-lbl">SUA JORNADA</div>
+          <div class="prog-road"><div class="prog-road-fill" id="progRoadFill" style="width:0%"></div></div>
+          <div class="prog-dots">
+            <div class="prog-dot-wrap"><div class="prog-dot start"></div><div class="prog-dot-lbl">Início</div><div class="prog-dot-val" id="pdStart">—</div></div>
+            <div class="prog-dot-wrap" id="midMarkerWrap" style="display:none"><div class="prog-dot" id="midMarkerDot"></div><div class="prog-dot-lbl" id="midMarkerLbl">—</div><div class="prog-dot-val" id="midMarkerVal">—</div></div>
+            <div class="prog-dot-wrap"><div class="prog-dot current"></div><div class="prog-dot-lbl">Agora</div><div class="prog-dot-val" id="pdNow">—</div></div>
+            <div class="prog-dot-wrap"><div class="prog-dot goal"></div><div class="prog-dot-lbl">Meta</div><div class="prog-dot-val" id="pdGoal">—</div></div>
+          </div>
+        </div>
+        <div class="prog-kpis" id="progKpis">
+          <div class="prog-kpi highlight"><div class="prog-kpl">Perdido</div><div class="prog-kpv" id="pkPerd">—</div><div class="prog-kph">total</div></div>
+          <div class="prog-kpi"><div class="prog-kpl">Faltam</div><div class="prog-kpv" id="pkFaltam">—</div><div class="prog-kph">para meta</div></div>
+          <div class="prog-kpi"><div class="prog-kpl">Ritmo</div><div class="prog-kpv" id="pkRitmo">—</div><div class="prog-kph">kg/semana</div></div>
+        </div>
+        <div class="prog-no-goal" id="progNoGoal" style="display:none" onclick="go('perfil')">🎯 Defina seu peso meta no Perfil →</div>
+        <div id="progProj" style="display:none;font-size:12px;color:var(--g300);margin-bottom:10px;text-align:center"></div>
+        <canvas id="chartMain" height="0" style="display:none"></canvas>
+      </div>
     </div>
-    <div class="pk-alert" id="pkAlert"></div>
-    <div style="margin-top:12px;padding:10px 12px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:10px;font-size:11px;color:rgba(255,255,255,.6);line-height:1.6">
-      ⚠️ <strong style="color:rgba(251,191,36,.8)">Mesmo com atividade baixa, não antecipe a dose.</strong> O intervalo semanal é definido pelo seu médico e não deve ser alterado. Curva estimada — variações individuais existem.
+  </div>
+
+  <!-- POTÊNCIA DA MEDICAÇÃO -->
+  <div id="pkAccCard" style="display:none;border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid rgba(99,179,237,.2)">
+    <button onclick="toggleAcc('pkAccBody','pkAccArr')" style="width:100%;padding:14px 16px;background:linear-gradient(135deg,rgba(13,21,38,.95),rgba(26,37,64,.9));border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">📈</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:#fff">Potência da medicação</div>
+          <div style="font-size:11px;color:rgba(147,197,253,.6)">Curva farmacocinética · Zona de saciedade</div>
+        </div>
+      </div>
+      <span id="pkAccArr" style="font-size:16px;color:rgba(147,197,253,.5);transition:transform .3s">▾</span>
+    </button>
+    <div id="pkAccBody" style="display:none;border-top:1px solid rgba(99,179,237,.1)">
+      <div class="pk-hero" id="pkCard" style="display:block;border-radius:0;margin-bottom:0;box-shadow:none">
+        <div class="pk-tag">📈 EXCLUSIVO EQUILIBRA</div>
+        <div class="pk-title" style="display:flex;align-items:center;gap:8px">Potência da medicação <span class="tip tip-dark" onclick="mostrarDica('farmaco')">ⓘ</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:16px">
+          <div style="position:relative;width:200px;height:110px">
+            <canvas id="pkGauge" width="200" height="110" style="display:block"></canvas>
+            <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+              <div id="pkRingPct" style="font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.5)">—</div>
+              <div style="font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1.5px;margin-top:2px">POTÊNCIA</div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:4px">
+            <div id="pkFaseLabel" style="font-size:15px;font-weight:700;color:#4ade80;line-height:1.2">—</div>
+            <div id="pkFaseSub" style="font-size:10px;color:rgba(255,255,255,.45);line-height:1.5;margin-top:3px;max-width:180px"></div>
+          </div>
+        </div>
+        <div class="pk-kpis" id="pkKpis"></div>
+        <div class="pk-chart-wrap"><div class="pk-zone-label">Zona de saciedade</div><canvas id="chartPK" height="100"></canvas></div>
+        <div class="pk-legend">
+          <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#3b82f6"></div>Concentração plasmática</div>
+          <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#22c55e"></div>Zona de saciedade</div>
+          <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#fff;border:2px solid #3b82f6"></div>Agora</div>
+          <div class="pk-leg-item"><div class="pk-leg-dot" style="background:#f59e0b"></div>Próxima dose</div>
+        </div>
+        <div class="pk-alert" id="pkAlert"></div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:10px;font-size:11px;color:rgba(255,255,255,.6);line-height:1.6">
+          ⚠️ <strong style="color:rgba(251,191,36,.8)">Mesmo com atividade baixa, não antecipe a dose.</strong> Curva estimada — variações individuais existem.
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- METABOLISMO E METAS -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid var(--cream3)">
+    <button onclick="toggleAcc('metabBody','metabArr')" style="width:100%;padding:14px 16px;background:var(--cream1);border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">⚡</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:var(--ink)">Metabolismo e metas</div>
+          <div style="font-size:11px;color:var(--ink3)">TMB · Calorias · Proteína · Água</div>
+        </div>
+      </div>
+      <span id="metabArr" style="font-size:16px;color:var(--ink3);transition:transform .3s">▾</span>
+    </button>
+    <div id="metabBody" style="display:none;padding:14px 16px;background:var(--cream1);border-top:1px solid var(--cream3)">
+      <div class="kg">
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">😴 Metabolismo em repouso <span class="tip" onclick="mostrarDica('TMB')">ⓘ</span></div><div class="kv" id="kTMB">—</div><div class="kh">kcal/dia</div>
+          <button class="exp-btn" onclick="toggleExp('eTMB',this)">O que é? <span class="exp-arr">▾</span></button>
+          <div class="exp-box" id="eTMB"><strong>Taxa Metabólica Basal.</strong> Energia gasta para existir — respirar, bombear sangue, manter temperatura.</div>
+        </div>
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🏃 Energia no dia <span class="tip" onclick="mostrarDica('GET')">ⓘ</span></div><div class="kv" id="kGET">—</div><div class="kh">kcal/dia</div>
+          <button class="exp-btn" onclick="toggleExp('eGET',this)">O que é? <span class="exp-arr">▾</span></button>
+          <div class="exp-box" id="eGET"><strong>Gasto Energético Total.</strong> TMB × fator de atividade.</div>
+        </div>
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🎯 Meta de calorias <span class="tip" onclick="mostrarDica('meta')">ⓘ</span></div><div class="kv" id="kMeta">—</div><div class="kh" id="kDefH">—</div>
+          <button class="exp-btn" onclick="toggleExp('eMeta',this)">O que é? <span class="exp-arr">▾</span></button>
+          <div class="exp-box" id="eMeta"><strong>Meta calórica diária.</strong> GET − 500 kcal. Déficit de ~0,45 kg/semana.</div>
+        </div>
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">📉 Perda esperada <span class="tip" onclick="mostrarDica('perda')">ⓘ</span></div><div class="kv" id="kPEst">—</div><div class="kh">kg/semana</div>
+          <button class="exp-btn" onclick="toggleExp('ePerda',this)">O que é? <span class="exp-arr">▾</span></button>
+          <div class="exp-box" id="ePerda">Estimativa teórica. Resultado real varia.</div>
+        </div>
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🎯 Meta de água <span class="tip" onclick="mostrarDica('agua')">ⓘ</span></div><div class="kv" id="kAgua">—</div><div class="kh">ml/dia</div></div>
+        <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🥩 Meta mínima proteína <span class="tip" onclick="mostrarDica('proteina')">ⓘ</span></div><div class="kv" id="kPMin">—</div><div class="kh">1,6g/kg</div></div>
+        <div class="kb"><div class="kl">Proteína ideal</div><div class="kv" id="kPIdeal">—</div><div class="kh">1,8–2,2g/kg</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUGESTÃO ALIMENTAR -->
+  <div id="dietAccCard" style="display:none;border-radius:14px;overflow:hidden;margin-bottom:10px;border:1px solid var(--cream3)">
+    <button onclick="toggleAcc('dietAccBody','dietAccArr')" style="width:100%;padding:14px 16px;background:var(--cream1);border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--ss)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">🥗</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:700;color:var(--ink)">Sugestão alimentar</div>
+          <div style="font-size:11px;color:var(--ink3)">Refeições para hoje</div>
+        </div>
+      </div>
+      <span id="dietAccArr" style="font-size:16px;color:var(--ink3);transition:transform .3s">▾</span>
+    </button>
+    <div id="dietAccBody" style="display:none;padding:14px 16px;background:var(--cream1);border-top:1px solid var(--cream3)">
+      <div id="dietCard" style="border:none;padding:0;background:none">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px" id="dietSub">—</div>
+        <div id="dietMeals"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--g200);line-height:1.5">⚠️ Sugestão educativa. Priorize sempre <strong>proteína primeiro</strong> em cada refeição.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEMENTOS OCULTOS mantidos para JS -->
+  <div style="display:none">
+    <div id="metaAguaLabel"></div><div id="metaAguaBar"></div>
+    <div id="metaProtLabel"></div><div id="metaProtBar"></div>
+    <div id="metaProtEquiv"></div><div id="metaProtSeletor"></div>
+    <div id="metaProtFoodList"></div><button id="metaProtBtn"></button>
+    <div id="alertaMuscular"></div>
+    <div id="kAguaH"></div><div id="kAguaHH"></div>
+    <div id="aguaBarWrap"><div id="aguaPct"></div><div id="aguaFill"></div></div>
+    <div id="peqEl"></div><div id="exercicioCard"></div>
+    <div id="proxDoseCard"><div id="proxDoseInner"><div id="proxDoseIc"></div><div id="proxDoseTag"></div><div id="proxDoseTtl"></div><div id="proxDoseSub"></div></div></div>
   </div>
 
   <div class="streak" id="streakEl" style="display:none!important;visibility:hidden;height:0;overflow:hidden;margin:0;padding:0">
@@ -898,54 +1175,6 @@ tr:hover td{background:var(--g50)}
     <div style="font-size:28px" id="msIc">🏆</div>
     <div><div style="font-size:14px;font-weight:600" id="msMsg">—</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px" id="msSub">—</div></div>
   </div>
-
-  <!-- 6 METABOLISMO E METAS -->
-  <div class="card">
-    <div class="ct" style="display:flex;align-items:center;gap:6px">⚡ Metabolismo &amp; Metas <span class="tip" onclick="mostrarDica('metabolismo')">ⓘ</span></div>
-    <div class="cs">Toque em <strong>O que é?</strong> para entender cada número.</div>
-    <div class="kg">
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">😴 Metabolismo em repouso <span class="tip" onclick="mostrarDica('TMB')">ⓘ</span></div><div class="kv" id="kTMB">—</div><div class="kh">kcal/dia</div>
-        <button class="exp-btn" onclick="toggleExp('eTMB',this)">O que é? <span class="exp-arr">▾</span></button>
-        <div class="exp-box" id="eTMB"><strong>Taxa Metabólica Basal.</strong> Energia gasta para existir — respirar, bombear sangue, manter temperatura. Calculado pela fórmula Mifflin-St Jeor.</div>
-      </div>
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🏃 Energia no dia <span class="tip" onclick="mostrarDica('GET')">ⓘ</span></div><div class="kv" id="kGET">—</div><div class="kh">kcal/dia</div>
-        <button class="exp-btn" onclick="toggleExp('eGET',this)">O que é? <span class="exp-arr">▾</span></button>
-        <div class="exp-box" id="eGET"><strong>Gasto Energético Total.</strong> TMB × fator de atividade. Representa tudo que você gasta num dia real.</div>
-      </div>
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🎯 Meta de calorias <span class="tip" onclick="mostrarDica('meta')">ⓘ</span></div><div class="kv" id="kMeta">—</div><div class="kh" id="kDefH">—</div>
-        <button class="exp-btn" onclick="toggleExp('eMeta',this)">O que é? <span class="exp-arr">▾</span></button>
-        <div class="exp-box" id="eMeta"><strong>Meta calórica diária.</strong> GET − 500 kcal. Déficit que resulta em ~0,45 kg/semana. O GLP-1 facilita com saciedade natural.</div>
-      </div>
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">📉 Perda esperada <span class="tip" onclick="mostrarDica('perda')">ⓘ</span></div><div class="kv" id="kPEst">—</div><div class="kh">kg/semana</div>
-        <button class="exp-btn" onclick="toggleExp('ePerda',this)">O que é? <span class="exp-arr">▾</span></button>
-        <div class="exp-box" id="ePerda">Estimativa teórica. Resultado real varia. Confie na média de 7 dias.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="ct" style="display:flex;align-items:center;gap:6px">💧 Hidratação &amp; Proteína <span class="tip" onclick="mostrarDica('hidratacao')">ⓘ</span></div>
-    <div class="cs">Metas ajustadas ao seu peso</div>
-    <div class="kg" style="margin-bottom:12px">
-      <div class="kb"><div class="kl">Água hoje</div><div class="kv" id="kAguaH">—</div><div class="kh" id="kAguaHH">—</div></div>
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🎯 Meta de água <span class="tip" onclick="mostrarDica('agua')">ⓘ</span></div><div class="kv" id="kAgua">—</div><div class="kh">ml/dia</div></div>
-      <div class="kb"><div class="kl" style="display:flex;align-items:center;gap:3px">🥩 Meta mínima <span class="tip" onclick="mostrarDica('proteina')">ⓘ</span></div><div class="kv" id="kPMin">—</div><div class="kh">1,6g/kg</div></div>
-      <div class="kb"><div class="kl">Proteína ideal</div><div class="kv" id="kPIdeal">—</div><div class="kh">1,8–2,2g/kg</div></div>
-    </div>
-    <div id="aguaBarWrap" style="display:none">
-      <div class="pbar-lbl">💧 Água — <span id="aguaPct">0%</span> da meta</div>
-      <div class="pbar"><div class="pbar-fill" id="aguaFill" style="width:0%"></div></div>
-    </div>
-    <div class="peq" id="peqEl" style="display:none">—</div>
-  </div>
-
-  <div class="diet-wrap" id="dietCard" style="display:none">
-    <div style="font-family:var(--fs);font-size:16px;color:var(--ink);margin-bottom:3px;font-weight:500">🥗 Sugestão alimentar para hoje</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:14px" id="dietSub">—</div>
-    <div id="dietMeals"></div>
-    <div style="font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--g200);line-height:1.5">⚠️ Sugestão educativa. Priorize sempre <strong>proteína primeiro</strong> em cada refeição.</div>
-  </div>
-
 
   <div class="card" id="proxCard" style="display:none">
     <div class="ct">💉 Minha Caneta</div>
@@ -1108,6 +1337,15 @@ tr:hover td{background:var(--g50)}
     <div class="calc-tag">🧪 CANETA MANIPULADA — FRASCO + SERINGA</div>
     <div class="calc-title">Calculadora de diluição</div>
     <div class="calc-sub">Para quem usa frasco manipulado com seringa de insulina. Informe o que está escrito no frasco e calcule quantas unidades aspirar.</div>
+    <!-- Banner último cálculo salvo -->
+    <div id="calcSalvoInfo" style="display:none;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.35);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#86efac;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Último cálculo</div>
+        <div id="calcSalvoTxt" style="font-size:13px;color:#fff;font-weight:600;line-height:1.4">—</div>
+      </div>
+      <button onclick="reajustarCalc()" style="flex-shrink:0;padding:7px 14px;border-radius:8px;border:1px solid rgba(74,222,128,.5);background:rgba(74,222,128,.2);color:#4ade80;font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">✏️ Recalcular</button>
+    </div>
+    <div id="calcFormWrap">
     <!-- ABAS: Ampola / Caneta -->
     <div style="display:flex;gap:8px;margin-bottom:14px">
       <button id="abaAmpolaBtn" onclick="setAbaCaneta('ampola')"
@@ -1172,11 +1410,17 @@ tr:hover td{background:var(--g50)}
         </div>
       </div>
     </div>
+    </div><!-- /calcFormWrap -->
     <div id="calcRes" style="margin-top:12px"><div class="calc-empty">Selecione o fármaco e a apresentação acima.</div></div>
   </div>
 
   <div class="card">
     <div class="ct">📏 Diário de peso</div>
+    <div id="pesoSalvoInfo" style="display:none;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;align-items:center;justify-content:space-between;gap:10px">
+      <div style="font-size:12px;color:var(--g700);line-height:1.5;font-weight:600" id="pesoSalvoTxt">Último peso registrado.</div>
+      <button onclick="reajustarPeso()" style="flex-shrink:0;padding:7px 14px;border-radius:8px;border:1px solid rgba(22,163,74,.5);background:rgba(22,163,74,.12);color:var(--g700);font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">✏️ Novo registro</button>
+    </div>
+    <div id="pesoFormWrap">
     <div class="cs">Registre ao acordar, após urinar, antes de comer.</div>
     <div class="fg">
       <div class="fi"><label>Data</label><input id="pData" type="date"/></div>
@@ -1187,11 +1431,17 @@ tr:hover td{background:var(--g50)}
       <div id="alertaVelocidadePeso" style="display:none;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid;font-size:12px;line-height:1.6"></div>
       <button class="btn bg2" style="padding:7px 12px;font-size:12px" onclick="delPeso()">Apagar última</button>
     </div>
+    </div><!-- /pesoFormWrap -->
     <div class="chw"><canvas id="chartCaneta" height="70"></canvas></div>
   </div>
 
   <div class="card">
     <div class="ct">Configurar tratamento</div>
+    <div id="tratSalvoInfo" style="display:none;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div style="font-size:12px;color:var(--g700);line-height:1.5;font-weight:600" id="tratSalvoTxt">Tratamento configurado.</div>
+      <button onclick="reajustarTratamento()" style="flex-shrink:0;padding:7px 14px;border-radius:8px;border:1px solid rgba(22,163,74,.5);background:rgba(22,163,74,.12);color:var(--g700);font-family:var(--ss);font-size:12px;font-weight:700;cursor:pointer">✏️ Reajustar</button>
+    </div>
+    <div id="tratFormWrap">
     <div class="cs">Informações da sua prescrição.</div>
     <div class="fg">
       <div class="fi">
@@ -1232,6 +1482,7 @@ tr:hover td{background:var(--g50)}
     <div class="row" style="margin-top:14px">
       <button class="btn bp" onclick="salvarCaneta()">💾 Salvar tratamento</button>
     </div>
+    </div><!-- /tratFormWrap -->
   </div>
 
   <div class="card" id="escCard" style="display:none">
@@ -1355,7 +1606,7 @@ tr:hover td{background:var(--g50)}
 
   <!-- Campo de busca -->
   <div style="position:relative;margin-bottom:16px">
-    <input id="faqBusca" type="text" placeholder="🔍 Digite sua dúvida..." oninput="filtrarFAQ(this.value)"
+    <input id="faqBusca" type="text" placeholder="🔍 Escreva a palavra-chave..." oninput="filtrarFAQ(this.value)"
       style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid var(--cream3);background:#fff;font-family:var(--ss);font-size:14px;outline:none"/>
     <button onclick="el('faqBusca').value='';filtrarFAQ('')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;font-size:16px;cursor:pointer;color:var(--muted)">✕</button>
   </div>
@@ -1530,33 +1781,33 @@ tr:hover td{background:var(--g50)}
    ═══════════════════════════════════ */
 
 var LS='equilibra_v5';
-var S={profile:{sex:'M',age:null,heightCm:null,activityLevel:'Moderada',startDate:'',weightStartKg:null,weightKg:null,weightGoalKg:null},caneta:{farmaco:'',dose:'',freq:'semanal',faseSac:'',inicio:'',ultima:'',diaSem:1,obs:''},weights:[],daily:[]};
+var S={profile:{sex:'M',age:null,heightCm:null,activityLevel:'Moderada',startDate:'',weightStartKg:null,weightKg:null,weightGoalKg:null},caneta:{farmaco:'',dose:'',freq:'semanal',faseSac:'',inicio:'',ultima:'',diaSem:1,obs:''},ultimaCalc:null,exercMetaSem:3,weights:[],daily:[]};
 
 var AF={Sedentário:1.20,Leve:1.35,Moderada:1.50,Alta:1.70};
 var WBX={Sedentário:0,Leve:200,Moderada:400,Alta:700};
 
 var DOSES={
   Tirzepatida:[
-    {dose:'2,5 mg',sem:'Semanas 1–4',info:'Dose de introdução. O corpo está aprendendo a responder ao duplo receptor. A saciedade plena começa a aparecer entre as semanas 5 e 8.'},
-    {dose:'5 mg',sem:'Semanas 5–8',info:'Primeira dose terapêutica real. Saciedade começa a se estabelecer. Muitos respondem muito bem aqui — não apresse progressão.'},
-    {dose:'7,5 mg',sem:'Semanas 9–12',info:'Saciedade consistente ao longo da semana toda. A maioria tem excelente resultado nessa dose.'},
-    {dose:'10 mg',sem:'Semanas 13–16',info:'Dose eficaz para a maioria. Platô de 1–2 semanas pode ocorrer — é remodelação corporal, não estagnação real.'},
-    {dose:'12,5 mg',sem:'Semanas 17–20',info:'Apenas se resposta subótima à 10mg. Decisão exclusivamente médica.'},
-    {dose:'15 mg',sem:'Semana 21+',info:'Dose máxima. Nem todos precisam chegar aqui. Suplementação nutricional obrigatória.'}
+    {dose:'2,5 mg', sem:'Semanas 1–4',         adaptacao:true,  info:'Dose de adaptação — não é terapêutica. O objetivo é acostumar o organismo ao fármaco. Náusea e enjoo podem aparecer e são esperados.'},
+    {dose:'5 mg',   sem:'Manter se saciedade ✓',adaptacao:false, info:'Primeira dose terapêutica real. Se há saciedade natural e perda consistente, mantenha esta dose. Só progrida com orientação médica.'},
+    {dose:'7,5 mg', sem:'Manter se saciedade ✓',adaptacao:false, info:'Saciedade consistente ao longo da semana toda. A maioria tem excelente resultado aqui — sem necessidade de avançar se a resposta for boa.'},
+    {dose:'10 mg',  sem:'Manter se saciedade ✓',adaptacao:false, info:'Dose eficaz para a maioria. Platô breve pode ocorrer — é remodelação, não estagnação. Mantenha se a saciedade está presente.'},
+    {dose:'12,5 mg',sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Somente se resposta subótima à 10mg confirmada pelo médico. Decisão exclusivamente clínica.'},
+    {dose:'15 mg',  sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Dose máxima. Nem todos precisam chegar aqui. Suplementação nutricional obrigatória nessa faixa.'}
   ],
   Semaglutida:[
-    {dose:'0,25 mg',sem:'Semanas 1–4',info:'Dose de adaptação. O nível sérico está subindo gradualmente. Saciedade ainda não é esperada.'},
-    {dose:'0,5 mg',sem:'Semanas 5–8',info:'Primeira dose com potencial terapêutico real. Saciedade começa.'},
-    {dose:'1,0 mg',sem:'Semanas 9–12',info:'Dose terapêutica principal. Muitos têm excelente resposta aqui — não progrida sem necessidade.'},
-    {dose:'1,7 mg',sem:'Semanas 13–16',info:'Dose intermediária alta. Indicada quando a 1mg foi insuficiente.'},
-    {dose:'2,4 mg',sem:'Semana 17+',info:'Dose máxima para obesidade (Wegovy). Suplementação nutricional frequentemente necessária.'}
+    {dose:'0,25 mg',sem:'Semanas 1–4',          adaptacao:true,  info:'Dose de adaptação — não tem efeito terapêutico. O corpo está aprendendo a responder ao GLP-1. Saciedade ainda não é esperada.'},
+    {dose:'0,5 mg', sem:'Manter se saciedade ✓',adaptacao:false, info:'Primeira dose com efeito real. Muitos pacientes mantêm esta dose por meses com excelentes resultados. Não progrida se há saciedade.'},
+    {dose:'1,0 mg', sem:'Manter se saciedade ✓',adaptacao:false, info:'Dose terapêutica principal. Excelente resposta na maioria. Se saciedade está presente e perda é consistente, mantenha aqui.'},
+    {dose:'1,7 mg', sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Dose intermediária alta. Indicada apenas quando 1mg foi insuficiente após avaliação médica.'},
+    {dose:'2,4 mg', sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Dose máxima (Wegovy). Suplementação nutricional frequentemente necessária. Decisão médica.'}
   ],
   Liraglutida:[
-    {dose:'0,6 mg',sem:'Semana 1',info:'Adaptação diária. Crie o hábito antes de progredir.'},
-    {dose:'1,2 mg',sem:'Semana 2',info:'Primeira dose com efeito terapêutico. Saciedade pós-prandial começa.'},
-    {dose:'1,8 mg',sem:'Semana 3',info:'Dose eficaz para muitos. Avalie resposta antes de progredir.'},
-    {dose:'2,4 mg',sem:'Semana 4',info:'Dose intermediária. Verifique tolerabilidade.'},
-    {dose:'3,0 mg',sem:'Semana 5+',info:'Dose máxima. Avalie em 12 semanas — mínimo 5% de perda esperado.'}
+    {dose:'0,6 mg',    sem:'Semana 1',             adaptacao:true,  info:'Adaptação diária. Objetivo: criar o hábito e adaptar o organismo. Não é dose terapêutica.'},
+    {dose:'1,2 mg',    sem:'Manter se saciedade ✓',adaptacao:false, info:'Primeira dose com efeito terapêutico. Saciedade pós-prandial começa. Se presente, mantenha — sem pressa para progredir.'},
+    {dose:'1,8 mg',    sem:'Manter se saciedade ✓',adaptacao:false, info:'Dose eficaz para muitos pacientes. Avalie resposta antes de considerar progressão com seu médico.'},
+    {dose:'2,4 mg',    sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Dose intermediária. Somente se 1,8mg foi insuficiente após avaliação médica.'},
+    {dose:'3,0 mg',    sem:'Apenas se indicado ⚕️', adaptacao:false, info:'Dose máxima. Avalie em 12 semanas com seu médico — mínimo 5% de perda esperado.'}
   ]
 };
 
@@ -1948,37 +2199,41 @@ function anaStep4B(){
   // Build protocol table
   var protocolos={
     Tirzepatida:[
-      {sem:'Semanas 1–4',dose:'2,5 mg',info:'Introdução — adaptação'},
-      {sem:'Semanas 5–8',dose:'5 mg',info:'1ª dose terapêutica'},
-      {sem:'Semanas 9–12',dose:'7,5 mg',info:'Saciedade consistente'},
-      {sem:'Semanas 13–16',dose:'10 mg',info:'Eficaz para a maioria'},
-      {sem:'Semanas 17–20',dose:'12,5 mg',info:'Se resposta subótima'},
-      {sem:'Semana 21+',dose:'15 mg',info:'Dose máxima'}
+      {sem:'Adaptação',         dose:'2,5 mg', adaptacao:true},
+      {sem:'Manter se saciedade ✓',dose:'5 mg'},
+      {sem:'Manter se saciedade ✓',dose:'7,5 mg'},
+      {sem:'Manter se saciedade ✓',dose:'10 mg'},
+      {sem:'Apenas se indicado ⚕️',dose:'12,5 mg'},
+      {sem:'Apenas se indicado ⚕️',dose:'15 mg'}
     ],
     Semaglutida:[
-      {sem:'Semanas 1–4',dose:'0,25 mg',info:'Adaptação'},
-      {sem:'Semanas 5–8',dose:'0,5 mg',info:'1ª dose terapêutica'},
-      {sem:'Semanas 9–12',dose:'1,0 mg',info:'Dose terapêutica principal'},
-      {sem:'Semanas 13–16',dose:'1,7 mg',info:'Dose intermediária'},
-      {sem:'Semana 17+',dose:'2,4 mg',info:'Dose máxima'}
+      {sem:'Adaptação',          dose:'0,25 mg',adaptacao:true},
+      {sem:'Manter se saciedade ✓',dose:'0,5 mg'},
+      {sem:'Manter se saciedade ✓',dose:'1,0 mg'},
+      {sem:'Apenas se indicado ⚕️',dose:'1,7 mg'},
+      {sem:'Apenas se indicado ⚕️',dose:'2,4 mg'}
     ],
     Liraglutida:[
-      {sem:'Semana 1',dose:'0,6 mg/dia',info:'Adaptação'},
-      {sem:'Semana 2',dose:'1,2 mg/dia',info:'1ª dose terapêutica'},
-      {sem:'Semana 3',dose:'1,8 mg/dia',info:'Dose eficaz'},
-      {sem:'Semana 4',dose:'2,4 mg/dia',info:'Dose intermediária'},
-      {sem:'Semana 5+',dose:'3,0 mg/dia',info:'Dose máxima'}
+      {sem:'Adaptação',          dose:'0,6 mg/dia', adaptacao:true},
+      {sem:'Manter se saciedade ✓',dose:'1,2 mg/dia'},
+      {sem:'Manter se saciedade ✓',dose:'1,8 mg/dia'},
+      {sem:'Apenas se indicado ⚕️',dose:'2,4 mg/dia'},
+      {sem:'Apenas se indicado ⚕️',dose:'3,0 mg/dia'}
     ]
   };
   var proto=protocolos[farm]||[];
   var tableRows=proto.map(function(p){
     var doseNum=parseFloat(p.dose);
     var isCurrent=Math.abs(doseNum-dose)<0.01;
-    var style=isCurrent?'background:rgba(74,222,128,.15);border-left:3px solid var(--g400);':'';
-    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06);'+style+'">'
-      +'<div style="font-size:12px;color:rgba(255,255,255,.5)">'+p.sem+'</div>'
-      +'<div style="font-size:13px;font-weight:700;color:'+(isCurrent?'var(--g400)':'#fff')+'">'+p.dose+(isCurrent?' ← você está aqui':'')+'</div>'
-      +'<div style="font-size:11px;color:rgba(255,255,255,.45)">'+p.info+'</div>'
+    var semColor=p.adaptacao?'rgba(251,191,36,.8)':p.sem.indexOf('⚕️')>=0?'rgba(239,68,68,.7)':'rgba(74,222,128,.8)';
+    var rowBg=isCurrent?'background:rgba(74,222,128,.12);border-left:3px solid var(--g400);':'';
+    return '<div style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06);'+rowBg+'">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">'
+      +'<span style="font-size:14px;font-weight:800;color:'+(isCurrent?'var(--g400)':'#fff')+'">'+p.dose+'</span>'
+      +'<span style="font-size:10px;font-weight:700;color:'+semColor+'">'+p.sem+'</span>'
+      +(isCurrent?'<span style="font-size:10px;background:rgba(74,222,128,.2);color:var(--g300);padding:2px 7px;border-radius:99px">← você está aqui</span>':'')
+      +'</div>'
+      +(!p.adaptacao?'<div style="font-size:10px;color:rgba(255,255,255,.35);font-style:italic">Mantenha se saciedade presente · Mude com orientação médica</div>':'')
       +'</div>';
   }).join('');
   setTimeout(function(){
@@ -2663,6 +2918,11 @@ function calcDil(){
   html+=avisoSer+'</div>'
     +'<div class="calc-warn" style="margin-top:10px">⚠️ Unidades = (dose ÷ concentração) × 100 &nbsp;|&nbsp; Sempre confirme com seu médico antes da aplicação.</div>';
   el('calcRes').innerHTML=html;
+  // Salvar último cálculo
+  S.ultimaCalc={farm:f,apresIdx:ai,mg:mgFrasco,ml:mlFrasco,dose:dose,uni:uni,conc:rd(conc,2),data:hoje()};
+  salvar();
+  // Mostrar botão de salvo (visível quando calc completo)
+  atualizarCalcSalvoInfo();
 }
 
 /* ══ COMO ESTOU ══ */
@@ -2746,21 +3006,38 @@ function buildSint(){
 
 /* ══ ALIMENTOS — PROTEÍNA ══ */
 var PROT_ALIMENTOS=[
-  {id:'frango',   nm:'🍗 Frango/Peito cozido',       fator:0.31},
-  {id:'carne',    nm:'🥩 Carne bovina magra',         fator:0.26},
-  {id:'porco',    nm:'🐷 Lombo suíno grelhado',       fator:0.27},
-  {id:'peixe',    nm:'🐟 Peixe grelhado',             fator:0.25},
-  {id:'camarao',  nm:'🦐 Camarão cozido',             fator:0.24},
-  {id:'atum_lata',nm:'🥫 Atum em lata escorrido',     fator:0.28},
-  {id:'ovo',      nm:'🥚 Ovo inteiro',                fator:7,    unidade:'unid'},
-  {id:'claras',   nm:'🥚 Clara de ovo',               fator:4,    unidade:'unid'},
-  {id:'whey',     nm:'💪 Whey protein (pó)',          fator:0.80},
-  {id:'cottage',  nm:'🧇 Cottage cheese',             fator:0.12},
-  {id:'iogurte',  nm:'🥛 Iogurte grego integral',     fator:0.09},
-  {id:'queijo_m', nm:'🧀 Queijo mussarela',           fator:0.20},
-  {id:'queijo_p', nm:'🧀 Queijo prato/coalho',        fator:0.23},
-  {id:'amendoim', nm:'🥜 Pasta de amendoim',          fator:0.27},
-  {id:'feijao',   nm:'🫘 Feijão/lentilha cozidos',    fator:0.09}
+  // fator = g de proteína pura por 100g de alimento (exceto unid e scoop)
+  {id:'frango',   nm:'🍗 Frango (peito cozido)',   fator:0.31, desc:'31g prot em 100g'},
+  {id:'carne',    nm:'🥩 Carne bovina magra',      fator:0.26, desc:'26g prot em 100g'},
+  {id:'porco',    nm:'🐷 Lombo suíno grelhado',    fator:0.27, desc:'27g prot em 100g'},
+  {id:'peixe',    nm:'🐟 Peixe grelhado',          fator:0.25, desc:'25g prot em 100g'},
+  {id:'camarao',  nm:'🦐 Camarão cozido',          fator:0.24, desc:'24g prot em 100g'},
+  {id:'atum_lata',nm:'🥫 Atum em lata (escorrido)',fator:0.28, desc:'28g prot em 100g'},
+  {id:'ovo',      nm:'🥚 Ovo inteiro',             fator:7,    desc:'7g prot por ovo',   unidade:'unid'},
+  {id:'claras',   nm:'🥚 Clara de ovo',            fator:4,    desc:'4g prot por clara',  unidade:'unid'},
+  {id:'whey',     nm:'💪 Whey protein',            fator:24,   desc:'24g prot por scoop', unidade:'scoop', gPorScoop:30},
+  {id:'cottage',  nm:'🧇 Cottage cheese',          fator:0.12, desc:'12g prot em 100g'},
+  {id:'iogurte',  nm:'🥛 Iogurte grego integral',  fator:0.09, desc:'9g prot em 100g'},
+  {id:'queijo_m', nm:'🧀 Queijo mussarela',        fator:0.20, desc:'20g prot em 100g'},
+  {id:'queijo_p', nm:'🧀 Queijo prato/coalho',     fator:0.23, desc:'23g prot em 100g'},
+  {id:'amendoim', nm:'🥜 Pasta de amendoim',       fator:0.27, desc:'27g prot em 100g'},
+  {id:'feijao',   nm:'🫘 Feijão/lentilha cozidos',  fator:0.09, desc:'9g prot em 100g'},
+  // Novas fontes
+  {id:'peru',     nm:'🦃 Peito de peru fatiado',    fator:0.22, desc:'22g prot em 100g'},
+  {id:'sardinha', nm:'🐟 Sardinha em lata',          fator:0.25, desc:'25g prot em 100g'},
+  {id:'atum_fresco',nm:'🐟 Atum fresco grelhado',   fator:0.30, desc:'30g prot em 100g'},
+  {id:'salmon',   nm:'🐠 Salmão grelhado',           fator:0.25, desc:'25g prot em 100g'},
+  {id:'tilapia',  nm:'🐟 Tilápia grelhada',          fator:0.26, desc:'26g prot em 100g'},
+  {id:'bacalhau', nm:'🐟 Bacalhau cozido',           fator:0.20, desc:'20g prot em 100g'},
+  {id:'presunto', nm:'🥩 Presunto magro fatiado',    fator:0.18, desc:'18g prot em 100g'},
+  {id:'whey_iso', nm:'💪 Whey Isolado',              fator:27,   desc:'27g prot por scoop', unidade:'scoop', gPorScoop:30},
+  {id:'caseina',  nm:'🥛 Caseína (pó)',              fator:24,   desc:'24g prot por scoop', unidade:'scoop', gPorScoop:33},
+  {id:'ovo_coz',  nm:'🥚 Ovo cozido (sem gema)',     fator:4,    desc:'4g prot por unidade', unidade:'unid'},
+  {id:'leite_d',  nm:'🥛 Leite desnatado',           fator:0.034,desc:'3,4g prot em 100ml'},
+  {id:'ricota',   nm:'🧀 Ricota',                    fator:0.11, desc:'11g prot em 100g'},
+  {id:'graodbico',nm:'🫘 Grão-de-bico cozido',       fator:0.09, desc:'9g prot em 100g'},
+  {id:'tofu',     nm:'🍱 Tofu firme',                fator:0.08, desc:'8g prot em 100g'},
+  {id:'edamame',  nm:'🫘 Edamame (soja verde)',       fator:0.11, desc:'11g prot em 100g'}
 ];
 
 /* Chips rápidos: porções do dia a dia já com peso pré-definido */
@@ -2882,7 +3159,7 @@ function metaAddAgua(ml){
   var n=Object.assign({},e,{date:d,waterMl:a});
   var i=S.daily.findIndex(function(x){return x.date===d;});
   if(i>=0)S.daily[i]=n;else S.daily.push(n);
-  salvar();renderMetaDia();
+  salvar();renderMetaDia();renderQuatroGauges();renderResumoDiario();verificarMetaBatida();
   toast('💧 +'+(ml>=1000?(ml/1000)+'L':ml+'ml')+' registrado!');
 }
 var metaProtFoods=[];
@@ -2944,7 +3221,7 @@ function metaSalvarProt(){
   salvar();metaProtFoods=[];
   var s=el('metaProtSeletor');if(s)s.style.display='none';
   var btn=el('metaProtBtn');if(btn)btn.textContent='🥩 Registrar proteina';
-  renderMetaDia();toast('🥩 +'+total+'g de proteina salvo!');
+  renderMetaDia();renderQuatroGauges();toast('🥩 +'+total+'g de proteina salvo!');
 }
 function toggleLeiaTodoDia(){
   var b=el('leiaTodoDiaBody');var a=el('leiaTodoDiaArr');if(!b)return;
@@ -2993,13 +3270,99 @@ function inicioSemana(){
   var seg=new Date(d.getFullYear(),d.getMonth(),diff);
   return seg.toISOString().slice(0,10);
 }
+function getMetaExerc(){ return S.exercMetaSem||3; }
+function ajustarMetaExerc(delta){
+  var atual=getMetaExerc();
+  var nova=Math.min(7,Math.max(2,atual+delta));
+  S.exercMetaSem=nova;
+  salvar();
+  var el2=el('metaExercNum');if(el2)el2.textContent=nova;
+  renderExercicioSemanal();
+  renderQuatroGauges();
+  toast('Meta: '+nova+'x por semana 💪');
+}
+function renderExercDiasAnteriores(){
+  var wrap=el('exercDiasAnteSelectWrap');if(!wrap)return;
+  wrap.innerHTML='';
+  var diasNm=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  var seg=inicioSemana();
+  var hj=hoje();
+  for(var i=0;i<7;i++){
+    var dt=new Date(seg);dt.setDate(dt.getDate()+i);
+    var dtStr=dt.toISOString().slice(0,10);
+    if(dtStr===hj) continue; // hoje já tem o seletor principal
+    var dh=S.daily.find(function(x){return x.date===dtStr;})||{};
+    var fez=dh.exercicio&&dh.exercicio!=='nao';
+    var btn=document.createElement('button');
+    btn.textContent=diasNm[i]+(fez?' ✓':'');
+    btn.style.cssText='padding:6px 12px;border-radius:8px;border:1.5px solid '+(fez?'var(--g400)':'var(--cream3)')+';background:'+(fez?'var(--g100)':'transparent')+';color:'+(fez?'var(--g700)':'var(--ink3)')+';font-family:var(--ss);font-size:11px;font-weight:700;cursor:pointer';
+    (function(dateStr,nomeDia){
+      btn.onclick=function(){
+        abrirExercDiaAnterior(dateStr,nomeDia);
+      };
+    })(dtStr,diasNm[i]);
+    wrap.appendChild(btn);
+  }
+}
+function abrirExercDiaAnterior(dateStr,nomeDia){
+  var ops=[
+    {v:'musculacao',l:'🏋️ Musculação'},
+    {v:'funcional',l:'⚡ Funcional'},
+    {v:'pilates',l:'🧘 Pilates'},
+    {v:'caminhada',l:'🚶 Caminhada'},
+    {v:'natacao',l:'🏊 Natação'},
+    {v:'outro',l:'💪 Outro'},
+    {v:'nao',l:'❌ Não treinei'}
+  ];
+  var dh=S.daily.find(function(x){return x.date===dateStr;})||{};
+  var atual=dh.exercicio||'';
+  // Mini modal inline simples
+  var modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:flex-end;justify-content:center';
+  var box=document.createElement('div');
+  box.style.cssText='background:var(--cream1);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:420px;font-family:var(--ss)';
+  var titulo=document.createElement('div');
+  titulo.style.cssText='font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px';
+  titulo.textContent='Exercício — '+nomeDia;
+  var sub=document.createElement('div');
+  sub.style.cssText='font-size:11px;color:var(--ink3);margin-bottom:14px';
+  sub.textContent=dateStr;
+  box.appendChild(titulo);box.appendChild(sub);
+  ops.forEach(function(op){
+    var b=document.createElement('button');
+    var sel=atual===op.v;
+    b.textContent=op.l;
+    b.style.cssText='display:block;width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid '+(sel?'var(--g500)':'var(--cream3)')+';background:'+(sel?'var(--g100)':'transparent')+';color:'+(sel?'var(--g700)':'var(--ink)')+';font-family:var(--ss);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;text-align:left';
+    b.onclick=function(){
+      var e2=S.daily.find(function(x){return x.date===dateStr;})||{};
+      var n=Object.assign({},e2,{date:dateStr,exercicio:op.v});
+      var idx=S.daily.findIndex(function(x){return x.date===dateStr;});
+      if(idx>=0)S.daily[idx]=n;else S.daily.push(n);
+      salvar();renderExercicioSemanal();renderExercDiasAnteriores();renderQuatroGauges();
+      document.body.removeChild(modal);
+      toast(op.v==='nao'?nomeDia+': descanso registrado':'💪 '+nomeDia+': '+op.l);
+    };
+    box.appendChild(b);
+  });
+  var fechar=document.createElement('button');
+  fechar.textContent='Cancelar';
+  fechar.style.cssText='display:block;width:100%;padding:11px;border-radius:10px;border:none;background:var(--cream3);color:var(--ink3);font-family:var(--ss);font-size:13px;cursor:pointer;margin-top:4px';
+  fechar.onclick=function(){document.body.removeChild(modal);};
+  box.appendChild(fechar);
+  modal.appendChild(box);
+  modal.onclick=function(e){if(e.target===modal)document.body.removeChild(modal);};
+  document.body.appendChild(modal);
+}
 function renderExercicioSemanal(){
-  var diasNm=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
+  var diasNm=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
   var seg=inicioSemana();
   var wrapD=el('exercSemanaDias');
   var countEl=el('exercSemanaCount');
   var barEl=el('exercSemanaBar');
   var msgEl=el('exercSemanaMsg');
+  var metaEl=el('metaExercNum');
+  var meta=getMetaExerc();
+  if(metaEl)metaEl.textContent=meta;
   if(!wrapD)return;
   wrapD.innerHTML='';
   var feitos=0;
@@ -3011,28 +3374,30 @@ function renderExercicioSemanal(){
     var isHoje=dtStr===hoje();
     if(fez)feitos++;
     var div=document.createElement('div');
-    div.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px';
+    div.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer';
     var cirStyle=fez
       ?'background:var(--g500);color:#fff;border:none'
       :isHoje?'border:2px solid var(--g400);background:rgba(74,222,128,.08)':'background:var(--cream2);border:1px solid var(--cream3)';
     div.innerHTML='<div style="font-size:10px;color:var(--ink3);font-weight:'+(isHoje?700:400)+'">'+diasNm[i]+'</div>'
       +'<div style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;'+cirStyle+'">'
       +(fez?'&#10003;':isHoje?'&#8226;':'')+'</div>';
+    if(!isHoje){
+      (function(ds,nm){ div.onclick=function(){abrirExercDiaAnterior(ds,nm);}; })(dtStr,diasNm[i]);
+    }
     wrapD.appendChild(div);
   }
-  var meta=3;
   var pct=Math.min(100,Math.round(feitos/meta*100));
   if(countEl)countEl.textContent=feitos+' de '+meta+'x na semana';
   if(barEl)barEl.style.width=pct+'%';
   if(msgEl){
     var msg='';
     if(feitos===0)msg='Seu músculo precisa de você. Qualquer movimento conta!';
-    else if(feitos===1)msg='Começou! Continue — a consistência é o que preserva.';
-    else if(feitos===2)msg='Quase na meta! Mais uma vez e você protege sua massa magra. 💪';
-    else if(feitos===3)msg='Meta batida! Parabéns — você está preservando o que importa. 🏆';
+    else if(feitos<meta)msg='Faltam '+(meta-feitos)+'x para bater sua meta esta semana. 💪';
+    else if(feitos===meta)msg='Meta batida! Parabéns — você está preservando o que importa. 🏆';
     else msg='Acima da meta! Excelente — seu músculo agradece muito. 💪';
     msgEl.textContent=msg;
   }
+  renderExercDiasAnteriores();
 }
 function renderExercicioCard(){
   var wrap=el('exercOpcoes');if(!wrap) return;
@@ -3086,43 +3451,7 @@ function msgProteina(pct){
 }
 
 /* ══ MENSAGEM DIA SEGUINTE ══ */
-function verificarMetaOntem(){
-  var aviso=el('avisoMetaOntem');if(!aviso) return;
-  var M=calcMetrics();if(!M){aviso.style.display='none';return;}
-  var meta=Math.round(M.pm);
-  // Checar últimos 3 dias
-  var diasAbaixo=0,diasStr=[];
-  for(var i=1;i<=3;i++){
-    var dd=new Date(agoraBR());dd.setDate(dd.getDate()-i);
-    var ds=dd.toISOString().slice(0,10);
-    diasStr.push(ds);
-    var dh2=S.daily.find(function(x){return x.date===ds;})||{};
-    if((dh2.proteinG||0)<meta*0.8) diasAbaixo++;
-  }
-  if(diasAbaixo>=3){
-    aviso.style.display='block';
-    aviso.style.background='rgba(239,68,68,.1)';
-    aviso.style.borderColor='rgba(239,68,68,.3)';
-    aviso.innerHTML='🚨 <strong>Atenção à flacidez!</strong> Você ficou abaixo da meta de proteína 3 dias seguidos.<br>'
-      +'Com GLP-1 isso aumenta o risco de perder músculo junto com gordura — e músculo é o que dá firmeza.<br>'
-      +'<strong>Hoje: priorize proteína! Meta: '+meta+'g</strong>';
-  } else {
-    // Checar só ontem
-    var ontemStr2=diasStr[0];
-    var dhOntem2=S.daily.find(function(d){return d.date===ontemStr2;})||{};
-    var protOntem2=dhOntem2.proteinG||0;
-    var h=new Date().getHours(),sauda=h<12?'Bom dia':'Boa tarde';
-    if(protOntem2>0&&protOntem2<meta*0.8){
-      aviso.style.display='block';
-      aviso.style.background='rgba(251,191,36,.1)';
-      aviso.style.borderColor='rgba(251,191,36,.3)';
-      aviso.innerHTML='☀️ <strong>'+sauda+'!</strong> Ontem a proteína ficou abaixo da meta — sem drama.<br>'
-        +'Hoje é um novo dia. Uma nova chance de proteger seu músculo. <strong>Vamos lá? 💪</strong>';
-    } else {
-      aviso.style.display='none';
-    }
-  }
-}
+function verificarMetaOntem(){var aviso=el('avisoMetaOntem');if(aviso)aviso.style.display='none';}
 
 
 var ciSac=null,ciSint=[];
@@ -3256,6 +3585,610 @@ function pkLevel(t,p){
   return Math.max(0,raw);
 }
 
+
+/* ═══ ACCORDION GENÉRICO ═══ */
+function toggleAcc(bodyId,arrId){
+  var b=el(bodyId),a=el(arrId);
+  if(!b)return;
+  var open=b.style.display==='none'||b.style.display==='';
+  b.style.display=open?'block':'none';
+  if(a)a.style.transform=open?'rotate(180deg)':'rotate(0deg)';
+  if(open&&bodyId==='pkAccBody')setTimeout(function(){buildPKChart();},80);
+}
+/* ═══ ATALHOS RÁPIDOS — ÁGUA ═══ */
+function toggleAguaRapido(){
+  var p=el('aguaRapidoPanel');if(!p)return;
+  var open=p.style.display==='none'||p.style.display==='';
+  ['protRapidoPanel','pesoRapidoPanel'].forEach(function(id){var x=el(id);if(x)x.style.display='none';});
+  p.style.display=open?'block':'none';
+}
+function togglePesoRapido(){
+  var p=el('pesoRapidoPanel');if(!p)return;
+  var open=p.style.display==='none'||p.style.display==='';
+  ['aguaRapidoPanel','protRapidoPanel'].forEach(function(id){var x=el(id);if(x)x.style.display='none';});
+  if(open){
+    var inp=el('pesoRapidoInput');
+    if(inp){
+      // Preencher com peso atual se disponível
+      var pw=S.weights&&S.weights.length?S.weights[S.weights.length-1].kg:'';
+      if(pw) inp.value=pw;
+      setTimeout(function(){inp.focus();inp.select();},80);
+    }
+  }
+  p.style.display=open?'block':'none';
+}
+function salvarPesoRapido(){
+  var inp=el('pesoRapidoInput');
+  if(!inp) return;
+  var kg=parseFloat(inp.value);
+  if(!kg||kg<30||kg>400){toast('Digite um peso válido');return;}
+  // Salvar no histórico de peso
+  var d=hoje();
+  S.weights=S.weights||[];
+  var existing=S.weights.find(function(w){return w.date===d;});
+  if(existing) existing.kg=kg;
+  else S.weights.push({date:d,kg:kg});
+  S.profile.weightKg=kg;
+  salvar();
+  var p=el('pesoRapidoPanel');if(p)p.style.display='none';
+  render();
+  atualizarPesoSalvoInfo();
+  toast('⚖️ Peso registrado: '+kg.toFixed(1)+' kg');
+}
+/* ═══ ATALHOS RÁPIDOS — PROTEÍNA ═══ */
+var _protRapidoFoods=[];
+function toggleProtRapido(){
+  var p=el('protRapidoPanel');if(!p)return;
+  var open=p.style.display==='none'||p.style.display==='';
+  ['aguaRapidoPanel','exercRapidoPanel'].forEach(function(id){var x=el(id);if(x)x.style.display='none';});
+  if(open){
+    _protRapidoFoods=[];
+    renderProtRapidoFoods();
+    protRapidoAddFood();
+  } else {
+    _protRapidoFoods=[];
+  }
+  p.style.display=open?'block':'none';
+}
+function protRapidoAddFood(){
+  _protRapidoFoods.push({alimId:'',grams:''});
+  renderProtRapidoFoods();
+  setTimeout(function(){var g=document.getElementById('prfg_'+(_protRapidoFoods.length-1));if(g)g.focus();},50);
+}
+function renderProtRapidoFoods(){
+  var wrap=el('protRapidoFoodList');if(!wrap)return;
+  wrap.innerHTML='';
+  _protRapidoFoods.forEach(function(item,idx){
+    var al=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;})||null;
+    var isScoop=al&&al.unidade==='scoop';
+    var isUnid=al&&al.unidade==='unid';
+
+    var wrapper=document.createElement('div');
+    wrapper.style.cssText='margin-bottom:10px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:10px;padding:10px';
+
+    // SELECT alimento
+    var sel=document.createElement('select');
+    sel.id='prfs_'+idx;
+    sel.style.cssText='width:100%;padding:8px;border-radius:8px;border:1px solid rgba(74,222,128,.3);background:#0a1f0e;color:#fff;font-size:13px;font-family:var(--ss);margin-bottom:8px';
+    sel.innerHTML='<option value="">— escolha o alimento —</option>';
+    PROT_ALIMENTOS.forEach(function(a){
+      sel.innerHTML+='<option value="'+a.id+'"'+(item.alimId===a.id?' selected':'')+'>'+a.nm+' — '+a.desc+'</option>';
+    });
+    sel.onchange=function(){_protRapidoFoods[idx].alimId=this.value;_protRapidoFoods[idx].grams='';renderProtRapidoFoods();};
+    wrapper.appendChild(sel);
+
+    // INPUT quantidade + label dinâmico
+    var rowQ=document.createElement('div');
+    rowQ.style.cssText='display:flex;align-items:center;gap:8px';
+
+    var inp=document.createElement('input');
+    inp.type='number';inp.id='prfg_'+idx;
+    if(isScoop) inp.placeholder='scoops';
+    else if(isUnid) inp.placeholder='unidades';
+    else inp.placeholder='gramas';
+    inp.min='0';inp.max='50';
+    inp.value=item.grams||'';
+    inp.style.cssText='width:80px;padding:8px;border-radius:8px;border:1px solid rgba(74,222,128,.3);background:#0a1f0e;color:#fff;font-size:14px;font-weight:700;text-align:center';
+    inp.oninput=function(){
+      _protRapidoFoods[idx].grams=this.value;
+      var lbl=document.getElementById('prfequiv_'+idx);
+      if(!lbl) return;
+      var al2=PROT_ALIMENTOS.find(function(a){return a.id===_protRapidoFoods[idx].alimId;});
+      var q=parseFloat(this.value)||0;
+      if(al2&&q>0){
+        var prot=Math.round(q*al2.fator);
+        var unidLabel=al2.unidade==='scoop'?'scoop(s)':al2.unidade==='unid'?'unidade(s)':'g';
+        lbl.innerHTML='= <strong>'+prot+'g de proteína pura</strong>';
+        lbl.style.display='block';
+      } else {
+        lbl.style.display='none';
+      }
+    };
+
+    var unidSpan=document.createElement('span');
+    if(isScoop) unidSpan.textContent='scoop(s)';
+    else if(isUnid) unidSpan.textContent='unidade(s)';
+    else unidSpan.textContent='gramas';
+    unidSpan.style.cssText='font-size:12px;color:rgba(255,255,255,.5)';
+
+    rowQ.appendChild(inp);
+    rowQ.appendChild(unidSpan);
+    wrapper.appendChild(rowQ);
+
+    // Label equivalência
+    var equiv=document.createElement('div');
+    equiv.id='prfequiv_'+idx;
+    equiv.style.cssText='font-size:12px;color:#4ade80;margin-top:6px;display:none';
+    if(al&&item.grams){
+      var q2=parseFloat(item.grams)||0;
+      if(q2>0){
+        var prot2=Math.round(q2*al.fator);
+        equiv.innerHTML='= <strong>'+prot2+'g de proteína pura</strong>';
+        equiv.style.display='block';
+      }
+    }
+    wrapper.appendChild(equiv);
+    wrap.appendChild(wrapper);
+  });
+}
+function protRapidoSalvar(){
+  var total=0;
+  _protRapidoFoods.forEach(function(item){
+    var al=PROT_ALIMENTOS.find(function(a){return a.id===item.alimId;});
+    var g=parseFloat(item.grams)||0;
+    if(al&&g>0)total+=Math.round(g*al.fator);
+  });
+  if(!total){toast('Adicione pelo menos um alimento');return;}
+  var d=hoje();var e=S.daily.find(function(x){return x.date===d;})||{};
+  var n=Object.assign({},e,{date:d,proteinG:(e.proteinG||0)+total});
+  var i=S.daily.findIndex(function(x){return x.date===d;});
+  if(i>=0)S.daily[i]=n;else S.daily.push(n);
+  salvar();_protRapidoFoods=[];
+  var p=el('protRapidoPanel');if(p)p.style.display='none';
+  renderMetaDia();renderQuatroGauges();renderResumoDiario();verificarMetaBatida();
+  toast('🥩 +'+total+'g de proteína salvo!');
+}
+/* ═══ ATALHOS RÁPIDOS — EXERCÍCIO ═══ */
+function toggleExercRapido(){
+  // Mantido para compatibilidade mas redireciona para accordion
+  abrirExercAccordion();
+}
+function abrirExercAccordion(){
+  // Fechar outros painéis
+  ['aguaRapidoPanel','protRapidoPanel','pesoRapidoPanel'].forEach(function(id){var x=el(id);if(x)x.style.display='none';});
+  // Abrir accordion de exercício
+  var body=el('exercAccBody');
+  var arr=el('exercAccArr');
+  if(body){
+    body.style.display='block';
+    if(arr)arr.style.transform='rotate(180deg)';
+    // Scroll suave até o card
+    setTimeout(function(){
+      var card=body.closest?body.closest('[style*="border-radius:14px"]'):null;
+      if(!card) card=body.parentElement;
+      if(card) card.scrollIntoView({behavior:'smooth',block:'center'});
+    },100);
+    renderExercicioCard();
+  }
+}
+function renderExercRapidoOpcoes(){
+  var wrap=el('exercRapidoOpcoes');if(!wrap)return;
+  wrap.innerHTML='';
+  var ops=[
+    {v:'musculacao',l:'🏋️ Musculação'},
+    {v:'funcional',l:'⚡ Funcional'},
+    {v:'pilates',l:'🧘 Pilates'},
+    {v:'caminhada',l:'🚶 Caminhada'},
+    {v:'natacao',l:'🏊 Natação'},
+    {v:'outro',l:'💪 Outro'},
+    {v:'nao',l:'❌ Não treinei'}
+  ];
+  var d=hoje();
+  var dh=S.daily.find(function(x){return x.date===d;})||{};
+  var atual=dh.exercicio||'';
+  ops.forEach(function(op){
+    var btn=document.createElement('button');
+    var sel=atual===op.v;
+    btn.textContent=op.l;
+    btn.style.cssText='padding:7px 14px;border-radius:8px;border:none;font-family:var(--ss);font-size:12px;font-weight:600;cursor:pointer;width:100%;text-align:left;'
+      +(sel?'background:rgba(251,146,60,.3);color:#fb923c;':'background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);');
+    btn.onclick=function(){
+      var e2=S.daily.find(function(x){return x.date===d;})||{};
+      var n=Object.assign({},e2,{date:d,exercicio:op.v});
+      var i=S.daily.findIndex(function(x){return x.date===d;});
+      if(i>=0)S.daily[i]=n;else S.daily.push(n);
+      salvar();renderQuatroGauges();renderExercicioSemanal();
+      var p2=el('exercRapidoPanel');if(p2)p2.style.display='none';
+      toast(op.v==='nao'?'Registrado — amanhã é outro dia':'💪 '+op.l+' registrado!');
+    };
+    wrap.appendChild(btn);
+  });
+}
+/* ═══ GAUGE SACIEDADE ═══ */
+function renderGaugeSaciedade(){
+  var farm=S.caneta&&S.caneta.farmaco;
+  var ultima=S.caneta&&S.caneta.ultima;
+  var pkAcc=el('pkAccCard');
+  var proxInfoEl=el('proxDoseInfoSac');
+  var semMedEl=el('semMedicacaoInfo');
+
+  // Sem medicação configurada — gauge vazio mas card visível
+  if(!farm||!ultima||!window.PK_PARAMS||!PK_PARAMS[farm]){
+    if(pkAcc)pkAcc.style.display='none';
+    if(proxInfoEl)proxInfoEl.style.display='none';
+    if(semMedEl)semMedEl.style.display='block';
+    drawGauge('gaugeSac',0,'#93c5fd','Saciedade');
+    var fl0=el('gaugeSacFase');if(fl0){fl0.textContent='Não configurado';fl0.style.color='rgba(147,197,253,.5)';}
+    var fs0=el('gaugeSacSub');if(fs0)fs0.textContent='Configure sua medicação';
+    return;
+  }
+
+  if(pkAcc)pkAcc.style.display='block';
+  if(semMedEl)semMedEl.style.display='none';
+
+  var p=PK_PARAMS[farm];
+  var lastDt=new Date(ultima+'T12:00:00');
+  var now=new Date();
+  var hoursEl=Math.max(0,(now.getTime()-lastDt.getTime())/3600000);
+  var step=farm==='Liraglutida'?1:4;
+  var pts=[];
+  for(var t=0;t<=p.period;t+=step)pts.push(pkLevel(t,p));
+  var maxPK=Math.max.apply(null,pts);
+  var curIdx=Math.round(Math.min(hoursEl,p.period)/step);
+  var curPct=maxPK>0?Math.round((pts[curIdx]||0)/maxPK*100):0;
+  drawGauge('gaugeSac',curPct,'#93c5fd','Saciedade');
+
+  var faseInfo=curPct>=80?{l:'Pico de ação',c:'#4ade80'}
+    :curPct>=(p.zone&&p.zone[0]?p.zone[0]:50)?{l:'Fase ativa',c:'#4ade80'}
+    :curPct>=30?{l:'Declínio gradual',c:'#f59e0b'}
+    :{l:'Nível baixo',c:'#ef4444'};
+  var fl=el('gaugeSacFase');if(fl){fl.textContent=faseInfo.l;fl.style.color=faseInfo.c;}
+  var fs=el('gaugeSacSub');if(fs)fs.textContent=farm+' · '+curPct+'% de potência';
+
+  // Próxima dose
+  if(proxInfoEl){
+    var proxDt=new Date(lastDt);
+    var freqDias=farm==='Liraglutida'?1:7;
+    proxDt.setDate(proxDt.getDate()+freqDias);
+    var diasRestantes=Math.ceil((proxDt-now)/86400000);
+    var diasNomeSem=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+    var nomeSem=diasNomeSem[proxDt.getDay()];
+    var dataFmt=proxDt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+    var proxDataEl=el('proxDoseInfoData');
+    var proxDiasEl=el('proxDoseInfoDias');
+    if(proxDataEl) proxDataEl.textContent=nomeSem.charAt(0).toUpperCase()+nomeSem.slice(1)+', '+dataFmt;
+    if(proxDiasEl){
+      if(diasRestantes<=0) proxDiasEl.textContent='Hoje é dia da dose! 💉';
+      else if(diasRestantes===1) proxDiasEl.textContent='Amanhã';
+      else proxDiasEl.textContent='Daqui '+diasRestantes+' dias';
+    }
+    proxInfoEl.style.display='block';
+  }
+}
+/* ═══ FECHAR PAINÉIS AO CLICAR FORA ═══ */
+document.addEventListener('click',function(e){
+  var ids=['aguaRapidoPanel','protRapidoPanel','pesoRapidoPanel'];
+  ids.forEach(function(id){
+    var p=el(id);if(!p||p.style.display==='none')return;
+    var btn=p.previousElementSibling;
+    if(!p.contains(e.target)&&(!btn||!btn.contains(e.target)))p.style.display='none';
+  });
+});
+/* ═══ CONTA-GIRO 4 PILARES ═══ */
+function drawGauge(canvasId, pct, color, label){
+  var canvas = el(canvasId);
+  if(!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var W=130, H=80, cx=65, cy=76, R=58, rIn=40;
+  ctx.clearRect(0,0,W,H);
+
+  var startA = Math.PI;       // 180° — esquerda
+  var totalA = Math.PI;       // semicírculo
+
+  // Fundo do arco
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,.07)';
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(cx, cy, (R+rIn)/2, startA, startA+totalA);
+  ctx.stroke();
+  ctx.restore();
+
+  // Arco colorido degradê
+  if(pct > 0){
+    var safePct = Math.min(100, Math.max(0, pct));
+    var grad = ctx.createLinearGradient(cx-R, cy, cx+R, cy);
+    grad.addColorStop(0,   '#ef4444'); // vermelho
+    grad.addColorStop(0.45,'#f59e0b'); // amarelo
+    grad.addColorStop(1,   '#22c55e'); // verde
+    ctx.save();
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 10;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(cx, cy, (R+rIn)/2, startA, startA + (safePct/100)*totalA);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Traços graduações
+  for(var i=0; i<=10; i++){
+    var frac = i/10;
+    var angle = startA + frac*totalA;
+    var isMaj = (i%5===0);
+    var r1 = isMaj ? rIn-4 : rIn+2;
+    var r2 = isMaj ? R+4   : R-2;
+    ctx.save();
+    ctx.strokeStyle = (i*10 <= pct) ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.12)';
+    ctx.lineWidth = isMaj ? 2.5 : 1.5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(angle)*r1, cy+Math.sin(angle)*r1);
+    ctx.lineTo(cx+Math.cos(angle)*r2, cy+Math.sin(angle)*r2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Labels 0% e 100%
+  ctx.save();
+  ctx.fillStyle = 'rgba(255,255,255,.25)';
+  ctx.font = 'bold 8px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('0', cx + Math.cos(startA)*(R+14), cy + Math.sin(startA)*(R+14));
+  ctx.fillText('100', cx + Math.cos(startA+totalA)*(R+16), cy + Math.sin(startA+totalA)*(R+14));
+  ctx.restore();
+
+  // Ponteiro
+  var pAngle = startA + (Math.min(100,Math.max(0,pct))/100)*totalA;
+  var pLen = rIn - 4;
+  ctx.save();
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(cx + Math.cos(pAngle)*pLen, cy + Math.sin(pAngle)*pLen);
+  ctx.stroke();
+  ctx.restore();
+
+  // Bolinha centro
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 4, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Percentual no centro
+  ctx.save();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 15px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(Math.round(pct)+'%', cx, cy - 6);
+  ctx.restore();
+}
+
+function renderQuatroGauges(){
+  var dh = getDH();
+  var M = calcMetrics();
+
+  // ÁGUA
+  var aguaHoje = dh && dh.waterMl ? dh.waterMl : 0;
+  var aguaMeta = M ? Math.round(M.agua) : 2000;
+  var aguaPct  = Math.min(100, Math.round((aguaHoje/aguaMeta)*100));
+  drawGauge('gaugeAgua', aguaPct, '#38bdf8', 'Água');
+  var elAV = el('gaugeAguaVal');
+  if(elAV) elAV.textContent = aguaHoje + 'ml de ' + aguaMeta + 'ml';
+
+  // PROTEÍNA
+  var protHoje = dh && dh.proteinG ? dh.proteinG : 0;
+  var protMeta = M ? Math.round(M.pm) : 120;
+  var protPct  = Math.min(100, Math.round((protHoje/protMeta)*100));
+  drawGauge('gaugeProt', protPct, '#4ade80', 'Proteína');
+  var elPV = el('gaugeProtVal');
+  if(elPV) elPV.textContent = protHoje + 'g de ' + protMeta + 'g';
+
+  // EXERCÍCIO — % da semana (meta 3x)
+  var seg = inicioSemana();
+  var feitos = 0;
+  for(var i=0; i<7; i++){
+    var dt = new Date(seg); dt.setDate(dt.getDate()+i);
+    var dtStr = dt.toISOString().slice(0,10);
+    var dhE = S.daily.find(function(x){return x.date===dtStr;})||{};
+    if(dhE.exercicio && dhE.exercicio!=='nao') feitos++;
+  }
+  var exercPct = Math.min(100, Math.round((feitos/getMetaExerc())*100));
+  drawGauge('gaugeExerc', exercPct, '#fb923c', 'Exercício');
+  var elEV = el('gaugeExercVal');
+  if(elEV) elEV.textContent = feitos + ' de ' + getMetaExerc() + 'x esta semana';
+
+  // PROGRESSO PESO
+  var prof = S.profile || {};
+  var sw = prof.weightStartKg || prof.weightKg;
+  var cw = prof.weightKg;
+  var gw = prof.weightGoalKg;
+  var pesoPct = 0;
+  if(sw && gw && cw && sw > gw){
+    pesoPct = Math.min(100, Math.max(0, Math.round(((sw-cw)/(sw-gw))*100)));
+  }
+  drawGauge('gaugePeso', pesoPct, '#c084fc', 'Progresso');
+  var elPesoV = el('gaugePesoVal');
+  if(elPesoV){
+    if(sw && cw && sw > cw){
+      var perdido = (sw - cw).toFixed(1);
+      elPesoV.textContent = perdido + 'kg perdidos';
+    } else if(!gw){
+      elPesoV.textContent = 'Configure sua meta';
+    } else {
+      elPesoV.textContent = '0kg perdidos';
+    }
+  }
+}
+/* ═══ RESUMO DIÁRIO ═══ */
+function toggleEntendaMeta(){
+  var body=el('entendaMetaBody');
+  var arr=el('entendaMetaArr');
+  if(!body) return;
+  var open=body.style.display==='none'||body.style.display==='';
+  if(open){
+    var M=calcMetrics();
+    if(!M){body.innerHTML='<div style="color:rgba(255,255,255,.4)">Complete seu perfil para ver os cálculos personalizados.</div>';body.style.display='block';return;}
+    var w=M.w,tmb=Math.round(M.tmb),tdee=Math.round(M.tdee),meta=Math.round(M.meta),
+        agua=Math.round(M.agua),prot=Math.round(M.pm),def=Math.round(M.def),
+        ativ=S.profile.activityLevel||'Moderada',sex=S.profile.sex==='F'?'ela':'ele';
+    var html='';
+    // Água
+    html+='<div style="background:rgba(56,189,248,.08);border-left:3px solid #38bdf8;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:10px">';
+    html+='<div style="font-size:13px;font-weight:800;color:#38bdf8;margin-bottom:4px">💧 Por que '+agua+'ml de água?</div>';
+    html+='Seu peso atual é <strong>'+w.toFixed(1)+'kg</strong>. A fórmula é <strong>35ml × peso corporal</strong>, que resulta em '+(w*35).toFixed(0)+'ml de base. ';
+    html+='Com seu nível de atividade <strong>'+ativ.toLowerCase()+'</strong>, adicionamos mais 200ml. ';
+    html+='⚠️ Os GLP-1 <strong>suprimem a sede</strong> — você pode estar desidratado sem sentir. Beba mesmo sem sede.';
+    html+='</div>';
+    // Proteína
+    html+='<div style="background:rgba(74,222,128,.08);border-left:3px solid #4ade80;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:10px">';
+    html+='<div style="font-size:13px;font-weight:800;color:#4ade80;margin-bottom:4px">🥩 Por que '+prot+'g de proteína?</div>';
+    html+='A meta mínima é <strong>1,6g de proteína pura por kg de peso</strong>: 1,6 × '+w.toFixed(1)+' = <strong>'+prot+'g</strong>. ';
+    html+='Com GLP-1 você come menos — por isso cada grama importa mais. Sem proteína suficiente, o corpo ';
+    html+='usa <strong>músculo como energia</strong> durante o emagrecimento. Isso é sarcopenia — você perde firmeza, força e metabolismo.';
+    html+='</div>';
+    // Calorias / déficit
+    html+='<div style="background:rgba(251,146,60,.08);border-left:3px solid #fb923c;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:10px">';
+    html+='<div style="font-size:13px;font-weight:800;color:#fb923c;margin-bottom:4px">🔥 Por que '+meta+' kcal?</div>';
+    html+='Seu metabolismo em repouso (TMB) é <strong>'+tmb+' kcal</strong> — energia que seu corpo gasta só existindo. ';
+    html+='Com sua atividade '+ativ.toLowerCase()+', seu gasto total diário (GET) é <strong>'+tdee+' kcal</strong>. ';
+    html+='Comendo <strong>'+meta+' kcal</strong>, você cria um déficit de <strong>'+def+' kcal/dia</strong> — suficiente para perder aproximadamente ';
+    var perdaSem=M.perda.toFixed(2).replace('.',',');
+    var perdaMes=(M.perda*4.3).toFixed(1).replace('.',',');
+    html+='<strong>~'+perdaSem+'kg por semana</strong> (ou <strong>~'+perdaMes+'kg por mês</strong>) de forma saudável.';
+    html+='</div>';
+    body.innerHTML=html;
+    body.style.display='block';
+    if(arr) arr.style.transform='rotate(180deg)';
+  } else {
+    body.style.display='none';
+    if(arr) arr.style.transform='rotate(0deg)';
+  }
+}
+function renderResumoDiario(){
+  var M=calcMetrics();
+  var dh=getDH();
+  if(!M){
+    var rc=el('resumoDiarioCard');
+    if(rc) rc.style.display='none';
+    return;
+  }
+  var agua=Math.round(M.agua);
+  var prot=Math.round(M.pm);
+  var kcal=Math.round(M.meta);
+  var elA=el('resumoAguaVal'),elP=el('resumoProtVal'),elK=el('resumoKcalVal'),elProg=el('resumoDiarioProgresso');
+  if(elA) elA.textContent=agua;
+  if(elP) elP.textContent=prot+'g';
+  if(elK) elK.textContent=kcal;
+  // Progresso do dia
+  if(elProg && dh){
+    var aguaHoje=dh.waterMl||0;
+    var protHoje=dh.proteinG||0;
+    var aguaPct=Math.min(100,Math.round((aguaHoje/agua)*100));
+    var protPct=Math.min(100,Math.round((protHoje/prot)*100));
+    var parts=[];
+    if(aguaHoje>0) parts.push('💧 '+aguaHoje+'ml ('+aguaPct+'%)');
+    if(protHoje>0) parts.push('🥩 '+protHoje+'g ('+protPct+'%)');
+    if(parts.length) elProg.textContent='Hoje: '+parts.join(' · ');
+    else elProg.textContent='Registre sua água e proteína para acompanhar o progresso.';
+  } else if(elProg){
+    elProg.textContent='Registre sua água e proteína para acompanhar o progresso.';
+  }
+}
+
+/* ═══ PARABÉNS METAS ═══ */
+var _ultimaMetaBatidaMsg='';
+function verificarMetaBatida(){
+  var M=calcMetrics();
+  var dh=getDH();
+  var card=el('metaBatidaCard');
+  if(!card||!M||!dh){ if(card) card.style.display='none'; return; }
+  var agua=Math.round(M.agua);
+  var prot=Math.round(M.pm);
+  var aguaHoje=dh.waterMl||0;
+  var protHoje=dh.proteinG||0;
+  var aguaOk=aguaHoje>=agua;
+  var protOk=protHoje>=prot;
+  if(aguaOk&&protOk){
+    var msg='Água ✅ e proteína ✅ batidas hoje! Seu músculo e sua hidratação estão protegidos. Continue assim! 💪';
+    card.style.display='block';
+    var msgEl=el('metaBatidaMsg');
+    if(msgEl) msgEl.textContent=msg;
+    // Toast só na primeira vez do dia
+    if(_ultimaMetaBatidaMsg!==hoje()){
+      _ultimaMetaBatidaMsg=hoje();
+      setTimeout(function(){toast('🎉 Parabéns! Você bateu as metas do dia!');},500);
+    }
+  } else if(aguaOk){
+    card.style.display='block';
+    var msgEl=el('metaBatidaMsg');
+    if(msgEl) msgEl.textContent='Água ✅ batida! Agora falta a proteína — mais '+Math.max(0,prot-protHoje)+'g para fechar o dia. 💪';
+  } else if(protOk){
+    card.style.display='block';
+    var msgEl=el('metaBatidaMsg');
+    if(msgEl) msgEl.textContent='Proteína ✅ batida! Agora falta a água — mais '+Math.max(0,agua-aguaHoje)+'ml para fechar o dia. 💧';
+  } else {
+    card.style.display='none';
+  }
+}
+
+/* ═══ STREAK DE DIAS COMPLETOS ═══ */
+function calcStreakDiasCompletos(){
+  var M=calcMetrics();if(!M) return 0;
+  var agua=Math.round(M.agua);
+  var prot=Math.round(M.pm);
+  var streak=0;
+  var d=new Date(agoraBR());
+  // Começa de ontem (hoje pode estar incompleto)
+  d.setDate(d.getDate()-1);
+  for(var i=0;i<365;i++){
+    var ds=d.toISOString().slice(0,10);
+    var dh=S.daily.find(function(x){return x.date===ds;})||{};
+    var aguaOk=(dh.waterMl||0)>=agua;
+    var protOk=(dh.proteinG||0)>=prot;
+    if(aguaOk&&protOk) streak++;
+    else break;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+function renderStreakCard(){
+  // Adicionar ao card de parabéns se streak>0
+  var streak=calcStreakDiasCompletos();
+  var card=el('metaBatidaCard');
+  var msgEl=el('metaBatidaMsg');
+  if(!card||!msgEl) return;
+  if(streak>=2 && card.style.display!=='none'){
+    var extra=' 🔥 '+streak+' dias seguidos batendo as metas!';
+    if(msgEl.textContent.indexOf('dias seguidos')<0) msgEl.textContent+=extra;
+  }
+}
+function compartilharMeta(){
+  var M=calcMetrics();if(!M) return;
+  var streak=calcStreakDiasCompletos();
+  var nl=String.fromCharCode(10);
+  var txt='Equilibra - Metas do dia'+nl+'Agua: batida'+nl+'Proteina: batida'+(streak>=2?nl+streak+' dias seguidos':'')+''+nl+'#Equilibra #GLP1';
+  if(navigator.share){
+    navigator.share({text:txt}).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(txt).then(function(){toast('Texto copiado para compartilhar! 📋');});
+  }
+}
+
+/* ═══ FIM CONTA-GIRO 4 PILARES ═══ */
 
 function drawPkGauge(pct){
   var canvas=el('pkGauge');
@@ -3593,12 +4526,17 @@ function render(){
   renderExercicioCard();
   renderExercicioSemanal();
   verificarMetaOntem();
+  setTimeout(renderQuatroGauges, 80);
+  setTimeout(renderGaugeSaciedade, 100);
+  setTimeout(renderResumoDiario, 60);
+  setTimeout(verificarMetaBatida, 120);
+  setTimeout(renderStreakCard, 200);
   var ms=checkMS(perd);var _me=el('msEl');if(_me){_me.style.display=(ms&&perd>0)?'flex':'none';if(ms&&perd>0){var _mi=el('msIc');var _mm=el('msMsg');var _ms2=el('msSub');if(_mi)_mi.textContent=ms.ic;if(_mm)_mm.textContent=ms.msg;if(_ms2)_ms2.textContent=ms.sub;}}
   var nr=buildNarr(M,rl,perd,dh,pd);var _nt=el('narrTag');if(_nt){_nt.textContent=nr.tag;el('narrMsg').textContent=nr.msg;el('narrDet').textContent=nr.det;el('narrBtn').style.display=nr.btn?'inline-flex':'none';}
   var _sb=el('stBar');if(_sb){if(rh){_sb.style.display='flex';_sb.className='sbar '+rh.bar;el('stLbl').textContent=rh.lbl;el('stMsg').textContent=rh.msg;el('stTag').className='tag '+rh.cls;el('stTag').textContent=rh.lbl;}else _sb.style.display='none';}
   var ld=S.daily.slice().sort(porData),lastD=ld.length?ld[ld.length-1]:null;
-  var _as=el('alSint');if(_as)_as.style.display=(lastD&&(lastD.intensity||0)>=2)?'block':'none';
-  var _aw=el('alAgua');if(_aw)_aw.style.display=(!dh||!dh.waterMl)&&new Date().getHours()>=9?'block':'none';
+  /* alerta sintomas removido do dashboard */
+  /* alerta agua removido */
   var al=el('alDose');
   if(pd&&pd.diff===0){al.textContent='💉 Hoje é dia da sua dose de '+S.caneta.farmaco+'. Não esqueça!';al.style.display='block';al.className='alert alert-g';}
   else if(pd&&pd.diff===1){al.textContent='💉 Amanhã é dia da sua dose de '+S.caneta.farmaco+'.';al.style.display='block';al.className='alert alert-g';}
@@ -3643,7 +4581,29 @@ function render(){
     var crow=el('chRow');crow.innerHTML='';
     [{l:'Frequência',v:S.caneta.freq==='semanal'?'Semanal':'Diária'},{l:'Última aplicação',v:S.caneta.ultima?dataBR(S.caneta.ultima):'—'},{l:'Próxima',v:pd?pd.diff<=0?'Hoje':dataBR(pd.date):'—'}].forEach(function(k){var d=document.createElement('div');d.className='ch-kpi';d.innerHTML='<div class="ch-kl">'+k.l+'</div><div class="ch-kv">'+k.v+'</div>';crow.appendChild(d);});
     var doses2=DOSES[S.caneta.farmaco];
-    if(doses2){el('escCard').style.display='block';el('escSub').textContent='Protocolo para '+S.caneta.farmaco+'.';var tl=el('escTL');tl.innerHTML='';doses2.forEach(function(d){var act=S.caneta.dose&&d.dose===S.caneta.dose;var step=document.createElement('div');step.className='tl-step'+(act?' active':'');step.innerHTML='<div class="tl-dose">'+d.dose+' <span style="font-size:11px;color:var(--muted);font-weight:400">— '+d.sem+'</span>'+(act?' <span class="tag tg" style="font-size:10px;padding:2px 7px">Você está aqui</span>':'')+'</div><div class="tl-info">'+d.info+'</div>';tl.appendChild(step);});}else el('escCard').style.display='none';
+    if(doses2){
+    el('escCard').style.display='block';
+    el('escSub').textContent='Protocolo para '+S.caneta.farmaco+'.';
+    var tl=el('escTL');tl.innerHTML='';
+    doses2.forEach(function(d){
+      var act=S.caneta.dose&&d.dose===S.caneta.dose;
+      var step=document.createElement('div');
+      step.className='tl-step'+(act?' active':'');
+      var semColor=d.adaptacao?'rgba(251,191,36,.7)':d.sem.indexOf('⚕️')>=0?'rgba(239,68,68,.6)':'rgba(74,222,128,.7)';
+      var semBg=d.adaptacao?'rgba(251,191,36,.1)':d.sem.indexOf('⚕️')>=0?'rgba(239,68,68,.08)':'rgba(74,222,128,.08)';
+      step.innerHTML='<div class="tl-dose" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">'
+        +'<strong>'+d.dose+'</strong>'
+        +'<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:'+semBg+';color:'+semColor+'">'+d.sem+'</span>'
+        +(act?'<span class="tag tg" style="font-size:10px;padding:2px 7px">← você está aqui</span>':'')
+        +'</div>'
+        +'<div class="tl-info">'+d.info+'</div>'
+        +(!d.adaptacao&&!d.sem.indexOf('⚕️')>=0?'':'')
+        +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic">'
+        +(d.adaptacao?'':'Mantenha se saciedade presente · Mude apenas com orientação do seu médico')
+        +'</div>';
+      tl.appendChild(step);
+    });
+  }else el('escCard').style.display='none';
     if(ESQ[S.caneta.farmaco]){el('esqCard').style.display='block';el('esqTxt').innerHTML=ESQ[S.caneta.farmaco];}else el('esqCard').style.display='none';
     if(S.caneta.faseSac) setFase(S.caneta.faseSac);
   }else el('proxCard').style.display='none';
@@ -4241,17 +5201,47 @@ function toggleFAQ(idx){
   });
   if(!open){body.style.display='block';arr.style.transform='rotate(180deg)';}
 }
+/* ══ FAQ fuzzy normalization ══ */
+function normalizarTexto(t){
+  if(!t) return '';
+  return t.toLowerCase()
+    // remove acentos
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    // variações comuns de erros
+    .replace(/ph/g,'f').replace(/ss/g,'s').replace(/rr/g,'r')
+    .replace(/nh/g,'n').replace(/lh/g,'l').replace(/ch/g,'x')
+    .trim();
+}
+function faqScore(f, termos){
+  var txt=normalizarTexto(f.q+' '+f.a+' '+f.cat);
+  var score=0;
+  termos.forEach(function(t){
+    if(txt.includes(t)) score+=t.length>3?3:1;
+    // tolerância parcial: aceita substrings com 3+ chars
+    if(t.length>=4){
+      var partial=t.slice(0,-1); // remove último char
+      if(txt.includes(partial)) score+=0.5;
+    }
+  });
+  return score;
+}
 function filtrarFAQ(q){
-  q=q.toLowerCase().trim();
+  q=q.trim();
   var wrap=el('faqLista');
   if(!q){buildFAQ();el('faqNenhum').style.display='none';return;}
-  var found=FAQ.filter(function(f){return f.q.toLowerCase().includes(q)||f.a.toLowerCase().includes(q)||f.cat.toLowerCase().includes(q);});
-  if(!found.length){wrap.innerHTML='';el('faqNenhum').style.display='block';return;}
+  var qNorm=normalizarTexto(q);
+  var termos=qNorm.split(/\s+/).filter(function(t){return t.length>=2;});
+  if(!termos.length){buildFAQ();return;}
+  var scored=FAQ.map(function(f){return{f:f,score:faqScore(f,termos)};})
+    .filter(function(x){return x.score>0;})
+    .sort(function(a,b){return b.score-a.score;});
+  if(!scored.length){wrap.innerHTML='';el('faqNenhum').style.display='block';return;}
   el('faqNenhum').style.display='none';
   wrap.innerHTML='';
   var list=document.createElement('div');
   list.style.cssText='border:1px solid var(--cream3);border-radius:12px;overflow:hidden;background:#fff';
-  found.forEach(function(f,ci){
+  scored.forEach(function(x,ci){
+    var f=x.f;
     var idx=FAQ.indexOf(f);
     var item=document.createElement('div');
     item.style.cssText='border-top:'+(ci>0?'1px solid var(--cream2)':'none');
@@ -4318,7 +5308,7 @@ function salvarPerfil(){
 function salvarCaneta(){
   var f=el('cFarm').value;if(!f){alert('Selecione o fármaco.');return;}
   S.caneta.farmaco=f;S.caneta.dose=el('cDose').value;S.caneta.freq=el('cFreq').value;S.caneta.inicio=el('cIni').value;S.caneta.ultima=el('cUlt').value;S.caneta.diaSem=nv(el('cDia').value,1);S.caneta.obs=el('cObs').value;
-  render();setTimeout(buildPKChart,80);setTimeout(drawPkGauge.bind(null,null),80);toast('Tratamento salvo! 💉');
+  render();setTimeout(buildPKChart,80);setTimeout(drawPkGauge.bind(null,null),80);setTimeout(renderGaugeSaciedade,120);toast('Tratamento salvo! 💉');
 }
 function updateDoses(){
   var f=el('cFarm').value,s=el('cDose');s.innerHTML='<option value="">— selecione a dose —</option>';
@@ -4330,6 +5320,7 @@ function addPeso(){
   var i=S.weights.findIndex(function(x){return x.date===date;});if(i>=0) S.weights[i].weight=w;else S.weights.push({date:date,weight:w});
   S.profile.weightKg=w;if(!S.profile.weightStartKg) S.profile.weightStartKg=w;
   el('pVal').value='';
+  atualizarPesoSalvoInfo();
   // Alerta de velocidade de perda
   var sorted=S.weights.slice().sort(porData);
   if(sorted.length>=2){
@@ -4404,22 +5395,100 @@ function popularPerfil(){
   if(el('ativ')) el('ativ').value=S.profile.activityLevel||'Moderada';
   if(el('dtIni')) el('dtIni').value=S.profile.startDate||'';
 }
+function atualizarCalcSalvoInfo(){
+  var infoEl=el('calcSalvoInfo');
+  var formEl=el('calcFormWrap');
+  var txtEl=el('calcSalvoTxt');
+  if(S.ultimaCalc&&S.ultimaCalc.uni){
+    var c=S.ultimaCalc;
+    var apNome=c.farm+' · '+c.dose+'mg → '+c.uni+' UI na seringa';
+    if(infoEl){infoEl.style.display='flex';}
+    if(txtEl) txtEl.textContent=apNome+(c.data?' ('+new Date(c.data+'T12:00:00').toLocaleDateString('pt-BR')+')':'');
+    if(formEl) formEl.style.display='none';
+  } else {
+    if(infoEl) infoEl.style.display='none';
+    if(formEl) formEl.style.display='block';
+  }
+}
+function reajustarCalc(){
+  var infoEl=el('calcSalvoInfo');
+  var formEl=el('calcFormWrap');
+  if(infoEl) infoEl.style.display='none';
+  if(formEl) formEl.style.display='block';
+  // Preencher com últimos valores
+  if(S.ultimaCalc){
+    var c=S.ultimaCalc;
+    if(el('calcFarm')&&c.farm){el('calcFarm').value=c.farm;updateCalcApres();}
+    setTimeout(function(){
+      if(el('calcApres')&&c.apresIdx!==undefined) el('calcApres').value=c.apresIdx;
+      if(el('calcMg')&&c.mg){el('calcMg').value=c.mg;el('calcMg').readOnly=false;}
+      if(el('calcMl')&&c.ml){el('calcMl').value=c.ml;el('calcMl').readOnly=false;}
+      if(el('calcDose')&&c.dose) el('calcDose').value=c.dose;
+      if(el('calcAmpolaWrap')) el('calcAmpolaWrap').style.display='block';
+      calcDil();
+    },100);
+  }
+}
 function popularCaneta(){
   var cf=el('cFarm');if(!cf) return;
   if(S.caneta.farmaco){
     cf.value=S.caneta.farmaco;
     if(typeof updateDoses==='function') updateDoses();
-    // dose deve ser setada DEPOIS de updateDoses popular as opções
-    if(S.caneta.dose){
-      var cd=el('cDose');
-      if(cd) cd.value=String(S.caneta.dose);
-    }
+    if(S.caneta.dose){var cd=el('cDose');if(cd) cd.value=String(S.caneta.dose);}
   }
   if(el('cFreq')&&S.caneta.freq) el('cFreq').value=S.caneta.freq;
   if(el('cIni')&&S.caneta.inicio) el('cIni').value=S.caneta.inicio;
   if(el('cUlt')&&S.caneta.ultima) el('cUlt').value=S.caneta.ultima;
   if(el('cDia')&&S.caneta.diaSem!=null) el('cDia').value=String(S.caneta.diaSem);
   if(el('cObs')&&S.caneta.obs) el('cObs').value=S.caneta.obs;
+  // Mostrar estado salvo se já configurado
+  var infoEl=el('tratSalvoInfo');
+  var formEl=el('tratFormWrap');
+  var txtEl=el('tratSalvoTxt');
+  if(S.caneta.farmaco&&S.caneta.dose){
+    var diasNm=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+    var diaStr=S.caneta.freq==='diaria'?'diária':'toda '+diasNm[S.caneta.diaSem||1];
+    if(infoEl){infoEl.style.display='flex';}
+    if(txtEl) txtEl.textContent=S.caneta.farmaco+' '+S.caneta.dose+'mg · Aplicação '+diaStr+(S.caneta.ultima?' · Última: '+S.caneta.ultima:'');
+    if(formEl) formEl.style.display='none';
+  } else {
+    if(infoEl) infoEl.style.display='none';
+    if(formEl) formEl.style.display='block';
+  }
+  // Calculadora salva
+  atualizarCalcSalvoInfo();
+  // Peso salvo
+  atualizarPesoSalvoInfo();
+}
+function atualizarPesoSalvoInfo(){
+  var infoEl=el('pesoSalvoInfo');
+  var formEl=el('pesoFormWrap');
+  var txtEl=el('pesoSalvoTxt');
+  var ultimoP=S.weights&&S.weights.length?S.weights.slice().sort(porData).pop():null;
+  if(ultimoP){
+    var kg=ultimoP.weight||ultimoP.kg;
+    if(infoEl){infoEl.style.display='flex';}
+    if(txtEl) txtEl.textContent='Último: '+kg+'kg em '+new Date(ultimoP.date+'T12:00:00').toLocaleDateString('pt-BR');
+    if(formEl) formEl.style.display='none';
+  } else {
+    if(infoEl) infoEl.style.display='none';
+    if(formEl) formEl.style.display='block';
+  }
+}
+function reajustarTratamento(){
+  var formEl=el('tratFormWrap');
+  var infoEl=el('tratSalvoInfo');
+  if(formEl) formEl.style.display='block';
+  if(infoEl) infoEl.style.display='none';
+}
+function reajustarPeso(){
+  var formEl=el('pesoFormWrap');
+  var infoEl=el('pesoSalvoInfo');
+  if(formEl) formEl.style.display='block';
+  if(infoEl) infoEl.style.display='none';
+  if(el('pData')) el('pData').value=hoje();
+  if(el('pVal')) el('pVal').value='';
+  setTimeout(function(){var v=el('pVal');if(v)v.focus();},80);
 }
 function go(id){
   document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});
@@ -4439,6 +5508,221 @@ function go(id){
 }
 function abrirMais(){el('maisOv').style.display='block';document.body.style.overflow='hidden';}
 function fecharMais(){el('maisOv').style.display='none';document.body.style.overflow='';}
+/* ══════════════════════════════════
+   GUIA VIRTUAL — SPOTLIGHT TOUR
+══════════════════════════════════ */
+var GUIA_SLIDES=[
+  {
+    ic:'👋', alvo:null, posCard:'center',
+    titulo:'Bem-vindo ao Equilibra!',
+    texto:'Tour rápido pelo app. Cada slide ilumina o elemento exato que está sendo explicado. Toque em Próximo para começar.',
+    dica:null
+  },
+  {
+    ic:'📋', alvo:'resumoDiarioCard', posCard:'below',
+    titulo:'Sua Meta de Hoje',
+    texto:'Suas três metas do dia — <strong>água, proteína e calorias</strong> — calculadas especificamente para o seu peso, altura e atividade física.',
+    dica:'💡 Toque em "Entenda o porquê" para ver o raciocínio médico por trás de cada número.'
+  },
+  {
+    ic:'⚡', alvo:'quatroGauges', posCard:'below',
+    titulo:'Conta-giros — 4 Pilares',
+    texto:'Os quatro medidores mostram em tempo real seu progresso de <strong>água, proteína, exercício e peso</strong> hoje.',
+    dica:'💡 Quando água e proteína chegam a 100%, aparece o card de parabéns com botão para compartilhar!'
+  },
+  {
+    ic:'🥩', alvo:'btnProtRapido', posCard:'below',
+    titulo:'Registro Rápido de Proteína',
+    texto:'Toque aqui para registrar o que comeu. Cada alimento mostra a <strong>proteína pura equivalente</strong> — ex: 200g de frango = 62g de proteína.',
+    dica:'💡 30 fontes disponíveis, com whey em scoops e ovos em unidades.'
+  },
+  {
+    ic:'💧', alvo:'aguaRapidoPanel', alvoFallback:'quatroGauges', posCard:'below',
+    titulo:'Atalhos Rápidos',
+    texto:'Os botões abaixo permitem adicionar <strong>água</strong>, registrar <strong>exercício</strong> e anotar o <strong>peso do dia</strong> — tudo sem sair da tela.',
+    dica:'💡 O botão de exercício abre o accordion Estímulo Muscular diretamente.'
+  },
+  {
+    ic:'💊', alvo:'gaugeSacCard', posCard:'above',
+    titulo:'Saciedade da Medicação',
+    texto:'O gauge azul mostra a <strong>potência atual do seu GLP-1</strong> — em que ponto da curva farmacocinética você está agora.',
+    dica:'💡 Configure sua medicação na aba Caneta. A próxima dose também aparece aqui.'
+  },
+  {
+    ic:'💉', alvo:'nb-caneta', posCard:'above',
+    titulo:'Aba Caneta',
+    texto:'Configure fármaco, dose e dia de aplicação. O app salva tudo. Para ajustes, toque em <strong>✏️ Reajustar</strong>.',
+    dica:'💡 O protocolo de escalonamento mostra quando manter ou trocar a dose — com orientação clínica.'
+  },
+  {
+    ic:'❓', alvo:'nb-faq', posCard:'above',
+    titulo:'Central de Dúvidas',
+    texto:'Mais de 50 perguntas respondidas sobre GLP-1, sintomas, exercício e alimentação. A busca tolera <strong>erros de digitação</strong>.',
+    dica:'💡 Digite "nausea" e encontra "náusea". Digite "proteina" e encontra "proteína".'
+  },
+  {
+    ic:'🗺️', alvo:null, posCard:'center',
+    titulo:'Tudo pronto!',
+    texto:'O Equilibra foi criado por médico, para pacientes reais. Use o app <strong>todo dia</strong> — o hábito é o que faz a diferença.',
+    dica:'💡 O GLP-1 faz o trabalho pesado. Proteína, água e exercício fazem você emagrecer do jeito certo.'
+  }
+];
+
+var _guiaStep=0;
+
+function abrirGuia(){
+  // Garantir que está no dashboard
+  go('dashboard');
+  _guiaStep=0;
+  var ov=el('guiaOv');
+  ov.style.display='block';
+  ov.style.pointerEvents='auto';
+  renderGuiaSlide();
+}
+
+function fecharGuia(){
+  var ov=el('guiaOv');
+  ov.style.display='none';
+  // Limpar sombras
+  ['guiaSombraTop','guiaSombraBottom','guiaSombraLeft','guiaSombraRight','guiaBorda'].forEach(function(id){
+    var e=el(id);if(e)e.style.cssText=e.style.cssText;
+  });
+  document.body.style.overflow='';
+  try{localStorage.setItem('equilibra_guia_visto','1');}catch(e){}
+}
+
+function guiaGetAlvo(slide){
+  if(!slide.alvo) return null;
+  var e=el(slide.alvo);
+  // fallback se elemento não visível
+  if((!e||e.offsetParent===null)&&slide.alvoFallback) e=el(slide.alvoFallback);
+  if(!e||e.offsetParent===null) return null;
+  return e;
+}
+
+function renderGuiaSlide(){
+  var s=GUIA_SLIDES[_guiaStep];
+  var total=GUIA_SLIDES.length;
+
+  // Conteúdo do card
+  el('guiaIc').textContent=s.ic;
+  el('guiaTitulo').innerHTML=s.titulo;
+  el('guiaTexto').innerHTML=s.texto;
+  var dicaEl=el('guiaDica');
+  if(s.dica){dicaEl.innerHTML=s.dica;dicaEl.style.display='block';}
+  else dicaEl.style.display='none';
+
+  // Botões nav
+  var btnA=el('guiaBtnAnterior');
+  var btnP=el('guiaBtnProximo');
+  if(btnA) btnA.style.display=_guiaStep>0?'inline-flex':'none';
+  if(btnP) btnP.textContent=_guiaStep===total-1?'Concluir ✓':'Próximo →';
+
+  // Barra progresso
+  el('guiaProgressBar').style.width=Math.round((_guiaStep+1)/total*100)+'%';
+
+  // Dots
+  var dotsEl=el('guiaDots');
+  dotsEl.innerHTML='';
+  for(var i=0;i<total;i++){
+    var dot=document.createElement('div');
+    dot.style.cssText='height:6px;border-radius:99px;background:'+(i===_guiaStep?'#4ade80':'rgba(255,255,255,.25)')+';transition:all .3s;width:'+(i===_guiaStep?'16px':'6px');
+    dotsEl.appendChild(dot);
+  }
+
+  // Posicionar spotlight
+  var alvoEl=guiaGetAlvo(s);
+  if(alvoEl){
+    // Scroll suave até o elemento
+    alvoEl.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(function(){posicionarSpotlight(alvoEl,s.posCard);},350);
+  } else {
+    // Sem alvo: overlay escuro completo, card centralizado
+    posicionarSpotlightVazio(s.posCard);
+  }
+}
+
+function posicionarSpotlight(alvoEl, posCard){
+  var pad=8; // padding ao redor do elemento
+  var vw=window.innerWidth,vh=window.innerHeight;
+  var rect=alvoEl.getBoundingClientRect();
+  var top=rect.top-pad,bot=rect.bottom+pad,left=rect.left-pad,right=rect.right+pad;
+  // Clamp
+  top=Math.max(0,top);bot=Math.min(vh,bot);left=Math.max(0,left);right=Math.min(vw,right);
+  var h=bot-top,w=right-left;
+
+  // 4 sombras
+  var sT=el('guiaSombraTop'),sB=el('guiaSombraBottom'),sL=el('guiaSombraLeft'),sR=el('guiaSombraRight');
+  sT.style.cssText='position:absolute;left:0;right:0;top:0;height:'+top+'px;background:rgba(0,0,0,.78);pointer-events:auto;transition:all .35s ease';
+  sB.style.cssText='position:absolute;left:0;right:0;top:'+bot+'px;bottom:0;background:rgba(0,0,0,.78);pointer-events:auto;transition:all .35s ease';
+  sL.style.cssText='position:absolute;left:0;width:'+left+'px;top:'+top+'px;height:'+h+'px;background:rgba(0,0,0,.78);pointer-events:auto;transition:all .35s ease';
+  sR.style.cssText='position:absolute;left:'+right+'px;right:0;top:'+top+'px;height:'+h+'px;background:rgba(0,0,0,.78);pointer-events:auto;transition:all .35s ease';
+
+  // Borda brilhante
+  var borda=el('guiaBorda');
+  borda.style.cssText='position:absolute;top:'+(top)+'px;left:'+(left)+'px;width:'+w+'px;height:'+h+'px;border:2.5px solid #4ade80;border-radius:16px;box-shadow:0 0 0 4px rgba(74,222,128,.15),0 0 24px rgba(74,222,128,.3);pointer-events:none;transition:all .35s ease';
+
+  // Posicionar card
+  posicionarCard(top,bot,left,right,vw,vh,posCard);
+}
+
+function posicionarSpotlightVazio(posCard){
+  var vw=window.innerWidth,vh=window.innerHeight;
+  // Overlay completo
+  ['guiaSombraTop','guiaSombraBottom','guiaSombraLeft','guiaSombraRight'].forEach(function(id){
+    var e=el(id);if(e)e.style.cssText='position:absolute;background:rgba(0,0,0,.82);pointer-events:auto;transition:all .35s ease';
+  });
+  var sT=el('guiaSombraTop');if(sT)sT.style.cssText='position:absolute;inset:0;background:rgba(0,0,0,.82);pointer-events:auto';
+  ['guiaSombraBottom','guiaSombraLeft','guiaSombraRight'].forEach(function(id){
+    var e=el(id);if(e){e.style.width='0';e.style.height='0';}
+  });
+  var borda=el('guiaBorda');if(borda)borda.style.opacity='0';
+  // Card centralizado
+  var card=el('guiaCard');
+  var cw=Math.min(320,vw-32);
+  var ch=card.offsetHeight||220;
+  card.style.cssText=card.style.cssText.replace(/left:[^;]+;/,'').replace(/top:[^;]+;/,'');
+  card.style.left=Math.round((vw-cw)/2)+'px';
+  card.style.top=Math.round((vh-ch)/2)+'px';
+  card.style.width=cw+'px';
+  if(borda)borda.style.opacity='0';
+}
+
+function posicionarCard(top,bot,left,right,vw,vh,posCard){
+  var card=el('guiaCard');
+  var cw=Math.min(320,vw-32);
+  var margin=12;
+  var cx,cy;
+  var cardH=card.offsetHeight||220;
+
+  if(posCard==='above'||bot+cardH+margin>vh){
+    // Card acima do elemento
+    cy=top-cardH-margin;
+    if(cy<8) cy=8;
+  } else {
+    // Card abaixo do elemento
+    cy=bot+margin;
+    if(cy+cardH>vh-8) cy=vh-cardH-8;
+  }
+  // Horizontal: alinhar ao centro do elemento, mas manter na tela
+  cx=Math.round((left+right)/2-cw/2);
+  cx=Math.max(8,Math.min(vw-cw-8,cx));
+
+  card.style.left=cx+'px';
+  card.style.top=Math.max(8,cy)+'px';
+  card.style.width=cw+'px';
+  var borda=el('guiaBorda');if(borda)borda.style.opacity='1';
+}
+
+function guiaProximo(){
+  if(_guiaStep<GUIA_SLIDES.length-1){_guiaStep++;renderGuiaSlide();}
+  else fecharGuia();
+}
+function guiaAnterior(){
+  if(_guiaStep>0){_guiaStep--;renderGuiaSlide();}
+}
+/* ═══════════════════════════════════════════════════════ */
+
 function toast(msg){var t=el('toastEl');if(!t){t=document.createElement('div');t.id='toastEl';t.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--g700);color:#fff;padding:10px 20px;border-radius:999px;font-size:14px;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:opacity .3s';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(function(){t.style.opacity='0';},2500);}
 
 /* ══ INIT ══ */
