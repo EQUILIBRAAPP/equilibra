@@ -1,0 +1,44 @@
+{
+  "name": "Equilibra",
+  "short_name": "Equilibra",
+  "description": "Seu companheiro inteligente para GLP-1. Emagrecer é diferente de murchar.",
+  "start_url": "/equilibra/",
+  "scope": "/equilibra/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#052e16",
+  "theme_color": "#052e16",
+  "lang": "pt-BR",
+  "categories": ["health", "medical"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check-in do dia",
+      "short_name": "Check-in",
+      "description": "Registrar saciedade, água e proteína",
+      "url": "/equilibra/?s=checkin",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Painel",
+      "short_name": "Painel",
+      "description": "Ver minha evolução hoje",
+      "url": "/equilibra/?s=dashboard",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": []
+}
